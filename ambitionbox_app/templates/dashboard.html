@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block nav_dashboard %}active{% endblock %}
+{% block title %}Dashboard · AmbitionBox Analysis{% endblock %}
+
+{% block content %}
+<div class="wrap" style="padding-top:26px;padding-bottom:60px">
+  <div class="tool-head" style="margin-bottom:16px">
+    <div>
+      <h1>Visual dashboard</h1>
+      <p>Every chart redraws live as you change filters. <span id="dash-count" style="color:var(--cyan);font-weight:600"></span></p>
+    </div>
+    <div style="display:flex;gap:10px">
+      <a class="btn btn-ghost btn-sm" href="{{ url_for('explore') }}">See rows</a>
+      <button class="btn btn-primary btn-sm" id="open-filters">Filters</button>
+    </div>
+  </div>
+
+  <div class="dash-filter-toggle">
+    <span style="color:var(--text-dim);font-size:.86rem;font-weight:600">Active filters:</span>
+    <div class="chips" id="filter-chips"><span class="muted">none — showing all companies</span></div>
+  </div>
+
+  <div class="kpi-row" id="kpis">
+    <div class="kpi"><div class="k-lbl">Companies</div><div class="k-val grad" id="kpi-total">—</div></div>
+    <div class="kpi"><div class="k-lbl">Avg rating</div><div class="k-val" id="kpi-rating">—</div></div>
+    <div class="kpi"><div class="k-lbl">Avg age</div><div class="k-val" id="kpi-age">—</div></div>
+    <div class="kpi"><div class="k-lbl">Industries</div><div class="k-val" id="kpi-ind">—</div></div>
+    <div class="kpi"><div class="k-lbl">Top type</div><div class="k-val" id="kpi-type" style="font-size:1.15rem">—</div></div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="card col-8"><h3>Top industries</h3><div class="sub">Companies per industry (top 12)</div><div class="canvas-box"><canvas id="c-industries"></canvas></div></div>
+    <div class="card col-4"><h3>Company type</h3><div class="sub">Where a classification exists</div><div class="canvas-box"><canvas id="c-type"></canvas></div></div>
+
+    <div class="card col-6"><h3>Rating distribution</h3><div class="sub">How ratings are spread</div><div class="canvas-box"><canvas id="c-rating"></canvas></div></div>
+    <div class="card col-6"><h3>Top locations</h3><div class="sub">Companies per location (top 12)</div><div class="canvas-box"><canvas id="c-locations"></canvas></div></div>
+
+    <div class="card col-6"><h3>Size distribution</h3><div class="sub">By employee band</div><div class="canvas-box"><canvas id="c-size"></canvas></div></div>
+    <div class="card col-6"><h3>Company age</h3><div class="sub">Years since founding</div><div class="canvas-box"><canvas id="c-age"></canvas></div></div>
+
+    <div class="card col-6"><h3>Avg rating by industry</h3><div class="sub">Top 12 industries, ranked by rating</div><div class="canvas-box"><canvas id="c-rbi"></canvas></div></div>
+    <div class="card col-6"><h3>Rating vs age</h3><div class="sub">Does age relate to rating?</div><div class="canvas-box"><canvas id="c-scatter"></canvas></div></div>
+  </div>
+
+  <h2 class="dash-section-title">What drives the ratings?</h2>
+  <p id="insight-line">Analysing the current selection…</p>
+  <div class="chart-grid">
+    <div class="card col-6"><h3>Rating by company size</h3><div class="sub">Do bigger firms score better?</div><div class="canvas-box"><canvas id="c-rbs"></canvas></div></div>
+    <div class="card col-6"><h3>Rating by type</h3><div class="sub">Ownership vs employee satisfaction</div><div class="canvas-box"><canvas id="c-rbt"></canvas></div></div>
+    <div class="card col-6"><h3>Rating by company age</h3><div class="sub">Does maturity mean happier teams?</div><div class="canvas-box"><canvas id="c-rba"></canvas></div></div>
+    <div class="card col-6"><h3>Rating by city</h3><div class="sub">Which hub rates its employers best?</div><div class="canvas-box"><canvas id="c-rbl"></canvas></div></div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2>Filters</h2>
+    <button class="drawer-close" id="close-filters" aria-label="Close">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div id="filter-panel"></div>
+</aside>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/filters.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

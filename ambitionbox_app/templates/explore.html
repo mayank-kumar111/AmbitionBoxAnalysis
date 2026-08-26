@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block nav_explore %}active{% endblock %}
+{% block title %}Explore Companies · AmbitionBox Analysis{% endblock %}
+
+{% block content %}
+<div class="tool">
+  <div class="tool-head">
+    <div>
+      <h1>Explore companies</h1>
+      <p>Filter the dataset and sort through matching companies. Your selection also powers the Dashboard.</p>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="{{ url_for('dashboard') }}">Visualize this selection</a>
+  </div>
+
+  <aside class="filters" id="filter-panel"></aside>
+
+  <section class="tool-main">
+    <div class="result-bar">
+      <span class="result-count"><b id="result-total">…</b> companies match</span>
+      <div class="spacer"></div>
+      <button id="export-csv" class="btn btn-ghost btn-sm" style="margin-right:12px;font-weight:600">Export CSV</button>
+      <label style="color:var(--text-dim);font-size:.85rem">Rows
+        <select class="sort-select" id="page-size">
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr>
+            <th data-sort="company_name">Company <span class="arrow"></span></th>
+            <th data-sort="company_rating">Rating <span class="arrow">▼</span></th>
+            <th data-sort="industry">Industry <span class="arrow"></span></th>
+            <th data-sort="size">Size <span class="arrow"></span></th>
+            <th data-sort="type">Type <span class="arrow"></span></th>
+            <th data-sort="years_old">Age <span class="arrow"></span></th>
+            <th data-sort="location">Location <span class="arrow"></span></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <div class="pager" id="pager"></div>
+  </section>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/filters.js') }}"></script>
+<script src="{{ url_for('static', filename='js/explore.js') }}"></script>
+{% endblock %}

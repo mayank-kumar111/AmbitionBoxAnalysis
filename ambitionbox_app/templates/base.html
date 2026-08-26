@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AmbitionBox Analysis{% endblock %}</title>
+  <meta name="description" content="Filter, explore and visualize company data from AmbitionBox.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='3' y='12' width='4' height='8' rx='1' fill='%2306B6D4'/><rect x='10' y='7' width='4' height='13' rx='1' fill='%238B5CF6'/><rect x='17' y='3' width='4' height='17' rx='1' fill='%2306B6D4'/></svg>">
+  <script>
+    if (localStorage.getItem("theme") === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  </script>
+</head>
+<body>
+  <div class="bg-aurora" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <header class="nav">
+    <a class="brand" href="{{ url_for('index') }}">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><rect x="3" y="12" width="4" height="8" rx="1" fill="#06B6D4"/><rect x="10" y="7" width="4" height="13" rx="1" fill="#8B5CF6"/><rect x="17" y="3" width="4" height="17" rx="1" fill="#06B6D4"/></svg></span>
+      <span class="brand-text">AmbitionBox<span class="brand-accent">Analysis</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="{{ url_for('index') }}" class="{% block nav_home %}{% endblock %}">Home</a>
+      <a href="{{ url_for('explore') }}" class="{% block nav_explore %}{% endblock %}">Explore</a>
+      <a href="{{ url_for('dashboard') }}" class="{% block nav_dashboard %}{% endblock %}">Dashboard</a>
+      <a href="{{ url_for('compare') }}" class="{% block nav_compare %}{% endblock %}">Compare</a>
+      <a href="{{ url_for('about') }}" class="{% block nav_about %}{% endblock %}">About</a>
+    </nav>
+    
+    <div class="global-search" id="global-search-container">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="global-search-input" placeholder="Search companies..." autocomplete="off">
+      <div class="search-dropdown" id="global-search-results"></div>
+    </div>
+    
+    <div style="display:flex;align-items:center;gap:16px;">
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" style="background:none;border:none;color:var(--text);cursor:pointer;padding:8px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);background:var(--border);">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a class="nav-cta" href="{{ url_for('explore') }}">Launch tool</a>
+    </div>
+    <button class="nav-burger" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Global Modal -->
+  <div class="modal-overlay" id="company-modal" onclick="if(event.target===this) this.classList.remove('active')">
+    <div class="modal">
+      <button class="modal-close" onclick="document.getElementById('company-modal').classList.remove('active')">&times;</button>
+      <h2 id="modal-title">Company</h2>
+      <div class="modal-rating"><span style="color:var(--amber)">★</span> <span id="modal-rating-val"></span></div>
+      <div class="modal-tags" id="modal-tags"></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><rect x="3" y="12" width="4" height="8" rx="1" fill="#06B6D4"/><rect x="10" y="7" width="4" height="13" rx="1" fill="#8B5CF6"/><rect x="17" y="3" width="4" height="17" rx="1" fill="#06B6D4"/></svg></span>
+        <span class="brand-text">AmbitionBox<span class="brand-accent">Analysis</span></span>
+      </div>
+      <div class="footer-desc">
+        <p>Explore, compare, and visualize company data across India. Built with Flask and Chart.js.</p>
+        <p class="muted" style="margin-top:6px; font-size:0.85rem;">Data sourced from AmbitionBox listings, for analytical and educational use.<br>Built by <b style="color:var(--text)">Mayank Kumar</b>.</p>
+      </div>
+      <div class="footer-links">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('explore') }}">Explore</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('compare') }}">Compare</a>
+        <a href="{{ url_for('about') }}">About &amp; Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2024 AmbitionBox Analysis. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+  <script src="{{ url_for('static', filename='js/creator.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block nav_home %}active{% endblock %}
+{% block title %}AmbitionBox Analysis — Explore and Visualize Company Data{% endblock %}
+
+{% block content %}
+<section class="hero wrap">
+  <span class="eyebrow reveal">Company intelligence · India</span>
+  <h1 class="reveal">Explore <span class="glow">{{ "{:,}".format(totals.companies) }}</span> companies.<br>See the data <span class="glow">come alive.</span></h1>
+  <p class="lead reveal">A fast, interactive lens on AmbitionBox company listings — filter by rating, industry, size, type, age and location, then watch the charts rebuild themselves in real time.</p>
+  <div class="hero-cta reveal">
+    <a class="btn btn-primary" href="{{ url_for('explore') }}">Explore companies</a>
+    <a class="btn btn-ghost" href="{{ url_for('dashboard') }}">Open dashboard</a>
+  </div>
+  <p class="hero-note reveal">No sign-up · runs entirely on your machine</p>
+
+  <div class="stat-band">
+    <div class="stat reveal"><div class="num" data-count="{{ totals.companies }}">0</div><div class="lbl">Companies</div></div>
+    <div class="stat reveal"><div class="num" data-count="{{ totals.industries }}">0</div><div class="lbl">Industries</div></div>
+    <div class="stat reveal"><div class="num" data-count="{{ totals.locations }}">0</div><div class="lbl">Locations</div></div>
+    <div class="stat reveal"><div class="num" data-count="{{ totals.avg_rating }}" data-decimals="2">0</div><div class="lbl">Avg. rating (out of 5)</div></div>
+  </div>
+</section>
+
+<section class="features wrap">
+  <span class="eyebrow reveal">Why you'll like it</span>
+  <h2 class="section-title reveal">Everything you need to make sense of the data</h2>
+  <p class="section-sub reveal">Three connected views, one clean dataset. Point-and-click filtering that stays in sync across the whole tool.</p>
+
+  <div class="feature-grid">
+    <div class="feature reveal">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></div>
+      <h3>Multi-dimensional filters</h3>
+      <p>Slice by company name, rating, industry, size, type, age and location. Searchable multi-selects and dual range sliders make it effortless.</p>
+    </div>
+    <div class="feature reveal">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+      <h3>Dynamic visualizations</h3>
+      <p>Twelve live charts — industry mix, rating spread, company age, type breakdown and more — that redraw the instant you change a filter.</p>
+    </div>
+    <div class="feature reveal">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <h3>Instant, in-memory</h3>
+      <p>The full dataset is held in memory, so every query and chart update returns in milliseconds. No database, no waiting.</p>
+    </div>
+    <div class="feature reveal">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+      <h3>Export what you find</h3>
+      <p>Narrow the data to exactly the companies you care about, then download the filtered slice as a clean CSV in one click.</p>
+    </div>
+  </div>
+</section>
+
+<section class="steps wrap">
+  <span class="eyebrow reveal">How it works</span>
+  <h2 class="section-title reveal">From raw listings to insight in three steps</h2>
+  <div class="step-grid">
+    <div class="step reveal"><div class="n">01</div><h3>Filter</h3><p>Open the Explore view and dial in your criteria — say, Public IT companies in Pune rated 4 and above.</p></div>
+    <div class="step reveal"><div class="n">02</div><h3>Scan the table</h3><p>Sort and page through matching companies with colour-coded ratings and clean, readable columns.</p></div>
+    <div class="step reveal"><div class="n">03</div><h3>Visualize</h3><p>Jump to the Dashboard to see the same filtered slice as living charts — patterns jump right out.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="cta-band reveal">
+    <h2>Ready to dig in?</h2>
+    <p>Start filtering {{ "{:,}".format(totals.companies) }} companies across India's biggest hiring hubs, or jump straight to the visual dashboard.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="{{ url_for('explore') }}">Explore companies</a>
+      <a class="btn btn-ghost" href="{{ url_for('dashboard') }}">View dashboard</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/landing.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,1006 @@
+,company_name,company_rating,industry,size,type,years_old,location
+0,HCLTech,3.7,IT Services & Consulting,1 Lakh+ Employees,Public,33,Noida
+1,Genpact,3.9,IT Services & Consulting,1 Lakh+ Employees,Public,27,New
+2,Tech Mahindra,3.7,IT Services & Consulting,1 Lakh+ Employees,Public,38,Pune
+3,TCS,3.8,IT Services & Consulting,1 Lakh+ Employees,Public,56,Mumbai
+4,Paytm,3.5,FinTech,10k-50k Employees,Public,14,Noida
+5,Ericsson,4.3,Telecom,10k-50k Employees,Forbes Global 2000,148,Stockholm
+6,Capgemini,3.8,IT Services & Consulting,1 Lakh+ Employees,Public,57,Paris
+7,Accenture,4.0,IT Services & Consulting,1 Lakh+ Employees,Public,35,Dublin
+8,Info Edge,4.0,Internet,5k-10k Employees,Public,29,Noida
+9,Subros,4.0,Auto Components,1k-5k Employees,Public,39,Noida
+10,Samvardhana Motherson Group,3.8,Auto Components,1k-5k Employees,Public,38,Noida
+11,Wipro,3.8,IT Services & Consulting,1 Lakh+ Employees,Public,79,Bangalore/Bengaluru
+12,BYJU'S,3.1,EdTech,10k-50k Employees,Indian Unicorn,13,Bangalore
+13,Samsung,4.1,Consumer Electronics & Appliances,50k-1 Lakh Employees,Public,55,Seoul
+14,Sopra Steria,4.0,IT Services & Consulting,5k-10k Employees,Conglomerate,56,Paris
+15,Cogent E Services,3.3,BPO,10k-50k Employees,Conglomerate,20,Noida
+16,Lava International,4.1,Consumer Electronics & Appliances,1k-5k Employees,Public,15,Noida
+17,Cognizant,3.9,IT Services & Consulting,1 Lakh+ Employees,Forbes Global 2000,30,Noida
+18,IBM,4.1,IT Services & Consulting,1 Lakh+ Employees,Public,113,Noida
+19,MetLife,4.3,Insurance,1k-5k Employees,Forbes Global 2000,16,Noida
+20,DXC Technology,3.8,IT Services & Consulting,10k-50k Employees,Public,7,Noida
+21,JustDial,3.6,Internet,10k-50k Employees,Public,28,Noida
+22,Uflex,3.8,Packaging,5k-10k Employees,Public,39,Noida
+23,NEC,4.6,IT Services & Consulting,5k-10k Employees,Forbes Global 2000,125,Noida
+24,DS Group,4.1,FMCG,1k-5k Employees,Conglomerate,95,Noida
+25,R Systems International,3.4,IT Services & Consulting,1k-5k Employees,Public,31,Noida
+26,Newgen Software Technologies,3.6,IT Services & Consulting,1k-5k Employees,Public,32,Noida
+27,Amazon,4.1,Internet,1 Lakh+ Employees,Public,30,Hyderabad
+28,Fiserv,3.6,FinTech,5k-10k Employees,Forbes Global 2000,40,Noida
+29,Barclays,4.0,Banking,10k-50k Employees,Forbes Global 2000,334,Noida
+30,TELUS International Philippines,3.8,IT Services & Consulting,1k-5k Employees,Startup,19,Noida
+31,Birlasoft,3.8,IT Services & Consulting,10k-50k Employees,Public,29,Noida
+32,Adobe,4.2,Software Product,5k-10k Employees,Public,27,Noida
+33,Isgec Heavy Engineering,3.9,Industrial Machinery,1k-5k Employees,Public,91,Noida
+34,Axis Bank,3.9,Banking,50k-1 Lakh Employees,Public,31,Noida
+35,UnitedHealth,4.1,Healthcare,10k-50k Employees,Forbes Global 2000,47,Noida
+36,Concentrix Corporation,3.9,BPO,50k-1 Lakh Employees,Public,41,Noida
+37,Bureau Veritas,4.0,Other,1k-5k Employees,Forbes Global 2000,196,Noida
+38,Paytm Payments Bank,4.0,FinTech,1k-5k Employees,Public,8,Noida
+39,Kotak Mahindra Bank,3.9,Banking,50k-1 Lakh Employees,Public,21,Noida
+40,Havells,4.1,Electrical Equipment,5k-10k Employees,Public,41,Noida
+41,Dixon Technologies,4.2,Electronics Manufacturing,1k-5k Employees,Public,31,Noida
+42,Startek,3.3,BPO,10k-50k Employees,Public,7,Noida
+43,Pine Labs,3.7,FinTech,1k-5k Employees,Indian Unicorn,26,Noida
+44,ICICI Bank,4.0,Banking,1 Lakh+ Employees,Public,30,Noida
+45,Nucleus Software Exports,3.6,Software Product,1k-5k Employees,Public,38,Noida
+46,HDFC Ergo General Insurance,4.0,Insurance,10k-50k Employees,Public,22,Noida
+47,HCL Infosystems,4.1,IT Services & Consulting,51-200 Employees,Public,48,Noida
+48,HDFC Bank,4.0,Banking,1 Lakh+ Employees,Public,30,Noida
+49,Tata Projects,4.3,Engineering & Construction,5k-10k Employees,Public,45,Noida
+50,Jubilant Foods Works,3.9,Hospitality,10k-50k Employees,Public,29,Noida
+51,Transsion,4.2,Consumer Electronics & Appliances,501-1k Employees,Public,18,Noida
+52,Leverage Edu,4.2,EdTech,51-200 Employees,Startup,7,Noida
+53,Coforge,3.5,IT Services & Consulting,10k-50k Employees,Public,20,Noida
+54,Tech Mahindra Business Services,3.5,BPO,5k-10k Employees,Public,21,Noida
+55,Polestar Solutions & Services India,4.4,IT Services & Consulting,201-500 Employees,Startup,12,Noida
+56,Nokia,4.2,Telecom,10k-50k Employees,Forbes Global 2000,159,Noida
+57,LTIMindtree,3.6,IT Services & Consulting,50k-1 Lakh Employees,Public,27,Noida
+58,Fluper,4.1,IT Services & Consulting,201-500 Employees,Public,11,Noida
+59,OPPO,4.0,Consumer Electronics & Appliances,10k-50k Employees,Public,20,Noida
+60,Times Internet,3.6,Internet,10k-50k Employees,Public,25,Noida
+61,Addverb Technologies,4.0,Industrial Automation,501-1k Employees,Startup,8,Noida
+62,M.J Global,4.3,Packaging,201-500 Employees,Public,44,Noida
+63,upGrad,3.8,EdTech,5k-10k Employees,Indian Unicorn,9,Noida
+64,Physicswallah,3.8,EdTech,10k-50k Employees,Indian Unicorn,5,Noida
+65,Allsec Technologies,4.0,BPO,1k-5k Employees,Public,24,Noida
+66,Globus Infocom,4.8,EdTech,201-500 Employees,Conglomerate,23,Noida
+67,Landis+Gyr,3.7,Electrical Equipment,1k-5k Employees,Public,128,Noida
+68,Innovaccer,3.2,Software Product,1k-5k Employees,Indian Unicorn,10,Noida
+69,Kalpataru Power Transmission,4.2,Engineering & Construction,1k-5k Employees,Public,43,Noida
+70,BYJU'S Exam Prep,3.8,EdTech,501-1k Employees,Startup,9,Noida
+71,DISH TV,3.6,Broadcasting,201-500 Employees,Public,21,Noida
+72,Vivo,4.1,Consumer Electronics & Appliances,5k-10k Employees,Conglomerate,15,Noida
+73,Spark Minda,3.9,Auto Components,1k-5k Employees,Public,66,Noida
+74,Bharti Airtel,4.1,Telecom,10k-50k Employees,Public,29,Noida
+75,Fujitsu,3.9,IT Services & Consulting,5k-10k Employees,Forbes Global 2000,89,Noida
+76,Ebix Software India,3.3,IT Services & Consulting,1k-5k Employees,Public,48,Noida
+77,Helloverify,3.3,Law Enforcement & Security,501-1k Employees,Startup,12,Noida
+78,Cyient,3.8,IT Services & Consulting,10k-50k Employees,Public,33,Noida
+79,S&P Global,4.2,Analytics & KPO,10k-50k Employees,Public,164,Noida
+80,Aon,3.9,Financial Services,5k-10k Employees,Forbes Global 2000,84,Noida
+81,TSYS|Total System Services,4.4,Financial Services,1k-5k Employees,Public,40,Noida
+82,Moglix,3.6,Internet,501-1k Employees,Indian Unicorn,9,Noida
+83,3i Infotech,3.6,IT Services & Consulting,1k-5k Employees,Public,31,Noida
+84,Teleperformance,3.8,BPO,50k-1 Lakh Employees,Forbes Global 2000,46,Noida
+85,The Jaypee Group,3.9,Engineering & Construction,10k-50k Employees,Public,45,Noida
+86,Oracle,3.8,Software Product,50k-1 Lakh Employees,Public,47,Noida
+87,LG Electronics,4.1,Consumer Electronics & Appliances,1k-5k Employees,Public,66,Noida
+88,Progressive Infotech,3.5,IT Services & Consulting,1k-5k Employees,Forbes Global 2000,26,Noida
+89,Infosys,3.8,IT Services & Consulting,1 Lakh+ Employees,Public,43,Noida
+90,Care Health Insurance,3.8,Internet,5k-10k Employees,Public,12,Noida
+91,FarEye,3.0,IT Services & Consulting,501-1k Employees,Startup,11,Noida
+92,JK Tech,3.8,IT Services & Consulting,501-1k Employees,Public,30,Noida
+93,Kyndryl,4.1,IT Services & Consulting,10k-50k Employees,Public,2,Noida
+94,Rockwell Automation,4.1,Industrial Automation,1k-5k Employees,Forbes Global 2000,121,Noida
+95,Planetcast,3.8,Media & Entertainment,1k-5k Employees,Public,28,Noida
+96,DataTrained,4.2,EdTech,501-1k Employees,Startup,12,Noida
+97,Jubilant Pharmova,4.0,Pharma,1k-5k Employees,Public,46,Noida
+98,Classplus,3.4,Software Product,501-1k Employees,Startup,9,Noida
+99,Mahagun India,3.4,Real Estate,501-1k Employees,Conglomerate,29,Noida
+100,Thales,3.8,IT Services & Consulting,1k-5k Employees,Forbes Global 2000,24,Noida
+101,RapiPay,4.0,FinTech,1k-5k Employees,Startup,6,Noida
+102,SCA Health India,4.8,BPO,201-500 Employees,Forbes Global 2000,11,Noida
+103,MPS Limited,4.0,Content Development,1k-5k Employees,Public,54,Noida
+104,Evelyn Learning Systems,3.8,EdTech,1k-5k Employees,Startup,11,Noida
+105,JLL,4.2,Real Estate,10k-50k Employees,Forbes Global 2000,25,Noida
+106,Sopra Banking Software,3.7,IT Services & Consulting,1k-5k Employees,Public,12,Noida
+107,BigBasket,4.0,Internet,10k-50k Employees,Indian Unicorn,13,Noida
+108,Hinduja Global Solutions,4.0,IT Services & Consulting,10k-50k Employees,Public,24,Noida
+109,Triveni Engineering & Industries,4.1,Food Processing,1k-5k Employees,Public,92,Noida
+110,CBRE,4.2,Real Estate,10k-50k Employees,Forbes Global 2000,118,Noida
+111,Religare,3.9,Financial Services,1k-5k Employees,Public,40,Noida
+112,Naukri,4.0,Internet,1k-5k Employees,Public,28,Noida
+113,Flyhomes,4.3,Internet,201-500 Employees,Startup,9,Noida
+114,Vodafone Idea,4.2,Telecom,5k-10k Employees,Public,6,Noida
+115,Quess,4.0,BPO,1k-5k Employees,Public,17,Noida
+116,Lido Learning,2.3,EdTech,201-500 Employees,Startup,5,Noida
+117,JMC Projects,4.2,Engineering & Construction,1k-5k Employees,Public,42,Noida
+118,Cadence Design Systems,4.2,IT Services & Consulting,1k-5k Employees,Public,36,Noida
+119,Clarivate,3.9,Analytics & KPO,1k-5k Employees,Public,8,Noida
+120,Fortis Healthcare,4.1,Healthcare,1k-5k Employees,Public,28,Noida
+121,Kailash Hospital,4.1,Healthcare,5k-10k Employees,Public,40,Noida
+122,Hays Business Solutions,3.8,Recruitment,501-1k Employees,Public,13,Bangalore
+123,Gujarat Fluorochemicals,4.1,Chemicals,1k-5k Employees,Fortune India 500,37,Dahej
+124,Zee Media Corporation,3.6,Media & Entertainment,1k-5k Employees,Public,25,Noida
+125,Inox Wind,3.7,Power,501-1k Employees,Public,15,Noida
+126,Indiabulls Home Loans,3.9,NBFC,5k-10k Employees,Public,19,Noida
+127,Sodexo,4.1,Facility Management Services,10k-50k Employees,Forbes Global 2000,16,Noida
+128,Ge T & D India,4.3,Electrical Equipment,201-500 Employees,Public,67,Noida
+129,Tata Teleservices,4.1,Telecom,201-500 Employees,Public,28,Noida
+130,Ppap Automotive,3.7,Auto Components,1k-5k Employees,Public,46,Noida
+131,Infra.Market,4.2,Building Material,1k-5k Employees,Indian Unicorn,8,Noida
+132,Yes Bank,3.9,Banking,10k-50k Employees,Public,20,Noida
+133,Ang India,4.0,Consumer Electronics & Appliances,201-500 Employees,Public,46,Noida
+134,Tradologie.com,3.6,Internet,51-200 Employees,Startup,8,Noida
+135,ERA Group,3.9,Power,1k-5k Employees,Public,34,Noida
+136,Ujjivan Small Finance Bank,4.1,Banking,10k-50k Employees,Public,7,Noida
+137,Bpo Convergence,3.6,BPO,1k-5k Employees,Conglomerate,10,Noida
+138,IndusInd Bank,3.7,Banking,10k-50k Employees,Public,30,Noida
+139,Supreme Industries,4.2,Petrochemicals,5k-10k Employees,Public,82,Noida
+140,HT Media,3.4,Media & Entertainment,1k-5k Employees,Public,100,Noida
+141,PNB Housing Finance,3.9,Financial Services,1k-5k Employees,Public,36,Noida
+142,Lumen Technologies,4.0,Hardware & Networking,1k-5k Employees,Forbes Global 2000,94,Noida
+143,DigiVersal Consultants,2.7,Internet,201-500 Employees,Startup,9,Noida
+144,Jio,4.0,Telecom,50k-1 Lakh Employees,Public,6,Noida
+145,Expedien eSolutions,3.7,IT Services & Consulting,51-200 Employees,Public,21,Noida
+146,IDFC FIRST Bank,4.0,Banking,10k-50k Employees,Public,6,Noida
+147,Dainik Bhaskar Group,4.4,Printing & Publishing,5k-10k Employees,Public,66,Noida
+148,Somany Ceramics,4.3,Building Material,1k-5k Employees,Public,56,Noida
+149,Ameriprise Financial,3.8,Financial Services,1k-5k Employees,Forbes Global 2000,130,Noida
+150,Inshorts,4.2,Internet,201-500 Employees,Startup,11,Noida
+151,GE,4.3,Defence & Aerospace,10k-50k Employees,Forbes Global 2000,132,Noida
+152,Microsoft Corporation,4.1,Software Product,10k-50k Employees,Forbes Global 2000,49,Noida
+153,QX Global Group,3.4,IT Services & Consulting,1k-5k Employees,Public,21,Noida
+154,KRBL,4.0,Food Processing,1k-5k Employees,Public,135,Noida
+155,Rudrabhishek Enterprises,4.9,Urban Transport,201-500 Employees,Public,32,Noida
+156,Everest Industries,4.1,Building Material,1k-5k Employees,Public,90,Mumbai
+157,NXP Semiconductors,3.9,Semiconductors,1k-5k Employees,Public,55,Noida
+158,Dell,4.2,Consumer Electronics & Appliances,10k-50k Employees,Forbes Global 2000,40,Bangalore
+159,Intex Technologies,3.7,Consumer Electronics & Appliances,1k-5k Employees,Public,28,Noida
+160,FCS Software Solutions,3.5,IT Services & Consulting,1k-5k Employees,Public,30,Noida
+161,Flipkart,4.0,Internet,10k-50k Employees,Public,17,Noida
+162,Infinite Computer Solutions,3.5,IT Services & Consulting,1k-5k Employees,Public,23,Noida
+163,Biotique,3.8,Biotechnology,501-1k Employees,Conglomerate,24,Noida
+164,Zee Entertainment Enterprises,3.6,Media & Entertainment,1k-5k Employees,Public,32,Noida
+165,Ajnara India,3.5,Real Estate,201-500 Employees,Public,33,Noida
+166,Max Healthcare,4.1,Healthcare,1k-5k Employees,Fortune India 500,23,Hyderabad
+167,DENSO,4.2,Auto Components,1k-5k Employees,Public,77,Noida
+168,Polycab Wires,4.1,Electrical Equipment,1k-5k Employees,Fortune India 500,28,Noida
+169,Siti Networks,4.0,Media & Entertainment,201-500 Employees,Public,30,Noida
+170,Onicra Credit Rating Agency,2.6,FinTech,501-1k Employees,Public,31,Noida
+171,Synopsys,4.0,Software Product,1k-5k Employees,Public,38,Noida
+172,Indus Towers,4.0,Telecom,1k-5k Employees,Fortune India 500,17,Noida
+173,Oyo Rooms,3.4,Hospitality,1k-5k Employees,Indian Unicorn,11,Noida
+174,Sheela Foam,4.2,Furniture & Furnishing,1k-5k Employees,Public,53,Noida
+175,Healthcare At Home,3.6,Healthcare,1k-5k Employees,Startup,12,Noida
+176,Signify,3.6,Consumer Electronics & Appliances,1k-5k Employees,Conglomerate,8,Noida
+177,Hexaware Technologies,3.7,IT Services & Consulting,10k-50k Employees,Fortune India 500,34,Noida
+178,Holostik,3.8,Packaging,1k-5k Employees,Public,33,Noida
+179,Nickelfox Technologies,3.8,IT Services & Consulting,51-200 Employees,Conglomerate,10,Noida
+180,Jubilant Ingrevia,3.9,Chemicals,201-500 Employees,Fortune India 500,4,Noida
+181,Orient Electric,4.0,Consumer Electronics & Appliances,501-1k Employees,Public,70,Noida
+182,LambdaTest,4.4,Software Product,201-500 Employees,Startup,7,Noida
+183,Wave Infratech,3.9,Real Estate,1k-5k Employees,Conglomerate,61,Noida
+184,Saksoft,3.7,IT Services & Consulting,1k-5k Employees,Public,25,Noida
+185,Testbook.com,3.7,EdTech,501-1k Employees,Startup,10,Noida
+186,Yaantra,3.7,Internet,501-1k Employees,Startup,11,Noida
+187,DiGiSPICE,3.6,Hardware & Networking,501-1k Employees,Public,24,Noida
+188,Polyplex,4.4,Packaging,501-1k Employees,Public,40,Noida
+189,Team Lease,4.0,Recruitment,1k-5k Employees,Public,8,Noida
+190,SMC,3.9,Medical Equipment,201-500 Employees,Forbes Global 2000,36,Noida
+191,Kotak Mahindra Prime,4.0,NBFC,5k-10k Employees,Public,28,Noida
+192,Mphasis,3.5,IT Services & Consulting,10k-50k Employees,Public,26,Noida
+193,Domino's Pizza,4.0,Hospitality,1k-5k Employees,Public,64,Noida
+194,Country Holidays Travel India,4.3,Travel & Tourism,201-500 Employees,Startup,2,Noida
+195,Luxor International,3.8,Retail,201-500 Employees,Conglomerate,44,Noida
+196,APL Apollo Tubes,3.8,Building Material,1k-5k Employees,Public,38,Noida
+197,Lifestyle,4.4,Retail,10k-50k Employees,Fortune India 500,25,Noida
+198,UltraTech Cement,4.2,Building Material,10k-50k Employees,Public,41,Noida
+199,Yamaha Motor,4.2,Automobile,1k-5k Employees,Fortune India 500,69,Noida
+200,EMERSON PROCESS MANAGEMENT,4.1,Industrial Machinery,1k-5k Employees,Public,134,Noida
+201,Maral Overseas,3.6,Fashion & Textile,1k-5k Employees,Public,33,Noida
+202,Ksolves India Limited,2.8,IT Services & Consulting,201-500 Employees,Public,12,Noida
+203,GAIL,4.5,Oil & Gas,1k-5k Employees,Fortune India 500,40,Noida
+204,Tokopedia,3.9,Internet,201-500 Employees,Startup,7,Noida
+205,Paytm Mall,3.6,Internet,501-1k Employees,Indian Unicorn,14,Noida
+206,BIS Research,2.7,Management Consulting,51-200 Employees,Startup,10,Noida
+207,Bharat Petroleum,4.2,Oil & Gas,5k-10k Employees,Fortune India 500,72,Noida
+208,Haier Appliances India,4.1,Consumer Electronics & Appliances,1k-5k Employees,Conglomerate,20,Noida
+209,Timex Group India,3.9,Metals & Mining,201-500 Employees,Public,170,Noida
+210,Celebal Technologies,2.7,IT Services & Consulting,1k-5k Employees,Startup,9,Noida
+211,Mahindra & Mahindra,4.2,Automobile,1 Lakh+ Employees,Public,79,Noida
+212,IQVIA,4.0,Clinical Research,10k-50k Employees,Forbes Global 2000,42,Noida
+213,DFM Foods,4.0,FMCG,501-1k Employees,Public,41,Noida
+214,CNH,4.2,Automobile,1k-5k Employees,Public,11,Noida
+215,Asian Paints,4.1,Chemicals,5k-10k Employees,Public,82,Noida
+216,IDS Infotech,3.1,IT Services & Consulting,1k-5k Employees,Public,35,Noida
+217,Lumiq,3.3,IT Services & Consulting,201-500 Employees,Startup,11,Noida
+218,Apollo Hospitals,4.2,Healthcare,10k-50k Employees,Public,41,Noida
+219,Persistent Systems,3.8,IT Services & Consulting,10k-50k Employees,Public,34,Noida
+220,ICICI Lombard General Insurance Company,3.8,Insurance,10k-50k Employees,Public,23,Noida
+221,Karvy Innotech,3.2,IT Services & Consulting,501-1k Employees,Public,12,Noida
+222,Gaurs Group,4.1,Real Estate,1k-5k Employees,Public,29,Noida
+223,Metawallah,4.9,Internet,51-200 Employees,Startup,3,Noida
+224,Suprajit Engineering,3.8,Auto Components,501-1k Employees,Public,39,Noida
+225,Fictivebox Media,4.2,IT Services & Consulting,51-200 Employees,Startup,3,Noida
+226,Religare Finvest,4.4,Financial Services,1k-5k Employees,Public,18,Noida
+227,East India Udyog,3.8,Electrical Equipment,201-500 Employees,Public,58,Noida
+228,Flipkart Health+,3.7,Internet,501-1k Employees,Startup,11,Noida
+229,Ocrolus East,3.5,FinTech,201-500 Employees,Startup,10,Noida
+230,ATS Homekraft,4.1,Real Estate,201-500 Employees,Startup,6,Noida
+231,Rezo.AI,4.0,Internet,51-200 Employees,Startup,6,Noida
+232,Shoppers Stop,4.1,Retail,5k-10k Employees,Public,33,Noida
+233,BHEL,4.2,Electrical Equipment,10k-50k Employees,Fortune India 500,60,Noida
+234,Blinkit,3.9,Internet,1k-5k Employees,Indian Unicorn,11,Noida
+235,BHEL,4.2,Electrical Equipment,10k-50k Employees,Fortune India 500,60,Noida
+236,Monotype,3.9,IT Services & Consulting,51-200 Employees,Public,137,Noida
+237,Essel Group,4.1,Media & Entertainment,10k-50k Employees,Conglomerate,98,Noida
+238,Essel Group,4.1,Media & Entertainment,10k-50k Employees,Conglomerate,98,Noida
+239,Godrej Properties,3.7,Real Estate,1k-5k Employees,Public,34,Noida
+240,McDonald's,4.2,Hospitality,1k-5k Employees,Forbes Global 2000,69,Noida
+241,Wipro Infotech,4.0,IT Services & Consulting,1 Lakh+ Employees (Global),MNC,79,Noida
+242,CMS IT Services,3.2,IT Services & Consulting,5k-10k Employees,Startup,10,Noida
+243,PVR Cinemas,4.1,Media & Entertainment,1k-5k Employees,Public,27,Noida
+244,Enphase Energy,3.1,Power,501-1k Employees,Public,18,Noida
+245,MediaTek India Technology,4.1,Semiconductors,501-1k Employees,Forbes Global 2000,27,Noida
+246,Razor Infotech,4.9,BPO,201-500 Employees,Startup,6,Noida
+247,Medico Electrodes International,3.8,Medical Equipment,501-1k Employees,Public,22,Noida
+248,Credgenics,3.7,Internet,51-200 Employees,Startup,6,Noida
+249,Anmol Industries,4.0,Food Processing,501-1k Employees,Public,30,Kolkata
+250,Tata Power,4.0,Power,10k-50k Employees,Public,109,Mumbai
+251,Vahdam Teas,3.7,Financial Services,11-50 Employees,Startup,10,Noida
+252,AU Small Finance Bank,4.4,Banking,10k-50k Employees,Fortune India 500,28,Jaipur
+253,AU Small Finance Bank,4.4,Banking,10k-50k Employees,Fortune India 500,28,Noida
+254,KPIT Technologies,3.6,Software Product,5k-10k Employees,Public,34,Noida
+255,RACL Geartech,4.1,Auto Components,201-500 Employees,Public,35,Noida
+256,Pitch N Hire,5.0,Software Product,51-200 Employees,Startup,7,Noida
+257,Housing.com,3.8,Internet,1k-5k Employees,Startup,12,Gurgaon
+258,Bharat IT Services,3.2,IT Services & Consulting,501-1k Employees,Public,28,Noida
+259,Housing.com,3.8,Internet,1k-5k Employees,Startup,12,Noida
+260,Speqto Technologies,4.3,Software Product,51-200 Employees,Startup,7,Noida
+261,Projects & Development India,4.0,Oil & Gas,201-500 Employees,State,73,Noida
+262,HDFC Life,4.1,Insurance,10k-50k Employees,Public,24,Noida
+263,Ginni Filaments,3.7,Fashion & Textile,1k-5k Employees,Public,34,Noida
+264,Happiest Minds Technologies,3.9,IT Services & Consulting,1k-5k Employees,Public,13,Noida
+265,IIFL Finance,4.0,NBFC,10k-50k Employees,Public,29,Noida
+266,TVS Motor,4.1,Automobile,5k-10k Employees,Public,45,Noida
+267,Kratikal Tech Private Limited,3.4,Emerging Technologies,51-200 Employees,Startup,12,Noida
+268,PNB MetLife,3.5,Insurance,5k-10k Employees,Conglomerate,23,Noida
+269,Apollo Pipes,4.0,Building Material,201-500 Employees,Public,24,Noida
+270,KONE,4.3,Industrial Machinery,5k-10k Employees,Forbes Global 2000,114,Noida
+271,TraviYo,4.3,IT Services & Consulting,11-50 Employees,Startup,8,Noida
+272,RBL Bank,3.8,Banking,10k-50k Employees,Public,81,Noida
+273,Jindal X,3.5,BPO,1k-5k Employees,Public,25,Noida
+274,ICICI Prudential Life Insurance,4.1,Insurance,10k-50k Employees,Public,24,Noida
+275,Zee News,3.8,Broadcasting,10k-50k Employees,Public,25,Noida
+276,Fynd,3.6,Internet,501-1k Employees,Public,12,Noida
+277,Coloplast,3.2,Healthcare,51-200 Employees,Forbes Global 2000,70,Noida
+278,Xcelore,4.8,IT Services & Consulting,11-50 Employees,Startup,1,Noida
+279,DIC India,4.2,Chemicals,501-1k Employees,Public,77,Noida
+280,Roto Pumps,3.8,Industrial Machinery,201-500 Employees,Public,56,Noida
+281,Kotak Securities,3.7,Financial Services,5k-10k Employees,Conglomerate,30,Noida
+282,Thomson Reuters,4.2,Software Product,5k-10k Employees,Forbes Global 2000,16,Noida
+283,Saint-Gobain,4.0,Building Material,10k-50k Employees,Forbes Global 2000,359,Paris
+284,Aptech,3.7,Education & Training,201-500 Employees,Public,38,Mumbai
+285,Securitas,4.0,Law Enforcement & Security,10k-50k Employees,Forbes Global 2000,90,Stockholm
+286,NoBroker,3.2,Internet,1k-5k Employees,Indian Unicorn,10,Bangalore
+287,NoBroker,3.2,Internet,1k-5k Employees,Indian Unicorn,10,Noida
+288,Securitas,4.0,Law Enforcement & Security,10k-50k Employees,Forbes Global 2000,90,Noida
+289,Swiggy,3.9,Internet,5k-10k Employees,Indian Unicorn,10,Noida
+290,TV Today Network,4.1,Media & Entertainment,1k-5k Employees,Public,25,Noida
+291,Deki Electronics,4.4,Consumer Electronics & Appliances,201-500 Employees,Public,40,Noida
+292,Admitkard,3.2,Education & Training,51-200 Employees,Startup,8,Noida
+293,TV Today Network,4.1,Media & Entertainment,1k-5k Employees,Public,25,Noida
+294,Delhivery,4.0,Logistics,10k-50k Employees,Fortune India 500,13,Noida
+295,Trycon,4.9,Software Product,11-50 Employees,Startup,11,Noida
+296,PayMe India,3.7,Internet,11-50 Employees,Startup,8,Noida
+297,Honda,4.2,Automobile,10k-50k Employees,Forbes Global 2000,39,Noida
+298,EaseMyTrip.com,3.9,Internet,201-500 Employees,Public,16,Noida
+299,Smartworks,3.4,Real Estate,201-500 Employees,Startup,8,Noida
+300,Honda Cars,4.4,Automobile,5k-10k Employees,Fortune India 500,29,Noida
+301,Alstom Transportation,3.9,Urban Transport,5k-10k Employees,Forbes Global 2000,96,Noida
+302,Varun Beverages,4.1,Beverage,5k-10k Employees,Public,29,Noida
+303,Tata Motors,4.2,Automobile,10k-50k Employees,Public,79,Noida
+304,PropTiger.com,4.2,Internet,1k-5k Employees,Startup,13,Noida
+305,CARS24,3.7,Internet,5k-10k Employees,Indian Unicorn,9,Noida
+306,Bajaj Energy,4.3,Power,501-1k Employees,Public,16,Noida
+307,India Glycols,3.9,Chemicals,1k-5k Employees,Public,41,Noida
+308,Rivigo,3.9,Internet,1k-5k Employees,Indian Unicorn,10,Noida
+309,Kogta Financial India Limited,4.8,NBFC,1k-5k Employees,Public,28,Noida
+310,Emerson Electric Co.,4.2,IT Services & Consulting,5k-10k Employees,Public,134,Noida
+311,Tata Play,4.0,Broadcasting,5k-10k Employees,Public,18,Noida
+312,Samsung SDS,3.5,IT Services & Consulting,1k-5k Employees,Forbes Global 2000,39,Noida
+313,Maruti Suzuki,4.2,Automobile,10k-50k Employees,Public,43,Noida
+314,Samsung SDS,3.5,IT Services & Consulting,1k-5k Employees,Forbes Global 2000,39,Noida
+315,Global Payments,4.2,FinTech,51-200 Employees,Forbes Global 2000,57,Noida
+316,Tata Play,4.0,Broadcasting,5k-10k Employees,Public,18,Noida
+317,Milkbasket,3.8,Internet,501-1k Employees,Startup,9,Noida
+318,Patanjali Foods,4.0,FMCG,5k-10k Employees,Public,38,Noida
+319,Future Retail,4.3,Retail,10k-50k Employees,Public,37,Noida
+320,Randstad,3.9,Recruitment,5k-10k Employees,Conglomerate,32,Noida
+321,Reliance Industries,4.1,Oil & Gas,1 Lakh+ Employees,Public,47,Noida
+322,Eon Electric,4.0,Electrical Equipment,201-500 Employees,Public,66,Noida
+323,Mentor Graphics,4.0,Software Product,201-500 Employees,Public,43,Noida
+324,ExpertGRAD Educational Technologies,3.0,Education & Training,11-50 Employees,Startup,12,Noida
+325,Classcanyon,4.6,Education & Training,51-200 Employees,Startup,3,Noida
+326,TrioTree Technologies,3.5,Financial Services,51-200 Employees,Startup,12,Noida
+327,Canon,4.2,Consumer Electronics & Appliances,1k-5k Employees,Forbes Global 2000,87,Noida
+328,Agatsa Software,3.9,Internet,11-50 Employees,Startup,11,Noida
+329,United Drilling Tools,3.4,Oil & Gas,51-200 Employees,Public,38,Noida
+330,Siemens,4.2,Industrial Automation,5k-10k Employees,Public,177,Noida
+331,HLL Lifecare,3.7,Healthcare,1k-5k Employees,Central,58,Noida
+332,Zetwerk Manufacturing Businesses,4.1,Industrial Machinery,1k-5k Employees,Indian Unicorn,6,Noida
+333,Creamy foods,4.0,Food Processing,201-500 Employees,Public,33,Noida
+334,PhonePe,4.1,FinTech,5k-10k Employees,Indian Unicorn,9,Noida
+335,Ridings Consulting Engineers India,2.1,BPO,201-500 Employees,Public,29,Noida
+336,Dion Global Solutions,4.1,FinTech,501-1k Employees (Global),Public,30,Noida
+337,Moser Baer,4.1,Consumer Electronics & Appliances,1k-5k Employees,Public,41,Noida
+338,Vindhya Telelinks,4.2,Hardware & Networking,501-1k Employees,Public,41,Noida
+339,Dr Lal PathLabs,4.2,Healthcare,1k-5k Employees,Public,75,Noida
+340,Republic TV,2.8,Media & Entertainment,201-500 Employees,Startup,8,Noida
+341,Aditya Birla Fashion and Retail,4.2,Fashion & Textile,10k-50k Employees,Fortune India 500,36,Mumbai
+342,Jagran Prakashan,4.0,Printing & Publishing,501-1k Employees,Public,49,Noida
+343,REALCODERZ,3.3,Software Product,51-200 Employees,Startup,4,Noida
+344,9Yards Technology,4.4,IT Services & Consulting,51-200 Employees,Startup,4,Noida
+345,9Yards Technology,4.4,IT Services & Consulting,51-200 Employees,Startup,4,Noida
+346,REALCODERZ,3.3,Software Product,51-200 Employees,Startup,4,Noida
+347,Schoolnet India,3.8,EdTech,51-200 Employees,Public,27,Noida
+348,Lenskart,3.3,Internet,5k-10k Employees,Indian Unicorn,14,Noida
+349,Glam Studios,2.9,Internet,11-50 Employees (Global),Startup,8,Noida
+350,Escale Solutions,2.7,IT Services & Consulting,51-200 Employees,Startup,7,Noida
+351,Escale Solutions,2.7,IT Services & Consulting,51-200 Employees,Startup,7,Noida
+352,TCNS Clothing Company,4.1,Fashion & Textile,501-1k Employees,Public,23,Noida
+353,HomeLane,3.5,Architecture & Interior Design,1k-5k Employees,Startup,10,Noida
+354,MoneyMasterz,4.7,Financial Services,11-50 Employees,Startup,7,Noida
+355,MoneyMasterz,4.7,Financial Services,11-50 Employees,Startup,7,Noida
+356,Landmark Group,4.1,Retail,1k-5k Employees,Conglomerate,51,Noida
+357,Microland,3.6,IT Services & Consulting,1k-5k Employees,Public,35,Noida
+358,Security and Intelligence Services (India),4.1,Law Enforcement & Security,1 Lakh+ Employees,Public,39,Noida
+359,Dalmia Bharat Cement,4.1,Building Material,5k-10k Employees,Public,89,Noida
+360,Exampur,3.1,EdTech,51-200 Employees (Global),Startup,6,Noida
+361,Oriental Carbon & Chemicals,4.2,Chemicals,201-500 Employees,Public,46,Noida
+362,Cliantha Research,4.0,Clinical Research,501-1k Employees,Public,20,Noida
+363,SkillRecruit,4.7,Recruitment,201-500 Employees,MNC,19,Noida
+364,Dalmia Bharat Cement,4.1,Building Material,5k-10k Employees,Public,89,Noida
+365,Vertex,4.1,Pharma,501-1k Employees,Conglomerate,35,Noida
+366,Security and Intelligence Services (India),4.1,Law Enforcement & Security,1 Lakh+ Employees,Public,39,Noida
+367,Bandhan Bank,3.8,Banking,50k-1 Lakh Employees,Public,23,Noida
+368,Kotak Mahindara Life Insurance,3.9,Insurance,10k-50k Employees,Public,23,Noida
+369,Uttam Sugar Mills,3.9,Food Processing,1k-5k Employees,Public,31,Noida
+370,Crystal Hues,3.9,IT Services & Consulting,51-200 Employees,Public,35,Noida
+371,Gamix Labs,4.1,Gaming,11-50 Employees,Startup,6,Noida
+372,Cyber Futuristics,2.2,IT Services & Consulting,1k-5k Employees (Global),Conglomerate,23,Noida
+373,Samsung C&T,4.1,Engineering & Construction,501-1k Employees,Forbes Global 2000,86,Noida
+374,Urban Company,3.6,Internet,1k-5k Employees,Indian Unicorn,9,Noida
+375,The Institute Of Chartered Accountants,4.2,Education & Training,51-200 Employees,Central,75,Noida
+376,Healthians,3.5,Healthcare,1k-5k Employees,Startup,11,Noida
+377,ABC,4.0,Broadcasting,1k-5k Employees (Global),Public,81,Noida
+378,The Institute Of Chartered Accountants,4.2,Education & Training,51-200 Employees,Central,75,Noida
+379,Gujarat Heavy Chemicals,4.0,Chemicals,1k-5k Employees,Public,41,Noida
+380,Samsung C&T,4.1,Engineering & Construction,501-1k Employees,Forbes Global 2000,86,Noida
+381,TELUS Health,4.1,Recruitment,51-200 Employees,Public,58,Noida
+382,Hero MotoCorp,4.2,Automobile,5k-10k Employees,Public,40,Noida
+383,Larsen & Toubro Limited,4.1,Engineering & Construction,10k-50k Employees,Public,86,Noida
+384,Johnson Controls,3.7,Industrial Automation,5k-10k Employees,Public,139,Noida
+385,Lite-On Power Electronic,4.3,Electronics Manufacturing,51-200 Employees,Public,49,Noida
+386,Homoeo Amigo,4.0,Healthcare,11-50 Employees,Startup,4,Noida
+387,CG Power and Industrial Solutions,3.9,Electrical Equipment,1k-5k Employees,Public,87,Noida
+388,Sara Textiles,3.4,Fashion & Textile,201-500 Employees,Public,21,Noida
+389,National Fertilizers,4.3,Agro Chemicals,1k-5k Employees,Public,50,Noida
+390,Titan Company,4.4,Retail,5k-10k Employees,Public,40,Noida
+391,Big Bazaar,4.3,Retail,10k-50k Employees,Conglomerate,23,Noida
+392,Optiemus Infracom,3.6,Hardware & Networking,1k-5k Employees,Public,31,Noida
+393,HSCC India,3.2,Management Consulting,51-200 Employees,State,41,Noida
+394,Billabong High International School,3.8,Education & Training,51-200 Employees,Public,15,Noida
+395,Sinch,4.1,Internet,501-1k Employees,Startup,11,Noida
+396,State Bank of India,3.9,Banking,1 Lakh+ Employees,Fortune India 500,218,Noida
+397,Zomato,3.8,Internet,1k-5k Employees,Public,16,Noida
+398,Golden Peakock Overseas,4.6,Electrical Equipment,501-1k Employees,Public,74,New
+399,Salora International,3.5,Electronics Manufacturing,1k-5k Employees,Public,47,Delhi/NCR
+400,Pantaloons,4.2,Fashion & Textile,5k-10k Employees,Public,27,Noida
+401,Pearson,4.1,Education & Training,10k-50k Employees (Global),Conglomerate,180,Noida
+402,ISHIR,4.3,IT Services & Consulting,51-200 Employees,MNC,25,Noida
+403,Patanjali Ayurved,3.2,FMCG,1k-5k Employees,Fortune India 500,18,Noida
+404,Ricoh,3.9,IT Services & Consulting,1-10 Employees,Public,88,Noida
+405,AstroTalk,4.2,Internet,201-500 Employees,Startup,7,Noida
+406,Aarvi Encon,4.1,Recruitment,5k-10k Employees,Public,37,Noida
+407,Dainik Jagran,3.7,Printing & Publishing,1k-5k Employees,Public,82,Noida
+408,Unacademy,3.3,EdTech,1k-5k Employees,Indian Unicorn,9,Noida
+409,Tata Power Solar,4.3,Power,1k-5k Employees,Public,35,Mumbai
+410,Biodeal Pharmaceuticals Limited,3.8,Pharma,201-500 Employees,Public,19,Noida
+411,Adecco Group,3.8,Recruitment,1k-5k Employees,Forbes Global 2000,25,Mumbai
+412,Devyani International,3.9,Hospitality,10k-50k Employees,Public,33,Noida
+413,Network People Services Technologies,4.0,IT Services & Consulting,51-200 Employees,Startup,11,Noida
+414,HDFC Securities,3.7,Financial Services,1k-5k Employees,Public,24,Noida
+415,Exclusífe Technosoft,3.0,Retail,11-50 Employees,Startup,11,Noida
+416,Tata Chemicals,4.2,Chemicals,1k-5k Employees,Public,85,Noida
+417,Sahara India Pariwar,3.8,Broadcasting,5k-10k Employees,Conglomerate,46,Noida
+418,Shri Rathi Group,3.6,Iron & Steel,51-200 Employees,Public,82,Noida
+419,Hindustan Unilever,4.3,FMCG,10k-50k Employees,Public,152,Noida
+420,Sahara India Pariwar,3.8,Broadcasting,5k-10k Employees,Conglomerate,46,Noida
+421,Shri Rathi Group,3.6,Iron & Steel,51-200 Employees,Public,82,Noida
+422,Precision Electronics,3.6,Hardware & Networking,51-200 Employees,Public,45,Noida
+423,Hindustan Unilever,4.3,FMCG,10k-50k Employees,Public,152,Noida
+424,Indian Oil Corporation,4.4,Oil & Gas,10k-50k Employees,Fortune India 500,65,Noida
+425,Coromandel International,4.2,Agro Chemicals,5k-10k Employees,Public,63,Noida
+426,Unicharm,4.2,Beauty & Personal Care,1k-5k Employees,Forbes Global 2000,63,Noida
+427,Bharti Infratel,4.3,Telecom,1k-5k Employees,Public,18,Noida
+428,Mayoor School Of Music,4.6,Education & Training,11-50 Employees,Startup,6,Noida
+429,Zee Learn,3.8,Education & Training,201-500 Employees,Public,8,Noida
+430,Videocon d2h,3.9,Internet,501-1k Employees,Public,15,Noida
+431,Dynamic Engineering,3.5,Industrial Machinery,51-200 Employees,Public,42,Noida
+432,Bajaj Consumer Care,3.9,FMCG,201-500 Employees,Public,94,Noida
+433,L&T Infotech,3.8,IT Services & Consulting,10k-50k Employees,Public,28,Noida
+434,Cube Highways and Transport Assets Advisors,4.3,Urban Transport,201-500 Employees,Startup,9,Noida
+435,Bajaj Finserv,4.1,Financial Services,50k-1 Lakh Employees,Public,17,Noida
+436,L&T Infotech,3.8,IT Services & Consulting,10k-50k Employees,Public,28,Noida
+437,Infinity Learn,3.6,EdTech,501-1k Employees,Startup,3,Noida
+438,Sudo24,4.8,Agriculture,11-50 Employees,Startup,4,Noida
+439,Eveready Industries,4.0,Consumer Electronics & Appliances,1k-5k Employees,Public,90,Noida
+440,Superhouse,3.6,Leather,501-1k Employees,Public,18,Noida
+441,Citizen Co-operative Bank,3.5,Banking,51-200 Employees,Public,27,Noida
+442,Zepto,3.7,Internet,1k-5k Employees,Indian Unicorn,3,Noida
+443,Superhouse,3.6,Leather,501-1k Employees,Public,18,Noida
+444,Citizen Co-operative Bank,3.5,Banking,51-200 Employees,Public,27,Noida
+445,Jubilant Industries,3.8,Chemicals / Agri Inputs,501-1k Employees,Public,17,Noida
+446,Eveready Industries,4.0,Consumer Electronics & Appliances,1k-5k Employees,Public,90,Noida
+447,Salasar Techno Engineering,3.7,Iron & Steel,51-200 Employees,Public,18,Noida
+448,Anmol Biscuits,4.1,FMCG,501-1k Employees,Public,30,Noida
+449,Hitachi,4.1,Industrial Machinery,10k-50k Employees,Forbes Global 2000,114,Noida
+450,Vidooly,3.7,Internet,51-200 Employees,Startup,10,Noida
+451,Wollmilchsau Technologies,4.9,IT Services & Consulting,11-50 Employees,MNC,9,Noida
+452,TrapTheDeal,3.5,Internet,51-200 Employees,Startup,2,Noida
+453,STMicroelectronics,4.2,Semiconductors,1k-5k Employees,Forbes Global 2000,37,Noida
+454,Amdocs,4.0,Software Product,10k-50k Employees,Forbes Global 2000,42,Noida
+455,Blue Dart Express,4.1,Logistics,10k-50k Employees,Public,41,Noida
+456,DreamBig IT Solutions,3.2,IT Services & Consulting,51-200 Employees,Startup,6,Noida
+457,CSL Finance,4.2,FMCG,51-200 Employees,Public,32,Noida
+458,RentoMojo,4.4,Internet,501-1k Employees,Startup,10,Noida
+459,PG Electroplast,4.1,Consumer Electronics & Appliances,501-1k Employees,Public,47,Noida
+460,FastInfo,4.3,EdTech,501-1k Employees,Startup,5,Noida
+461,Cummins,4.4,Industrial Machinery,1k-5k Employees,Fortune India 500,105,Noida
+462,Berger Paints,3.8,Chemicals,1k-5k Employees,Public,101,Noida
+463,VIP Industries,4.0,Retail,1k-5k Employees,Public,53,Noida
+464,JanBask,4.3,IT Services & Consulting,51-200 Employees,Startup,9,Noida
+465,Attentive AI,4.1,Internet,51-200 Employees,Startup,7,Noida
+466,EDCIL,3.5,EdTech,201-500 Employees,Central,43,Noida
+467,Compass Group Support Services,4.1,Hospitality,10k-50k Employees,Public,83,Noida
+468,Marks & Spencer,4.0,Retail,1k-5k Employees,Forbes Global 2000,140,Noida
+469,SupplyNote,4.0,Software Product,51-200 Employees,Startup,9,Noida
+470,XpressBees,3.8,Logistics,5k-10k Employees,Indian Unicorn,9,Noida
+471,Vedantu,3.4,EdTech,1k-5k Employees,Indian Unicorn,13,Noida
+472,Catvision,4.0,Hardware & Networking,51-200 Employees,Public,39,Noida
+473,Property Gully Solutions,4.1,Real Estate,11-50 Employees,Startup,9,Noida
+474,Kalpataru Group,3.9,Real Estate,1k-5k Employees,Conglomerate,55,Noida
+475,Qualcomm,4.0,Semiconductors,10k-50k Employees,Forbes Global 2000,28,Noida
+476,Uniproducts,3.8,Auto Components,51-200 Employees,Public,42,Noida
+477,Loadshare Networks,3.6,Logistics,501-1k Employees,Startup,7,Noida
+478,Ninjacart,4.1,Internet,1k-5k Employees,Startup,9,Noida
+479,Daikin,4.2,Consumer Electronics & Appliances,1k-5k Employees,Fortune India 500,24,Noida
+480,Hindalco Industries,4.3,Metals & Mining,10k-50k Employees,Public,66,Noida
+481,Cashify,3.8,Other,501-1k Employees,Startup,11,Noida
+482,Qualcomm,4.0,Semiconductors,10k-50k Employees,Forbes Global 2000,28,Noida
+483,Planet Spark,3.7,EdTech,51-200 Employees,Startup,7,Noida
+484,DineOut,4.3,Internet,51-200 Employees,Startup,12,Noida
+485,Planet Spark,3.7,EdTech,51-200 Employees,Startup,7,Noida
+486,Mastek,3.7,IT Services & Consulting,1k-5k Employees,Public,42,Noida
+487,USHA International,4.2,Consumer Electronics & Appliances,1k-5k Employees,Public,90,Noida
+488,WikQik,3.7,Education & Training,11-50 Employees,Startup,6,Noida
+489,Quokka Labs,4.0,IT Services & Consulting,51-200 Employees,Startup,5,Noida
+490,Bosscoder Academy,4.6,EdTech,51-200 Employees,Startup,3,Noida
+491,BDO,3.5,Accounting & Auditing,5k-10k Employees,Public,61,Noida
+492,LivSpace,3.5,Architecture & Interior Design,1k-5k Employees,Indian Unicorn,9,Noida
+493,Aditya Birla Capital,4.0,Financial Services,10k-50k Employees,Public,7,Mumbai
+494,JBM Group,4.0,Auto Components,1k-5k Employees,Public,41,Gurgaon
+495,Reliance SMSL,4.0,BPO,1k-5k Employees,Public,17,Mumbai
+496,Ugro Capital,3.8,NBFC,1k-5k Employees,Public,31,Mumbai
+497,Aditya Birla Capital,4.0,Financial Services,10k-50k Employees,Public,7,Noida
+498,LivSpace,3.5,Architecture & Interior Design,1k-5k Employees,Indian Unicorn,9,Noida
+499,JBM Group,4.0,Auto Components,1k-5k Employees,Public,41,Noida
+500,Reliance SMSL,4.0,BPO,1k-5k Employees,Public,17,Noida
+501,Ugro Capital,3.8,NBFC,1k-5k Employees,Public,31,Noida
+502,Dunzo,3.5,Internet,1k-5k Employees,Startup,10,Noida
+503,Delhi Public School,3.9,Education & Training,1k-5k Employees,Public,26,Noida
+504,Whitehat jr,3.5,EdTech,5k-10k Employees,Startup,6,Noida
+505,Delhi Public School,3.9,Education & Training,1k-5k Employees,Public,26,Noida
+506,S Chand Group,4.1,Education & Training,1k-5k Employees,Public,85,Noida
+507,Tv18 Broadcast,4.1,Media & Entertainment,1k-5k Employees,Public,28,Noida
+508,PwC,3.6,Management Consulting,10k-50k Employees,Conglomerate,144,Noida
+509,MIMO Technologies,3.2,Logistics,51-200 Employees (Global),Startup,9,Noida
+510,Africare Global Business Ventures (India) Private Limited,3.3,Management Consulting,11-50 Employees,Startup,4,Noida
+511,Boolean Digital Studio,4.8,IT Services & Consulting,51-200 Employees,Startup,3,Noida
+512,K and A Technology,3.2,Marketing & Advertising,11-50 Employees,Startup,2,Noida
+513,Bajaj Hindusthan,4.2,Food Processing,1k-5k Employees,Public,93,Noida
+514,Sharp Business Systems India,3.5,Consumer Electronics & Appliances,51-200 Employees,Forbes Global 2000,112,Noida
+515,Reliance Infrastructure,4.1,Engineering & Construction,1k-5k Employees,Public,95,Noida
+516,Zocket Technologies,3.9,Marketing & Advertising,11-50 Employees,Startup,3,Noida
+517,CredAble,3.8,Financial Services,51-200 Employees,Startup,7,Noida
+518,Barclays Global Service Centre,4.0,IT Services & Consulting,201-500 Employees,Fortune India 500,17,Noida
+519,Metro Tyres,3.8,Auto Components,201-500 Employees,Public,56,Noida
+520,Reliance Communications,4.0,Telecom,201-500 Employees,Public,22,Noida
+521,Jaypee Infratech,4.1,Engineering & Construction,1k-5k Employees,Public,17,Noida
+522,Grindwell Norton,4.1,Industrial Machinery,1k-5k Employees,Public,83,Noida
+523,Sowil,1.6,Engineering & Construction,51-200 Employees,Public,28,Noida
+524,Core Integra Consulting Services,3.6,Recruitment,501-1k Employees,Conglomerate,13,Noida
+525,NIIT,3.7,Education & Training,1k-5k Employees,Public,43,Noida
+526,Bajaj Electricals,4.1,Consumer Electronics & Appliances,1k-5k Employees,Public,86,Noida
+527,ISGEC JOHN THOMPSON,3.9,Engineering & Construction,5k-10k Employees (Global),Public,91,Noida
+528,Online Legal India,4.7,Legal,501-1k Employees,Startup,5,Kolkata
+529,Indian Army,4.7,Defence & Aerospace,1 Lakh+ Employees,Public,129,Noida
+530,Uber,4.2,Internet,1k-5k Employees,Public,15,Noida
+531,Stashfin,4.5,FinTech,11-50 Employees,Startup,8,Noida
+532,DHL Express,4.1,Logistics,1k-5k Employees,Conglomerate,45,Noida
+533,Indian Army,4.7,Defence & Aerospace,1 Lakh+ Employees,Public,129,Noida
+534,Master Trust,2.9,Financial Services,51-200 Employees,Public,39,Noida
+535,ICICI Securities,3.8,Financial Services,1k-5k Employees,Public,29,Noida
+536,Bajaj Capital,3.9,Financial Services,1k-5k Employees,Public,60,Noida
+537,Fleek IT Solutions,4.3,Internet,11-50 Employees,Startup,3,Noida
+538,Red FM 93.5,4.1,Broadcasting,501-1k Employees (Global),Public,22,Noida
+539,Jacobs Engineering Group,4.1,Engineering & Construction,1k-5k Employees,Forbes Global 2000,77,Noida
+540,PPS International,3.8,Industrial Machinery,1-10 Employees,Public,21,Noida
+541,Alcis Sports,3.4,Internet,51-200 Employees,Startup,9,Noida
+542,Dabur,3.8,FMCG,5k-10k Employees,Public,140,Noida
+543,Mahindra Finance,4.3,NBFC,10k-50k Employees,Public,33,Noida
+544,Cult.fit,3.8,Fitness & Wellness,1k-5k Employees,Indian Unicorn,8,Noida
+545,PC Jewellers,4.0,Metals & Mining,1k-5k Employees,Public,19,Noida
+546,VLCC,3.7,Beauty & Personal Care,1k-5k Employees,Conglomerate,35,Noida
+547,Ahluwalia Contracts India,4.1,Engineering & Construction,1k-5k Employees,Public,59,Noida
+548,ANSYS,3.7,IT Services & Consulting,501-1k Employees,Forbes Global 2000,54,Noida
+549,Tata Capital,4.2,NBFC,5k-10k Employees,Fortune India 500,17,Noida
+550,Deutsche Bank,4.0,Banking,10k-50k Employees,Fortune India 500,154,Noida
+551,Marsh McLennan,4.1,Management Consulting,5k-10k Employees,Forbes Global 2000,153,Noida
+552,Aaj Tak,4.3,Broadcasting,201-500 Employees (Global),Public,24,Noida
+553,Prima Telecom,4.0,Financial Services,51-200 Employees,Public,29,Noida
+554,BB Works,4.8,IT Services & Consulting,11-50 Employees,Startup,4,Noida
+555,Corridor Web Agency,4.6,Internet,11-50 Employees,Startup,5,Noida
+556,Ola Cabs,3.5,Internet,1k-5k Employees,Indian Unicorn,14,Noida
+557,Unitech,3.9,Real Estate,1k-5k Employees,Public,53,Noida
+558,Inox Leisure,4.1,Media & Entertainment,1k-5k Employees,Public,25,Noida
+559,CMC,4.2,Education & Training,10k-50k Employees,Public,56,Noida
+560,Value Creatives,4.2,IT Services & Consulting,11-50 Employees,Startup,7,Noida
+561,News18,3.8,Broadcasting,1k-5k Employees (Global),Public,19,Noida
+562,SYSKA LED Lights,2.9,Consumer Electronics & Appliances,1k-5k Employees (Global),Startup,12,Noida
+563,CMC,4.2,Education & Training,10k-50k Employees,Public,56,Noida
+564,Inox Leisure,4.1,Media & Entertainment,1k-5k Employees,Public,25,Noida
+565,Unitech,3.9,Real Estate,1k-5k Employees,Public,53,Noida
+566,Safexpress,4.1,Logistics,1k-5k Employees,Conglomerate,27,Noida
+567,Uppcl,4.0,Power,10k-50k Employees,Public,25,Noida
+568,V-Trans,4.1,Logistics,1k-5k Employees,Public,66,Noida
+569,Moon Beverages,3.9,Beverage,51-200 Employees,Public,37,Noida
+570,FSL Software Technologies,3.3,IT Services & Consulting,51-200 Employees,Public,23,Noida
+571,Safexpress,4.1,Logistics,1k-5k Employees,Conglomerate,27,Noida
+572,Shriram Finance,4.1,NBFC,50k-1 Lakh Employees,Public,45,Noida
+573,Tata Group,4.3,IT Services & Consulting,1 Lakh+ Employees,Conglomerate,156,Noida
+574,ITC,4.0,FMCG,10k-50k Employees,Public,114,Noida
+575,Procter & Gamble,4.2,FMCG,1k-5k Employees,Public,187,Noida
+576,Muthoot Finance,3.6,NBFC,10k-50k Employees,Public,85,Noida
+577,DJUBO,4.2,Internet,1-10 Employees,Startup,10,Noida
+578,ExclusiveLane,3.4,Internet,51-200 Employees,Startup,12,Noida
+579,Ottomate,4.1,Internet,51-200 Employees,Startup,7,Noida
+580,Oakter Basic Smart Home,3.2,Internet,11-50 Employees (Global),Startup,10,Noida
+581,EZmall.com,3.2,Internet,51-200 Employees,Startup,7,Noida
+582,LetsMD,3.4,Healthcare,51-200 Employees,Startup,9,Noida
+583,DJUBO,4.2,Internet,1-10 Employees,Startup,10,Noida
+584,ExclusiveLane,3.4,Internet,51-200 Employees,Startup,12,Noida
+585,Advisorymandi.com,2.4,Internet,1-10 Employees,Startup,9,Noida
+586,Novel Patterns,3.9,FinTech,11-50 Employees,Startup,7,Noida
+587,We Avec U Mental Health Organization,4.8,Internet,11-50 Employees,Startup,6,Noida
+588,BSL,3.6,Fashion & Textile,1k-5k Employees,Public,53,Noida
+589,KHVatec,3.6,Industrial Machinery,1k-5k Employees (Global),Public,32,Noida
+590,Omaxe,4.1,Real Estate,201-500 Employees,Public,35,Noida
+591,Telesonic Networks,3.7,Telecom,5k-10k Employees,Public,15,Noida
+592,My Niyukti,5.0,Recruitment,11-50 Employees,Startup,3,Noida
+593,Fujitec,3.9,Electronics Manufacturing,51-200 Employees,Public,14,Noida
+594,Zolo,3.5,Internet,501-1k Employees,Startup,9,Noida
+595,Telesonic Networks,3.7,Telecom,5k-10k Employees,Public,15,Noida
+596,Omaxe,4.1,Real Estate,201-500 Employees,Public,35,Noida
+597,HSBC Group,4.1,Banking,10k-50k Employees,Forbes Global 2000,159,Noida
+598,Standard Chartered,3.9,Banking,10k-50k Employees,Fortune India 500,171,Noida
+599,Sahaj Retail,3.5,Government,1k-5k Employees,Public,16,Kolkata
+600,Zolo,3.5,Internet,501-1k Employees,Startup,9,Noida
+601,Sahaj Retail,3.5,Government,1k-5k Employees,Public,16,Noida
+602,Eldeco Infrastructure & Properties,4.3,Real Estate,201-500 Employees (Global),Conglomerate,49,Noida
+603,Sharika Enterprises,4.1,Engineering & Construction,51-200 Employees,Public,26,Noida
+604,Praxis home Retail,4.1,Retail,1k-5k Employees,Public,17,Noida
+605,Pioneer Polyleathers,4.1,Petrochemicals,201-500 Employees,Public,16,Noida
+606,Porter,4.2,Internet,1k-5k Employees,Startup,10,Noida
+607,Hyundai Motor India Limited,4.4,Automobile,10k-50k Employees,Fortune India 500,57,Noida
+608,Philips,3.9,Consumer Electronics & Appliances,5k-10k Employees,Forbes Global 2000,94,Noida
+609,Antara Senior Living,3.7,Real Estate,51-200 Employees,Public,11,Noida
+610,10times,4.1,Internet,11-50 Employees (Global),Startup,10,Noida
+611,Sumeru Verde Technologies,2.9,Facility Management Services,51-200 Employees,Startup,12,Noida
+612,Lal10,3.9,Internet,51-200 Employees,Startup,9,Noida
+613,Mall91,4.6,Internet,51-200 Employees,Startup,7,Noida
+614,Can Fashion,4.0,Fashion & Textile,51-200 Employees,Startup,7,Noida
+615,Surya Roshni,4.1,Real Estate,1k-5k Employees,Public,51,Noida
+616,Parker Hannifin,4.0,Defence & Aerospace,1k-5k Employees,Forbes Global 2000,107,Noida
+617,Airtel Payments Bank,4.2,FinTech,501-1k Employees,Public,8,Noida
+618,INGSOL,4.2,Packaging,11-50 Employees,Startup,3,Noida
+619,HungerBox,3.8,Internet,501-1k Employees,Startup,8,Noida
+620,Satya MicroCapital,3.8,Financial Services,1k-5k Employees,Public,8,Noida
+621,Aviva Life Insurance India,3.6,Insurance,1k-5k Employees,Forbes Global 2000,328,Noida
+622,TCI Express,3.9,Logistics,1k-5k Employees,Public,28,Noida
+623,Jaiprakash Power Ventures,3.9,Power,5k-10k Employees,Public,30,Noida
+624,Akzo Nobel India,4.2,Chemicals,1k-5k Employees,Public,85,Pune
+625,Shriram Housing Finance,4.0,Financial Services,501-1k Employees,Public,14,Mumbai
+626,HEG,4.0,Semiconductors,501-1k Employees,Public,52,Noida
+627,Varindera Constructions,4.3,Engineering & Construction,501-1k Employees,Public,40,Noida
+628,Innovative Tech Pack,3.5,Packaging,51-200 Employees,Public,35,Noida
+629,Shriram Housing Finance,4.0,Financial Services,501-1k Employees,Public,14,Noida
+630,A2Z Infraservices,4.0,Facility Management Services,201-500 Employees,Public,22,Noida
+631,ACG Infotech,3.3,Software Product,11-50 Employees,Public,31,Noida
+632,Get Set Resumes,4.9,Content Development,11-50 Employees,Startup,14,Noida
+633,Citibank,4.0,Banking,10k-50k Employees (Global),Fortune India 500,212,Noida
+634,John Deere,4.3,Industrial Machinery,5k-10k Employees,Fortune India 500,23,Noida
+635,Triveni Turbines,3.8,Electrical Equipment,501-1k Employees,Public,56,Noida
+636,Ashok Leyland,4.1,Automobile,5k-10k Employees,Public,76,Noida
+637,KRIBHCO Fertilizers Limited,4.5,Agro Chemicals,1-10 Employees,Public,29,Noida
+638,KEI Industries,4.2,Electrical Equipment,1k-5k Employees,Public,56,Noida
+639,Country Delight,4.1,Food Processing,1k-5k Employees,Startup,9,Noida
+640,Software Data (India),3.7,IT Services & Consulting,51-200 Employees,Public,23,Noida
+641,Country Delight,4.1,Food Processing,1k-5k Employees,Startup,9,Noida
+642,Software Data (India),3.7,IT Services & Consulting,51-200 Employees,Public,23,Noida
+643,LEAD School,3.3,EdTech,1k-5k Employees,Indian Unicorn,11,Noida
+644,Akzo Nobel India,4.2,Chemicals,1k-5k Employees,Public,85,Noida
+645,NTT Global Networks,4.1,IT Services & Consulting,501-1k Employees,Public,5,Noida
+646,Vyapar,3.7,Software Product,501-1k Employees,Startup,7,Noida
+647,ZTE Corporation,4.0,Telecom,201-500 Employees,Forbes Global 2000,21,Noida
+648,Megha Engineering & Infrastructures,4.0,Engineering & Construction,5k-10k Employees,Conglomerate,35,Noida
+649,Megha Engineering & Infrastructures,4.0,Engineering & Construction,5k-10k Employees,Conglomerate,35,Noida
+650,Capri Global Capital,3.7,NBFC,1k-5k Employees,Public,27,Noida
+651,KFintech,3.7,FinTech,5k-10k Employees,Startup,7,Noida
+652,Cholamandalam Investment & Finance,4.1,NBFC,10k-50k Employees,Fortune India 500,46,Chennai
+653,Adda 247,3.4,EdTech,51-200 Employees,Startup,8,Gurgaon
+654,American Express,4.2,Financial Services,10k-50k Employees,Forbes Global 2000,174,New
+655,Equitas Small Finance Bank,4.4,Banking,10k-50k Employees,Fortune India 500,17,Noida
+656,TeleCMI,4.7,Telecom,11-50 Employees,Startup,8,Noida
+657,ECE Industries,3.7,Electrical Equipment,201-500 Employees,Public,79,Noida
+658,MeetUniversity.Com,4.6,Internet,11-50 Employees,Startup,11,Noida
+659,Swiftmail Communications,3.3,Telecom,51-200 Employees,Public,31,Noida
+660,Reviewadda,4.3,Internet,51-200 Employees,Startup,9,Noida
+661,GoGroup,4.7,Software Product,11-50 Employees,Startup,5,Noida
+662,GoGroup,4.7,Software Product,11-50 Employees,Startup,5,Noida
+663,CareerSocially,3.1,Internet,11-50 Employees,Startup,8,Noida
+664,INZINT,4.0,IT Services & Consulting,11-50 Employees,Startup,4,Noida
+665,Secure Blink,4.2,Software Product,11-50 Employees,Startup,4,Noida
+666,INZINT,4.0,IT Services & Consulting,11-50 Employees,Startup,4,Noida
+667,Electronica Finance,4.2,NBFC,1k-5k Employees,Public,34,Noida
+668,Rasandik Engineering Industries India,3.6,Auto Components,1k-5k Employees,Public,38,Noida
+669,SaaS Labs,4.4,Financial Services,11-50 Employees,Startup,10,Noida
+670,TVS Credit,4.5,NBFC,10k-50k Employees,Public,16,Noida
+671,Welspun Global Brands,3.8,Fashion & Textile,10k-50k Employees (Global),Public,24,Noida
+672,Tata ClassEdge,3.5,EdTech,501-1k Employees,Public,13,Noida
+673,CIEL HR,4.1,Recruitment,1k-5k Employees,Startup,9,Bangalore
+674,Ircon International,4.0,Engineering & Construction,1k-5k Employees,Fortune India 500,48,New
+675,FedEx Express,4.2,Logistics,5k-10k Employees,Forbes Global 2000,53,Mumbai
+676,Reliance Trends,4.4,Retail,1 Lakh+ Employees,Conglomerate,18,Bangalore
+677,Daalchini Technologies,4.4,Internet,11-50 Employees,Startup,7,Noida
+678,Nowfloats Technologies,3.3,Software Product,201-500 Employees,Startup,12,Hyderabad
+679,FMC,4.2,Agro Chemicals,1k-5k Employees,Forbes Global 2000,15,Bharuch
+680,Star Health & Allied Insurance,3.9,Insurance,10k-50k Employees,Fortune India 500,18,Noida
+681,Levi Strauss & Co.,4.5,Fashion & Textile,1k-5k Employees,Public,171,Noida
+682,FoodPanda,3.9,Internet,501-1k Employees,Startup,12,Noida
+683,Voltas,4.1,Consumer Electronics & Appliances,1k-5k Employees,Public,70,Noida
+684,Bank of Baroda,3.6,Banking,50k-1 Lakh Employees,Fortune India 500,116,Noida
+685,Zensar Technologies,3.8,IT Services & Consulting,5k-10k Employees,Public,23,Noida
+686,Myforexeye,3.0,Financial Services,51-200 Employees,Startup,10,Noida
+687,Zydus Wellness,3.9,FMCG,501-1k Employees,Public,36,Noida
+688,Sintex Industries,4.1,Industrial Machinery,5k-10k Employees,Public,93,Noida
+689,Schneider Electric Infrastructure,4.2,Electrical Equipment,10k-50k Employees,Public,188,Noida
+690,NOON.COM,3.8,Internet,1k-5k Employees,Startup,8,Noida
+691,Electronica Finance,4.2,NBFC,1k-5k Employees,Public,34,Noida
+692,Tata ClassEdge,3.5,EdTech,501-1k Employees,Public,13,Noida
+693,Welspun Global Brands,3.8,Fashion & Textile,10k-50k Employees (Global),Public,24,Noida
+694,TVS Credit,4.5,NBFC,10k-50k Employees,Public,16,Noida
+695,SaaS Labs,4.4,Financial Services,11-50 Employees,Startup,10,Noida
+696,Ircon International,4.0,Engineering & Construction,1k-5k Employees,Fortune India 500,48,Noida
+697,Bank of Baroda,3.6,Banking,50k-1 Lakh Employees,Fortune India 500,116,Noida
+698,Bonami Software,3.8,IT Services & Consulting,51-200 Employees,Startup,5,Noida
+699,FoodPanda,3.9,Internet,501-1k Employees,Startup,12,Noida
+700,Voltas,4.1,Consumer Electronics & Appliances,1k-5k Employees,Public,70,Noida
+701,Nowfloats Technologies,3.3,Software Product,201-500 Employees,Startup,12,Noida
+702,CIEL HR,4.1,Recruitment,1k-5k Employees,Startup,9,Noida
+703,Reliance Trends,4.4,Retail,1 Lakh+ Employees,Conglomerate,18,Noida
+704,FMC,4.2,Agro Chemicals,1k-5k Employees,Forbes Global 2000,15,Noida
+705,Daalchini Technologies,4.4,Internet,11-50 Employees,Startup,7,Noida
+706,MamaEarth,4.0,Beauty & Personal Care,501-1k Employees,Indian Unicorn,8,Noida
+707,Hike Education Private Limited,3.3,EdTech,201-500 Employees,Startup,10,Noida
+708,Jawahar Navodaya Vidyalaya,4.4,Education & Training,10k-50k Employees,Central,39,Noida
+709,American Tower Corporation,3.9,Telecom,501-1k Employees,Forbes Global 2000,29,Noida
+710,Spencer's Retail,3.9,Retail,1k-5k Employees,Public,161,Noida
+711,Sirca Paints India,4.3,Chemicals,51-200 Employees,Public,18,Delhi/NCR
+712,Tata Technologies,3.8,Engineering & Construction,5k-10k Employees,Conglomerate,35,Singapore
+713,YogaDESK,4.4,Internet,11-50 Employees,Startup,3,Noida
+714,EM3 Agri Services,3.7,IT Services & Consulting,51-200 Employees,Startup,11,Noida
+715,SAGOON,4.3,Internet,11-50 Employees,Startup,9,Noida
+716,Rustorange,3.4,Internet,11-50 Employees (Global),Startup,8,Noida
+717,Right Symbol,5.0,Marketing & Advertising,1-10 Employees,Startup,3,Noida
+718,Eightfold AI,3.1,Internet,51-200 Employees,Startup,8,Noida
+719,Lifecare Health,4.6,Internet,11-50 Employees,Startup,10,Noida
+720,Right Symbol,5.0,Marketing & Advertising,1-10 Employees,Startup,3,Noida
+721,SOFTLIX,5.0,IT Services & Consulting,11-50 Employees,Startup,6,Noida
+722,Alkem Laboratories,4.0,Pharma,10k-50k Employees,Public,51,Noida
+723,Intense Technologies,4.1,IT Services & Consulting,501-1k Employees,Public,34,Noida
+724,Jetking Infotrain,3.7,Education & Training,51-200 Employees,Public,77,Noida
+725,Cavinkare,4.0,FMCG,1k-5k Employees,Conglomerate,41,Noida
+726,myGate,3.3,Law Enforcement & Security,1k-5k Employees,Startup,8,Noida
+727,Kendriya Vidyalaya Sangathan,4.4,Education & Training,10k-50k Employees,Public,61,Noida
+728,Ge India Industrial,4.3,Industrial Machinery,201-500 Employees,Conglomerate,122,Noida
+729,JTEKT,4.2,Auto Components,1k-5k Employees,Public,18,Noida
+730,MentorKart,3.6,Education & Training,11-50 Employees,Startup,6,Noida
+731,AT&T,4.2,Telecom,5k-10k Employees,Forbes Global 2000,41,Noida
+732,Godfrey Phillips India,4.1,FMCG,501-1k Employees,Public,91,Noida
+733,Patel Engineering,4.3,Engineering & Construction,1k-5k Employees,Public,75,Noida
+734,Religare Housing Development Finance Corporation,4.5,Financial Services,51-200 Employees,Public,31,Noida
+735,TTSL,4.1,Telecom,1k-5k Employees,Public,28,Noida
+736,Bata,3.9,Fashion & Textile,1k-5k Employees,Public,93,Noida
+737,63 Moons Technologies,3.8,IT Services & Consulting,501-1k Employees,Public,36,Noida
+738,Lakme,4.3,Beauty & Personal Care,201-500 Employees,Public,44,Noida
+739,Homesfy Realty,3.9,Real Estate,201-500 Employees,Public,11,Noida
+740,Patel Engineering,4.3,Engineering & Construction,1k-5k Employees,Public,75,Noida
+741,CarDekho,3.7,Internet,1k-5k Employees,Indian Unicorn,16,Noida
+742,Black Box Corporation,3.4,IT Services & Consulting,1k-5k Employees,Fortune India 500,48,Noida
+743,AT&T,4.2,Telecom,5k-10k Employees,Forbes Global 2000,41,Noida
+744,Godfrey Phillips India,4.1,FMCG,501-1k Employees,Public,91,Noida
+745,Rahman Industries,4.2,Fashion & Textile,201-500 Employees,Public,35,Noida
+746,NBCC,4.3,Real Estate,1k-5k Employees,Fortune India 500,64,Noida
+747,EPL Limited,4.0,Packaging,1k-5k Employees,Public,40,Noida
+748,Xiaomi,3.9,Consumer Electronics & Appliances,1k-5k Employees,Forbes Global 2000,14,Noida
+749,Xylem Water Solutions,4.0,Waste Management,501-1k Employees,Forbes Global 2000,13,Noida
+750,Bharat Sanchar Nigam,4.0,Telecom,50k-1 Lakh Employees,Central,24,Noida
+751,Mrs Bector's Food Specialities,4.0,FMCG,1k-5k Employees,Public,46,Noida
+752,JTEKT,4.2,Auto Components,1k-5k Employees,Public,18,Osaka
+753,TTSL,4.1,Telecom,1k-5k Employees,Public,28,Mumbai
+754,Bata,3.9,Fashion & Textile,1k-5k Employees,Public,93,Noida
+755,OnePlus,4.1,Consumer Electronics & Appliances,1k-5k Employees,Public,11,Noida
+756,Entertainment Network India,3.5,Media & Entertainment,501-1k Employees,Public,25,Noida
+757,Teva Pharmaceuticals,4.2,Pharma,1k-5k Employees,Forbes Global 2000,123,Noida
+758,Indostar Capital Finance,4.5,NBFC,1k-5k Employees,Public,13,Noida
+759,EICHER TRUCKS AND BUSES,4.4,Automobile,1k-5k Employees,Public,16,Noida
+760,MapleCloud Technologies,4.6,Software Product,51-200 Employees,Startup,10,Noida
+761,Indostar Capital Finance,4.5,NBFC,1k-5k Employees,Public,13,Noida
+762,AgriBazaar,3.2,Internet,51-200 Employees,Public,7,Noida
+763,Teva Pharmaceuticals,4.2,Pharma,1k-5k Employees,Forbes Global 2000,123,Noida
+764,KEC International,4.1,Engineering & Construction,5k-10k Employees,Public,79,Noida
+765,OneDios,4.0,Internet,11-50 Employees,Startup,5,Noida
+766,Ceridian,4.0,IT Services & Consulting,201-500 Employees,Public,12,Bangalore
+767,Honeywell Automation,3.8,Consumer Electronics & Appliances,10k-50k Employees,Public,118,Morris
+768,Escorts Kubota Limited,4.1,Automobile,1k-5k Employees,Public,80,Faridabad
+769,PolicyBazaar,3.5,Internet,10k-50k Employees,Public,16,Noida
+770,Inditex,3.8,Fashion & Textile,1k-5k Employees,Forbes Global 2000,61,Noida
+771,DLF,4.0,Real Estate,501-1k Employees,Public,78,Noida
+772,Pagarbook,4.1,Software Product,51-200 Employees,Startup,5,Noida
+773,Renault,4.3,Automobile,10k-50k Employees,Forbes Global 2000,126,Noida
+774,Prince Pipes & Fittings,4.3,Building Material,1k-5k Employees,Public,37,Noida
+775,HARMAN,3.9,Consumer Electronics & Appliances,5k-10k Employees,Public,15,Noida
+776,Momark Services,2.1,Internet,11-50 Employees (Global),Startup,12,Noida
+777,GoMedii Technologies,3.8,Internet,11-50 Employees (Global),Startup,7,Noida
+778,Momark Services,2.1,Internet,11-50 Employees (Global),Startup,12,Noida
+779,DB Digital,3.9,Internet,51-200 Employees,Startup,4,Noida
+780,GoMedii Technologies,3.8,Internet,11-50 Employees (Global),Startup,7,Noida
+781,Ev Motors,1.2,Internet,51-200 Employees,Startup,8,Noida
+782,Onfido,3.8,Software Product,51-200 Employees (Global),Startup,12,Noida
+783,Onfido,3.8,Software Product,51-200 Employees (Global),Startup,12,Noida
+784,Appfoster,4.6,IT Services & Consulting,11-50 Employees,Startup,5,Noida
+785,Ev Motors,1.2,Internet,51-200 Employees,Startup,8,Noida
+786,Appfoster,4.6,IT Services & Consulting,11-50 Employees,Startup,5,Noida
+787,DigiiDunia,4.9,IT Services & Consulting,11-50 Employees,Startup,4,Noida
+788,Shriram Group,4.1,Financial Services,50k-1 Lakh Employees,Conglomerate,50,Noida
+789,Delhi Metro Rail Corporation,4.1,Logistics,10k-50k Employees,Public,29,New
+790,Huntsman International,4.3,Chemicals,501-1k Employees,Forbes Global 2000,54,Mumbai
+791,Orient Technologies,3.9,IT Services & Consulting,1k-5k Employees,Forbes Global 2000,32,Chiyoda-ku
+792,Thermax Limited,4.2,Industrial Machinery,1k-5k Employees,Public,58,Pune
+793,Apple,4.3,Consumer Electronics & Appliances,10k-50k Employees,Forbes Global 2000,48,Cupertino
+794,ITSource Technologies,3.1,IT Services & Consulting,201-500 Employees,Public,26,Noida
+795,Carlsberg,4.3,Beverage,1k-5k Employees,Forbes Global 2000,177,Noida
+796,CallHealth,3.7,Healthcare,51-200 Employees,Startup,11,Noida
+797,Apollo Munich Health Insurance,3.9,Financial Services,1k-5k Employees,Public,17,Noida
+798,Baroda Global Shared Services,4.0,Banking,10k-50k Employees,Public,7,Noida
+799,Zen Technologies,3.5,Defence & Aerospace,201-500 Employees,Public,31,Noida
+800,Woodenstreet.com,3.5,Furniture & Furnishing,51-200 Employees,Startup,9,Noida
+801,Allen Solly,3.9,Fashion & Textile,10k-50k Employees,Public,280,Noida
+802,Cigna,3.4,Internet,201-500 Employees,Forbes Global 2000,159,Noida
+803,IDBI Bank,3.7,Banking,10k-50k Employees,Public,60,Noida
+804,ACC,4.0,Building Material,5k-10k Employees,Public,88,Noida
+805,Manappuram Finance,4.0,NBFC,10k-50k Employees,Public,75,Noida
+806,Lithium Urban Technologies,3.7,Urban Transport,51-200 Employees,Startup,11,Noida
+807,Doubtnut,3.4,EdTech,201-500 Employees,Startup,8,Noida
+808,G R Infraprojects,4.2,Engineering & Construction,10k-50k Employees,Public,29,Noida
+809,Echs Polyclinic,3.2,Healthcare,11-50 Employees,Public,21,Noida
+810,Doubtnut,3.4,EdTech,201-500 Employees,Startup,8,Noida
+811,Jana Small Finance Bank,3.9,Banking,10k-50k Employees,Public,18,Noida
+812,NOW,4.3,Internet,11-50 Employees (Global),Startup,9,Noida
+813,G R Infraprojects,4.2,Engineering & Construction,10k-50k Employees,Public,29,Noida
+814,Echs Polyclinic,3.2,Healthcare,11-50 Employees,Public,21,Noida
+815,Schneider Electric,4.2,Industrial Automation,10k-50k Employees,Forbes Global 2000,25,Noida
+816,Tenneco,3.8,Auto Components,1k-5k Employees,Forbes Global 2000,84,Noida
+817,Muthoot Fincorp,4.1,NBFC,10k-50k Employees,Conglomerate,137,Noida
+818,Asian Granito India,3.8,Building Material,1k-5k Employees,Public,24,Noida
+819,ITSource Technologies,3.1,IT Services & Consulting,201-500 Employees,Public,26,Noida
+820,Zebra Technologies,4.1,IT Services & Consulting,51-200 Employees,Forbes Global 2000,55,Noida
+821,Hero Housing Finance,3.9,Financial Services,501-1k Employees,Startup,7,Noida
+822,Ruloans,3.8,Financial Services,51-200 Employees (Global),Public,28,Noida
+823,Gail Gas,4.1,Oil & Gas,1k-5k Employees,Central,16,Noida
+824,Lentra AI,3.0,Financial Services,201-500 Employees,Startup,6,Noida
+825,Apollo Munich Health Insurance,3.9,Financial Services,1k-5k Employees,Public,17,Jalandhar
+826,Woodenstreet.com,3.5,Furniture & Furnishing,51-200 Employees,Startup,9,Udaipur
+827,Allen Solly,3.9,Fashion & Textile,10k-50k Employees,Public,280,Jalandhar
+828,Baroda Global Shared Services,4.0,Banking,10k-50k Employees,Public,7,Gandhinagar
+829,Zen Technologies,3.5,Defence & Aerospace,201-500 Employees,Public,31,Hyderabad
+830,Kalyan Jewellers,4.7,Jewellery,5k-10k Employees,Fortune India 500,31,Noida
+831,InsanelyGood,4.1,Internet,11-50 Employees,Startup,9,Noida
+832,Devnagri,3.4,Internet,11-50 Employees,Startup,5,Noida
+833,Adonmo,3.9,Marketing & Advertising,501-1k Employees,Startup,8,Noida
+834,Kalyan Jewellers,4.7,Jewellery,5k-10k Employees,Fortune India 500,31,Noida
+835,Gabriel India,4.2,Auto Components,1k-5k Employees,Public,63,Noida
+836,Trent,4.1,Retail,10k-50k Employees,Public,26,Noida
+837,Turtlemint,3.6,Internet,1k-5k Employees,Startup,9,Noida
+838,Arvind Group,4.1,Fashion & Textile,10k-50k Employees,Public,93,Noida
+839,Adonmo,3.9,Marketing & Advertising,501-1k Employees,Startup,8,Mumbai
+840,PharmEasy,3.7,Internet,1k-5k Employees,Indian Unicorn,9,Noida
+841,Turtlemint,3.6,Internet,1k-5k Employees,Startup,9,Noida
+842,Arvind Group,4.1,Fashion & Textile,10k-50k Employees,Public,93,Noida
+843,Barclays Investment Bank,3.9,Banking,50k-1 Lakh Employees (Global),Public,27,Noida
+844,Onward Technologies Inc,3.2,Software Product,1k-5k Employees,Public,33,Noida
+845,Onward Technologies Inc,3.2,Software Product,1k-5k Employees,Public,33,Noida
+846,Digitas,3.6,Marketing & Advertising,201-500 Employees,Public,18,Noida
+847,Ryan International School,3.7,Education & Training,10k-50k Employees,Public,32,Noida
+848,Trent,4.1,Retail,10k-50k Employees,Public,26,Noida
+849,Merino Industries,2.7,Furniture & Furnishing,1k-5k Employees,Public,56,Noida
+850,BASIC Home Loan,4.7,FinTech,201-500 Employees,Startup,4,Noida
+851,Merino Industries,2.7,Furniture & Furnishing,1k-5k Employees,Public,56,Noida
+852,Meesho,3.7,Internet,5k-10k Employees,Indian Unicorn,9,Noida
+853,Delta Electronics,4.0,Electronics Manufacturing,501-1k Employees,Forbes Global 2000,32,Noida
+854,Shree Cement,4.0,Building Material,5k-10k Employees,Public,45,Noida
+855,Spinny,3.9,Internet,1k-5k Employees,Indian Unicorn,9,Noida
+856,Abbott,4.2,Pharma,10k-50k Employees,Public,136,Noida
+857,DMart,4.0,Retail,10k-50k Employees,Fortune India 500,22,Noida
+858,Majestic Auto,4.5,Auto Components,51-200 Employees,Public,51,Noida
+859,Lybrate,3.8,Internet,51-200 Employees,Startup,11,Noida
+860,Carnival Group,4.0,Media & Entertainment,51-200 Employees,Conglomerate,17,Noida
+861,Carnival Group,4.0,Media & Entertainment,51-200 Employees,Conglomerate,17,Noida
+862,Travelkhana,2.5,Internet,11-50 Employees (Global),Startup,12,Noida
+863,QuickRide,2.7,Software Product,11-50 Employees,Startup,10,Noida
+864,PayTunes,4.5,Internet,51-200 Employees,Startup,9,Noida
+865,ANG Industries,3.9,Auto Components,51-200 Employees,Public,33,Noida
+866,Aba Corp Greenovation,4.3,Real Estate,201-500 Employees,Public,32,Noida
+867,eBhasha Setu Language Services,3.2,Internet,11-50 Employees (Global),Startup,9,Noida
+868,Travelkhana,2.5,Internet,11-50 Employees (Global),Startup,12,Noida
+869,Stitch MES,4.8,Software Product,11-50 Employees,Startup,5,Noida
+870,Reclame Hub,1.4,Marketing & Advertising,11-50 Employees,Startup,3,Noida
+871,Tandem,2.4,Internet,11-50 Employees (Global),Startup,11,Noida
+872,Aba Corp Greenovation,4.3,Real Estate,201-500 Employees,Public,32,Noida
+873,InstaSolv,3.8,Internet,51-200 Employees (Global),Startup,5,Noida
+874,InstaSolv,3.8,Internet,51-200 Employees (Global),Startup,5,Noida
+875,Invoay Software,4.9,Software Product,11-50 Employees,Startup,7,Noida
+876,Codefree.io,2.3,Software Product,1-10 Employees,Startup,6,Noida
+877,Zypp Electric,4.0,Internet,501-1k Employees,Startup,7,Gurgaon
+878,Reliance Capital,4.0,Financial Services,1k-5k Employees,Public,19,Navi
+879,Simplex Infrastructures,3.3,Engineering & Construction,1k-5k Employees,Public,100,Noida
+880,LimeRoad,2.8,Internet,501-1k Employees,Startup,12,Noida
+881,Life Insurance Corporation of India,4.4,Insurance,1 Lakh+ Employees,Fortune India 500,68,Noida
+882,Alcatel-Lucent,4.2,Telecom,201-500 Employees,Public,32,Noida
+883,Indian Railways,4.2,Railways,1 Lakh+ Employees,Central,171,Noida
+884,Bank of India,4.0,Banking,50k-1 Lakh Employees,Fortune India 500,118,Noida
+885,Alp Consulting,3.3,Recruitment,201-500 Employees,Public,28,Noida
+886,Pradhan Mantri Kaushal Vikas Yojana,4.0,Education & Training,1-10 Employees,Public,9,Noida
+887,GIVA Jewellery,3.7,Internet,51-200 Employees,Startup,5,Noida
+888,Paisabazaar.com,3.6,Internet,1k-5k Employees,Startup,10,Noida
+889,JanaJal,4.7,Internet,11-50 Employees,Startup,9,Noida
+890,Mercedes-Benz Research & Development India,4.0,IT Services & Consulting,5k-10k Employees,Public,28,Noida
+891,i2iFunding,5.0,Internet,11-50 Employees (Global),Startup,9,Noida
+892,NuShala,4.8,Education & Training,11-50 Employees,Startup,5,Noida
+893,Tlg India,3.8,Software Product,201-500 Employees,Public,52,Noida
+894,IVP (India),4.0,Chemicals / Agri Inputs,51-200 Employees,Public,95,Noida
+895,Smile Electronics,3.3,Electronics Manufacturing,201-500 Employees,Public,26,Bangalore
+896,Awfis,4.0,Real Estate,501-1k Employees,Startup,9,Gurgaon
+897,Aegis Logistics,4.0,Oil & Gas,1k-5k Employees,Public,68,Noida
+898,Reclame Hub,1.4,Marketing & Advertising,11-50 Employees,Startup,3,Noida
+899,1248 Technologies,3.2,Design,11-50 Employees,Startup,2,Noida
+900,Stitch MES,4.8,Software Product,11-50 Employees,Startup,5,Noida
+901,Bharat Electronics,4.2,Electronics Manufacturing,5k-10k Employees,Fortune India 500,70,Noida
+902,Future Supply Chain Solutions,4.4,Logistics,1k-5k Employees,Public,18,Noida
+903,ITC Hotels,4.2,Hospitality,5k-10k Employees,Public,49,Noida
+904,Sharekhan,4.0,Financial Services,1k-5k Employees,Public,24,Noida
+905,Coca-Cola Company,4.3,Beverage,5k-10k Employees,Forbes Global 2000,138,Noida
+906,Thomas Cook,3.9,Travel & Tourism,1k-5k Employees,Public,143,Noida
+907,Hubergroup,4.2,Chemicals,1k-5k Employees,Fortune India 500,38,Noida
+908,Moody's,4.1,Analytics & KPO,1k-5k Employees,Forbes Global 2000,115,Noida
+909,HFCL,4.2,Hardware & Networking,1k-5k Employees,Public,37,Noida
+910,Reliance Capital,4.0,Financial Services,1k-5k Employees,Public,19,Noida
+911,Zerodha,3.9,FinTech,1k-5k Employees,Public,14,Noida
+912,Electronic Arts,4.3,Gaming,1k-5k Employees,Forbes Global 2000,42,Noida
+913,TotalEnergies,3.9,Oil & Gas,1k-5k Employees,Forbes Global 2000,100,Noida
+914,Life Insurance Corporation of India,4.4,Insurance,1 Lakh+ Employees,Fortune India 500,68,Noida
+915,VA Tech Wabag,4.0,Waste Management,501-1k Employees,Public,100,Noida
+916,Tata AutoComp Systems,3.9,Auto Components,1k-5k Employees,Public,29,Noida
+917,National Small Industries Corporation,3.9,Government,1k-5k Employees,Central,69,Noida
+918,Alcatel-Lucent,4.2,Telecom,201-500 Employees,Public,32,Boulogne
+919,Adani Power,3.9,Power,1k-5k Employees,Public,18,Ahmedabad
+920,Simplex Infrastructures,3.3,Engineering & Construction,1k-5k Employees,Public,100,Kolkata
+921,LimeRoad,2.8,Internet,501-1k Employees,Startup,12,Gurgaon
+922,Zypp Electric,4.0,Internet,501-1k Employees,Startup,7,Noida
+923,Pudumjee Paper Products,4.1,Pulp & Paper,501-1k Employees,Public,9,Noida
+924,91springboard,3.7,Real Estate,51-200 Employees,Startup,11,Noida
+925,JoulestoWatts Business Solutions,2.9,IT Services & Consulting,201-500 Employees,Startup,9,Noida
+926,Thyrocare Technologies,3.6,Healthcare,1k-5k Employees,Public,28,Noida
+927,Voxelwerks 3D Solutions,3.9,Industrial Machinery,1-10 Employees,Startup,3,Noida
+928,Cogoport,3.0,Internet,51-200 Employees,Startup,8,Noida
+929,Air Liquide,3.9,Chemicals,201-500 Employees,Public,122,Noida
+930,Pradhan Mantri Kaushal Vikas Yojana,4.0,Education & Training,1-10 Employees,Public,9,Noida
+931,JanaJal,4.7,Internet,11-50 Employees,Startup,9,Noida
+932,i2iFunding,5.0,Internet,11-50 Employees (Global),Startup,9,Noida
+933,Mercedes-Benz Research & Development India,4.0,IT Services & Consulting,5k-10k Employees,Public,28,Bengaluru/Bangalore
+934,Air Liquide,3.9,Chemicals,201-500 Employees,Public,122,Paris
+935,Venus Remedies,4.4,Pharma,1k-5k Employees,Public,35,Noida
+936,Salesforce,4.1,Software Product,5k-10k Employees,Public,25,San
+937,AccioJob,4.2,EdTech,51-200 Employees,Startup,6,Noida
+938,FloBiz,3.5,IT Services & Consulting,51-200 Employees,Startup,5,Noida
+939,Amazon Web Services,4.0,Software Product,10k-50k Employees,Public,18,Noida
+940,Park Plus,3.0,Internet,201-500 Employees,Startup,5,Noida
+941,Cuemath,3.8,EdTech,1k-5k Employees,Startup,11,Noida
+942,Tlg India,3.8,Software Product,201-500 Employees,Public,52,Noida
+943,Oracle Financial Services Software,3.7,IT Services & Consulting,10k-50k Employees,Public,34,Noida
+944,Smile Electronics,3.3,Electronics Manufacturing,201-500 Employees,Public,26,Noida
+945,Continental Chemicals,2.5,IT Services & Consulting,11-50 Employees,Public,40,Noida
+946,Lohia Group,3.7,Industrial Machinery,1k-5k Employees,Public,48,Noida
+947,Pidilite Industries,4.4,Chemicals,5k-10k Employees,Public,65,Noida
+948,Jumbotail Technologies,3.7,Retail,201-500 Employees,Startup,9,Noida
+949,Venus Remedies,4.4,Pharma,1k-5k Employees,Public,35,Noida
+950,Dana Group,5.0,Pharma,11-50 Employees,Conglomerate,49,Noida
+951,Akums Drugs & Pharmaceuticals Limited,4.2,Pharma,10k-50k Employees,Public,20,Noida
+952,Johnson & Johnson,4.2,Pharma,1k-5k Employees,Forbes Global 2000,67,Noida
+953,L&T Technology Services,3.4,IT Services & Consulting,10k-50k Employees,Public,12,Noida
+954,Motilal Oswal Financial Services,3.8,Financial Services,10k-50k Employees,Public,37,Noida
+955,Finnovationz,4.3,Financial Services,51-200 Employees,Startup,4,Noida
+956,Xchanging,4.0,IT Services & Consulting,201-500 Employees,Public,26,Noida
+957,Pernod Ricard,3.9,Beverage,1k-5k Employees,Forbes Global 2000,49,Noida
+958,Salesforce,4.1,Software Product,5k-10k Employees,Public,25,Noida
+959,Shadow Infosystem,5.0,IT Services & Consulting,11-50 Employees,Public,16,Noida
+960,Rotork Controls,3.6,Industrial Machinery,201-500 Employees,Public,67,Noida
+961,Zopsmart Technology,3.1,Software Product,201-500 Employees,Startup,10,Noida
+962,Uber eats,4.5,Internet,1k-5k Employees (Global),Startup,10,Noida
+963,DealShare,3.5,Internet,1k-5k Employees,Indian Unicorn,6,Noida
+964,Publicis,3.7,Marketing & Advertising,5k-10k Employees,Forbes Global 2000,98,Noida
+965,Stanza Living,3.1,Internet,501-1k Employees,Startup,7,Noida
+966,Exide Industries,3.6,Auto Components,5k-10k Employees,Public,77,Noida
+967,Piramal Group,4.0,Financial Services,10k-50k Employees,Fortune India 500,44,Noida
+968,Adani Wilmar,4.2,FMCG,1k-5k Employees,Public,25,Noida
+969,JK Lakshmi Cement,3.9,Building Material,1k-5k Employees,Public,42,Noida
+970,Finolex Cables,3.9,Electrical Equipment,1k-5k Employees,Public,68,Noida
+971,Locuz Enterprise Solutions,4.2,IT Services & Consulting,501-1k Employees,Public,25,Noida
+972,Poonawalla Fincorp,3.9,NBFC,1k-5k Employees,Public,36,Noida
+973,TE Connectivity,4.1,Industrial Machinery,1k-5k Employees,Forbes Global 2000,83,Noida
+974,V-Mart,4.2,Retail,5k-10k Employees,Public,22,Noida
+975,Infineon Technologies,3.8,Semiconductors,1k-5k Employees,Forbes Global 2000,25,Noida
+976,JSW Steel,4.0,Iron & Steel,10k-50k Employees,Public,42,Noida
+977,Sun Pharmaceutical Industries,4.1,Pharma,10k-50k Employees,Public,41,Noida
+978,Sony,4.3,Consumer Electronics & Appliances,1k-5k Employees,Public,30,Noida
+979,AtkinsRealis,4.0,Engineering & Construction,1k-5k Employees,Public,113,Noida
+980,Ion Exchange India,3.9,Waste Management,1k-5k Employees,Public,60,Noida
+981,Yash Papers,3.7,Pulp & Paper,501-1k Employees (Global),Public,43,Noida
+982,Healthfore Technologies,3.2,IT Services & Consulting,51-200 Employees,Public,25,Noida
+983,Indus OS,4.5,IT Services & Consulting,51-200 Employees,Startup,11,Noida
+984,Spa Capital Service,3.3,Financial Services,501-1k Employees,Public,29,Noida
+985,Indosolar,3.1,Power,51-200 Employees,Public,16,Noida
+986,TUI India,4.2,Travel & Tourism,501-1k Employees,Forbes Global 2000,19,Gurugram
+987,Indosolar,3.1,Power,51-200 Employees,Public,16,Noida
+988,Unibera Developers,4.8,Real Estate,51-200 Employees,Public,20,Noida
+989,TPI India,3.5,Packaging,51-200 Employees (Global),Public,49,Noida
+990,Portdesk,1.0,Internet,11-50 Employees (Global),Startup,10,Noida
+991,Portdesk,1.0,Internet,11-50 Employees (Global),Startup,10,Noida
+992,Religare Commodities,4.1,Investment Banking / Venture Capital / Private Equity,1k-5k Employees (Global),Public,21,Noida
+993,TPI India,3.5,Packaging,51-200 Employees (Global),Public,49,Noida
+994,Sunil Hitech Engineers,4.3,Engineering & Construction,501-1k Employees,Public,26,Noida
+995,Unibera Developers,4.8,Real Estate,51-200 Employees,Public,20,Noida
+996,Lucky Nugget Gaming,4.1,Animation & VFX,51-200 Employees,MNC,12,Noida
+997,Kezan Consulting,3.7,Other,11-50 Employees,Startup,1,Noida
+998,Abhiman Innovations,5.0,Internet,11-50 Employees,Startup,4,Noida
+999,Genius Corner,4.7,EdTech,11-50 Employees (Global),Public,14,Noida
+1000,Religare Commodities,4.1,Investment Banking / Venture Capital / Private Equity,1k-5k Employees (Global),Public,21,Noida
+1001,Sunil Hitech Engineers,4.3,Engineering & Construction,501-1k Employees,Public,26,Noida
+1002,Lucky Nugget Gaming,4.1,Animation & VFX,51-200 Employees,MNC,12,Noida
+1003,A.G. Enterprises,4.3,Electrical Equipment,11-50 Employees,Startup,3,Noida
+1004,A.G. Enterprises,4.3,Electrical Equipment,11-50 Employees,Startup,3,Noida

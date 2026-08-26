@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Compare Companies | AmbitionBox Explorer{% endblock %}
+
+{% block content %}
+<div class="dash-head">
+  <h1>Head-to-Head Comparison</h1>
+  <p class="subtitle">Pit two companies against each other to see how their employee ratings, sizes, and ages stack up.</p>
+</div>
+
+<div class="compare-container">
+  <div class="compare-search-row">
+    <div class="compare-col">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="c1-input" placeholder="Search Company 1..." autocomplete="off">
+        <div id="c1-dropdown" class="search-dropdown" style="display:none;"></div>
+      </div>
+    </div>
+    
+    <div class="compare-vs">VS</div>
+    
+    <div class="compare-col">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="c2-input" placeholder="Search Company 2..." autocomplete="off">
+        <div id="c2-dropdown" class="search-dropdown" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card compare-results" id="compare-results" style="display:none; margin-top:24px;">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th width="20%"></th>
+          <th width="40%" id="c1-name-th" class="center-th" style="text-align:center; font-size:1.5rem; color:var(--text);"></th>
+          <th width="40%" id="c2-name-th" class="center-th" style="text-align:center; font-size:1.5rem; color:var(--text);"></th>
+        </tr>
+      </thead>
+      <tbody id="compare-tbody">
+        <!-- Rendered by JS -->
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="empty" id="compare-empty" style="margin-top:40px;">
+    <div class="big">
+      <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 21l6-6M9 8l-5 5M4 13v5h5M4 18l6-6"/></svg>
+    </div>
+    Select two companies above to see their detailed comparison.
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/compare.js') }}"></script>
+{% endblock %}
