@@ -45,6 +45,21 @@
     <div id="data-health-updated" class="sub" style="margin-top:10px">Loading…</div>
   </section>
 
+  <section class="card" style="margin:18px 0">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div>
+        <h3 style="margin-bottom:4px">Company timeline</h3>
+        <div class="sub">Jump from the dashboard to a company's historical profile</div>
+      </div>
+      <a class="btn btn-ghost btn-sm" href="{{ url_for('history_company') }}">Open timeline</a>
+    </div>
+    <form id="dashboard-company-history-form" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <input id="dashboard-company-name" class="form-control" style="flex:1;min-width:240px" placeholder="Search company, e.g. TCS" aria-label="Company name">
+      <input id="dashboard-company-location" class="form-control" style="min-width:180px" placeholder="Location (optional)" aria-label="Company location">
+      <button class="btn btn-primary" type="submit">View history</button>
+    </form>
+  </section>
+
   <div class="chart-grid">
     <div class="card col-8"><h3>Top industries</h3><div class="sub">Companies per industry (top 12)</div><div class="canvas-box"><canvas id="c-industries"></canvas></div></div>
     <div class="card col-4"><h3>Company type</h3><div class="sub">Where a classification exists</div><div class="canvas-box"><canvas id="c-type"></canvas></div></div>
@@ -85,4 +100,19 @@
 <script src="{{ url_for('static', filename='js/filters.js') }}"></script>
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 <script src="{{ url_for('static', filename='js/dashboard_quality.js') }}"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("dashboard-company-history-form");
+    if (!form) return;
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = document.getElementById("dashboard-company-name").value.trim();
+      const location = document.getElementById("dashboard-company-location").value.trim();
+      if (!name) return;
+      const params = new URLSearchParams({ name });
+      if (location) params.set("location", location);
+      window.location.href = `/history/company?${params.toString()}`;
+    });
+  });
+</script>
 {% endblock %}
