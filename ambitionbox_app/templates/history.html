@@ -9,7 +9,15 @@
       <h1>Data history</h1>
       <p>Track dataset snapshots, company discoveries, and rating changes.</p>
     </div>
-    <a class="btn btn-ghost btn-sm" href="{{ url_for('dashboard') }}">Back to dashboard</a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn btn-primary btn-sm" href="{{ url_for('history_company') }}">Company Timeline</a>
+      <a class="btn btn-ghost btn-sm" href="{{ url_for('dashboard') }}">Back to dashboard</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <h3>Two levels of history</h3>
+    <p class="sub" style="margin-top:6px">Use <b>Data History</b> for the whole dataset, or <b>Company Timeline</b> to inspect one company's rating and field changes over time.</p>
   </div>
 
   <div class="kpi-row" id="history-kpis">
@@ -46,6 +54,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ url_for('static', filename='js/history.js') }}"></script>
 {% endblock %}
