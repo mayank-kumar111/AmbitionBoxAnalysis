@@ -10,7 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -39,6 +39,17 @@ def _latest_snapshot(store: SQLiteStore) -> str | None:
     return row[0] if row and row[0] else None
 
 
+def _seed_timestamp(snapshot_at: str) -> str:
+    """Place a first-run baseline immediately before the incoming snapshot."""
+    try:
+        parsed = datetime.fromisoformat(snapshot_at.replace("Z", "+00:00"))
+    except ValueError:
+        parsed = datetime.now(timezone.utc)
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return (parsed - timedelta(seconds=1)).isoformat()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Persist a collected snapshot in SQLite history.")
     parser.add_argument("--master", type=Path, required=True)
@@ -51,19 +62,21 @@ def main() -> None:
     store = SQLiteStore(args.database)
     store.initialize()
 
+    snapshot_at = args.snapshot_at or datetime.now(timezone.utc).isoformat()
     seeded = False
+    seed_records = 0
+
     if store.company_count() == 0:
         master = pd.read_csv(args.master)
         validate_or_raise(master)
-        seed_time = args.snapshot_at or datetime.now(timezone.utc).isoformat()
+        seed_time = _seed_timestamp(snapshot_at)
         if not _snapshot_exists(store, seed_time):
-            store.import_dataframe(master, seed_time)
+            seed_records = store.import_dataframe(master, seed_time)
             seeded = True
 
     incoming = load_snapshot_files(args.incoming)
     validate_or_raise(incoming, check_duplicates=False)
 
-    snapshot_at = args.snapshot_at or datetime.now(timezone.utc).isoformat()
     imported = 0
     if not _snapshot_exists(store, snapshot_at):
         imported = store.import_dataframe(incoming, snapshot_at)
@@ -71,9 +84,9 @@ def main() -> None:
     report = {
         "database": str(args.database),
         "seeded_master": seeded,
-        "seed_records": store.company_count() if seeded else None,
+        "seed_records": int(seed_records),
         "incoming_records": int(len(incoming)),
-        "imported_snapshot_records": imported,
+        "imported_snapshot_records": int(imported),
         "companies_in_database": store.company_count(),
         "snapshot_records_in_database": store.snapshot_count(),
         "latest_snapshot": _latest_snapshot(store),
