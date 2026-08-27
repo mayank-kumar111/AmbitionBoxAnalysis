@@ -1,4 +1,4 @@
-// Dataset health and coverage cards for the dashboard.
+// Dataset health + latest ingestion/change summary for the dashboard.
 (function () {
   const $ = (selector) => document.querySelector(selector);
 
@@ -37,9 +37,7 @@
       });
 
       const updated = $("#data-health-updated");
-      if (updated) {
-        updated.textContent = "Live from the current application dataset";
-      }
+      if (updated) updated.textContent = "Live from the current application dataset";
       if (status) status.textContent = "Healthy";
     } catch (error) {
       console.error("Unable to load dataset health:", error);
@@ -47,5 +45,59 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", loadDataHealth);
+  function renderRefreshSummary(summary) {
+    const status = $("#refresh-summary-status");
+    const meta = $("#refresh-summary-meta");
+    if (!summary || !summary.available) {
+      if (status) status.textContent = "No refresh report";
+      if (meta) meta.textContent = "Run the ingestion pipeline to publish the latest change summary.";
+      return;
+    }
+
+    const values = [
+      ["refresh-new", summary.new_records],
+      ["refresh-updated", summary.updated_records],
+      ["refresh-duplicates", summary.duplicate_records],
+      ["refresh-rating", summary.rating_changes],
+      ["refresh-invalid", summary.invalid_records],
+    ];
+    values.forEach(([id, value]) => {
+      const element = $(`#${id}`);
+      if (element) element.textContent = formatNumber(value);
+    });
+
+    if (status) {
+      status.textContent = summary.applied ? "Applied" : "Dry run";
+    }
+
+    if (meta) {
+      const parts = [];
+      if (summary.snapshot) parts.push(`Snapshot: ${summary.snapshot}`);
+      if (summary.previous_records || summary.incoming_records) {
+        parts.push(`Previous: ${formatNumber(summary.previous_records)}`);
+        parts.push(`Incoming: ${formatNumber(summary.incoming_records)}`);
+      }
+      if (summary.collapsed_records) parts.push(`Collapsed duplicates: ${formatNumber(summary.collapsed_records)}`);
+      meta.textContent = parts.length ? parts.join(" · ") : "Latest refresh report loaded";
+    }
+  }
+
+  async function loadRefreshSummary() {
+    try {
+      let response = await fetch("/static/last_update_report.json", { cache: "no-store" });
+      if (!response.ok) {
+        response = await fetch("/api/data-quality", { cache: "no-store" });
+      }
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      renderRefreshSummary(await response.json());
+    } catch (error) {
+      console.error("Unable to load refresh summary:", error);
+      renderRefreshSummary(null);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    loadDataHealth();
+    loadRefreshSummary();
+  });
 })();
