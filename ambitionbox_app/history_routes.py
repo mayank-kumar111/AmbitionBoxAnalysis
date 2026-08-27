@@ -1,11 +1,11 @@
-"""History dashboard routes backed by the project's SQLite store."""
+"""SQLite-backed history and company timeline routes."""
 
 from __future__ import annotations
 
 import sqlite3
 from pathlib import Path
 
-from flask import jsonify, render_template
+from flask import jsonify, render_template, request
 
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -18,6 +18,20 @@ def _connect():
     return connection
 
 
+def _empty_history_payload():
+    return {
+        "current_companies": 0,
+        "snapshot_count": 0,
+        "new_records": 0,
+        "rating_updates": 0,
+        "latest_snapshot": None,
+        "growth": [],
+        "latest_activity": [],
+        "improved_companies": [],
+        "latest_new": [],
+    }
+
+
 def register_history_routes(app):
     @app.route("/history")
     def history():
@@ -26,17 +40,7 @@ def register_history_routes(app):
     @app.route("/api/history")
     def api_history():
         if not DATABASE_PATH.exists():
-            return jsonify({
-                "current_companies": 0,
-                "snapshot_count": 0,
-                "new_records": 0,
-                "rating_updates": 0,
-                "latest_snapshot": None,
-                "growth": [],
-                "latest_activity": [],
-                "improved_companies": [],
-                "latest_new": [],
-            })
+            return jsonify(_empty_history_payload())
 
         with _connect() as db:
             current = db.execute("SELECT COUNT(*) FROM companies").fetchone()[0]
@@ -104,4 +108,80 @@ def register_history_routes(app):
                 for row in improved_rows
             ],
             "latest_new": [dict(row) for row in new_rows],
+        })
+
+    @app.route("/history/company")
+    def history_company():
+        company_name = request.args.get("name", "").strip()
+        location = request.args.get("location", "").strip()
+        return render_template(
+            "company_history.html",
+            company_name=company_name,
+            location=location,
+        )
+
+    @app.route("/api/history/company")
+    def api_history_company():
+        company_name = request.args.get("name", "").strip()
+        location = request.args.get("location", "").strip()
+
+        if not company_name:
+            return jsonify({"error": "Query parameter 'name' is required."}), 400
+        if not DATABASE_PATH.exists():
+            return jsonify({"error": "History database is not available."}), 503
+
+        with _connect() as db:
+            company_sql = """
+                SELECT id, company_name, company_rating, industry, size, type,
+                       years_old, location, first_seen, last_seen
+                FROM companies
+                WHERE lower(company_name) = lower(?)
+            """
+            params = [company_name]
+            if location:
+                company_sql += " AND lower(location) = lower(?)"
+                params.append(location)
+            company_sql += " ORDER BY location LIMIT 1"
+            company = db.execute(company_sql, params).fetchone()
+
+            if company is None:
+                return jsonify({"error": "Company not found."}), 404
+
+            company_id = int(company["id"])
+            snapshots = db.execute("""
+                SELECT snapshot_at, company_rating, industry, size, type,
+                       years_old, location
+                FROM company_snapshots
+                WHERE company_id = ?
+                ORDER BY snapshot_at
+            """, (company_id,)).fetchall()
+
+            changes = db.execute("""
+                SELECT snapshot_at, change_type, field_name, old_value, new_value
+                FROM change_log
+                WHERE company_id = ?
+                ORDER BY snapshot_at, change_id
+            """, (company_id,)).fetchall()
+
+            locations = db.execute("""
+                SELECT DISTINCT location
+                FROM company_snapshots
+                WHERE company_id = ?
+                ORDER BY location
+            """, (company_id,)).fetchall()
+
+        latest_rating = company["company_rating"]
+        first_rating = snapshots[0]["company_rating"] if snapshots else latest_rating
+        rating_change = None
+        if first_rating is not None and latest_rating is not None:
+            rating_change = round(float(latest_rating) - float(first_rating), 2)
+
+        return jsonify({
+            "company": dict(company),
+            "locations": [row["location"] for row in locations],
+            "first_rating": first_rating,
+            "latest_rating": latest_rating,
+            "rating_change": rating_change,
+            "snapshots": [dict(row) for row in snapshots],
+            "changes": [dict(row) for row in changes],
         })
