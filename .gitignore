@@ -43,3 +43,10 @@ dist/
 # Temporary files
 *.tmp
 *.temp
+
+# Generated data / reports
+/data/incoming/
+/data/ambitionbox.db
+/data/processed/companies_updated.csv
+/reports/*.json
+/reports/*.csv
