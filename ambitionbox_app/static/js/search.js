@@ -3,6 +3,16 @@
   const dropdown = document.getElementById("global-search-results");
   const esc = window.AB && window.AB.esc ? window.AB.esc : (s) => String(s).replace(/[&<>"']/g, function(m) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]; });
 
+  function historyUrl(data) {
+    const params = new URLSearchParams({ name: data.company_name });
+    if (data.location) params.set("location", data.location);
+    return `/history/company?${params.toString()}`;
+  }
+
+  window.openCompanyHistory = function(data) {
+    window.location.href = historyUrl(data);
+  };
+
   window.openCompanyModal = function(data) {
     const $ = (s) => document.querySelector(s);
     $("#modal-title").textContent = data.company_name;
@@ -13,19 +23,17 @@
     if (data.location) tags += `<span>${esc(data.location)}</span>`;
     if (data.size) tags += `<span>${esc(String(data.size).replace(" Employees", ""))}</span>`;
     $("#modal-tags").innerHTML = tags;
+
     let b = `<strong>${esc(data.company_name)}</strong> is a ${data.years_old ? data.years_old+' year old ' : ''}company`;
     if (data.location) b += ` based in ${esc(data.location)}.`;
     else b += ".";
     if (data.company_rating >= 4.0) b += `<br><br><span style="color:var(--cyan)">★ This company is highly rated!</span>`;
+    b += `<div style="margin-top:18px"><button type="button" class="btn btn-primary btn-sm" id="modal-history-btn">View company history</button></div>`;
     $("#modal-body").innerHTML = b;
+    const historyButton = document.getElementById("modal-history-btn");
+    if (historyButton) historyButton.addEventListener("click", () => openCompanyHistory(data));
     $("#company-modal").classList.add("active");
   };
-
-  function openCompanyHistory(data) {
-    const params = new URLSearchParams({ name: data.company_name });
-    if (data.location) params.set("location", data.location);
-    window.location.href = `/history/company?${params.toString()}`;
-  }
 
   if (!input || !dropdown) return;
 
