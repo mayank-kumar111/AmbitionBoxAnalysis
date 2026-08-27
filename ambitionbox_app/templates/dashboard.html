@@ -28,6 +28,23 @@
     <div class="kpi"><div class="k-lbl">Top type</div><div class="k-val" id="kpi-type" style="font-size:1.15rem">—</div></div>
   </div>
 
+  <section class="card" style="margin:18px 0">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div>
+        <h3 style="margin-bottom:4px">Dataset health</h3>
+        <div class="sub">Coverage and freshness indicators for the current dataset</div>
+      </div>
+      <span id="data-health-status" class="chip">Checking…</span>
+    </div>
+    <div class="kpi-row" style="margin-top:14px">
+      <div class="kpi"><div class="k-lbl">Companies</div><div class="k-val" id="data-health-companies">—</div></div>
+      <div class="kpi"><div class="k-lbl">Rated coverage</div><div class="k-val" id="data-health-rated">—</div></div>
+      <div class="kpi"><div class="k-lbl">Industries</div><div class="k-val" id="data-health-industries">—</div></div>
+      <div class="kpi"><div class="k-lbl">Locations</div><div class="k-val" id="data-health-locations">—</div></div>
+    </div>
+    <div id="data-health-updated" class="sub" style="margin-top:10px">Loading…</div>
+  </section>
+
   <div class="chart-grid">
     <div class="card col-8"><h3>Top industries</h3><div class="sub">Companies per industry (top 12)</div><div class="canvas-box"><canvas id="c-industries"></canvas></div></div>
     <div class="card col-4"><h3>Company type</h3><div class="sub">Where a classification exists</div><div class="canvas-box"><canvas id="c-type"></canvas></div></div>
@@ -67,4 +84,5 @@
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/filters.js') }}"></script>
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard_quality.js') }}"></script>
 {% endblock %}
