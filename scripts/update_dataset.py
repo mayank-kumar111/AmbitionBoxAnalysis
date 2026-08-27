@@ -1,8 +1,4 @@
-"""Incrementally update a master company snapshot from incoming CSV files.
-
-Safe by default: use --apply to write the merged dataset. Without --apply,
-the command only reports what would change.
-"""
+"""Incrementally update a master company snapshot from incoming CSV files."""
 
 from __future__ import annotations
 
@@ -49,29 +45,29 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True, help="Merged output CSV")
     parser.add_argument("--report", type=Path, default=Path("reports/update_report.json"))
     parser.add_argument("--apply", action="store_true", help="Write the merged dataset; otherwise dry-run")
+    parser.add_argument("--full-snapshot", action="store_true", help="Treat incoming data as complete source coverage and report removals")
     args = parser.parse_args()
 
     incoming = load_snapshot_files(args.incoming)
     validate_or_raise(incoming)
 
     ingestor = IncrementalIngestor(args.master)
-    merged, result = ingestor.merge(incoming, output_path=args.output if args.apply else None)
+    merged, result = ingestor.merge(
+        incoming,
+        output_path=args.output if args.apply else None,
+        full_snapshot=args.full_snapshot,
+    )
 
-    report = {
-        "previous_records": result.previous_records,
-        "incoming_records": result.incoming_records,
-        "final_records": result.final_records,
-        "new_records": result.new_records,
-        "updated_records": result.updated_records,
-        "unchanged_records": result.unchanged_records,
-        "invalid_records": result.invalid_records,
-        "applied": args.apply,
-    }
+    report = result.to_dict()
+    report["new_companies"] = list(result.new_companies)
+    report["updated_companies"] = list(result.updated_companies)
+    report["applied"] = args.apply
+    report["full_snapshot"] = args.full_snapshot
 
     args.report.parent.mkdir(parents=True, exist_ok=True)
-    args.report.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    args.report.write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
 
-    print(json.dumps(report, indent=2))
+    print(json.dumps(report, indent=2, default=str))
     if not args.apply:
         print("DRY RUN: no master dataset was changed. Use --apply to write the output.")
     else:
