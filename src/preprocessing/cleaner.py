@@ -37,6 +37,9 @@ TYPE_VALUES = {
 
 SIZE_PATTERN = re.compile(r"\b(?:\d+(?:\.\d+)?[kKmM]?|1\s*Lakh\+?|50k-1\s*Lakh|10k-50k|5k-10k|1k-5k)\s*Employees(?:\s*\([^)]*\))?\b", re.I)
 AGE_PATTERN = re.compile(r"\b(\d+)\s+years?\s+old\b", re.I)
+# AmbitionBox may render locations as either ``Jaipur +2 more`` or
+# ``Mumbai +392 other locations``. Only the base location should be stored.
+MORE_LOCATION_PATTERN = re.compile(r"\s*\+\d+\s+(?:other\s+)?locations?\s*$", re.I)
 MORE_PATTERN = re.compile(r"\s*\+\d+\s+more\s*$", re.I)
 
 
@@ -73,13 +76,20 @@ def _find_type(parts: list[str], excluded: set[int]) -> tuple[str | None, int | 
     return None, None
 
 
+def _normalize_location(value: str) -> str | None:
+    """Remove AmbitionBox's trailing extra-location count."""
+    location = MORE_LOCATION_PATTERN.sub("", value).strip(" ,")
+    location = MORE_PATTERN.sub("", location).strip(" ,")
+    return location or None
+
+
 def parse_other_data(value: object) -> dict[str, object]:
     """Parse the semi-structured ``other_data`` field by content, not position."""
     parts = _parts(value)
     if not parts:
         return {"industry": None, "size": None, "type": None, "years_old": None, "location": None}
 
-    location = MORE_PATTERN.sub("", parts[-1]).strip(" ,") or None
+    location = _normalize_location(parts[-1])
     size, size_index = _find_size(parts)
     years_old, age_index = _find_age(parts)
 
