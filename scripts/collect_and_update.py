@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -50,7 +51,7 @@ def main() -> None:
 
     incoming = load_snapshot_files(incoming_dir)
     ingestor = IncrementalIngestor(args.master)
-    merged, result = ingestor.merge(
+    _, result = ingestor.merge(
         incoming,
         output_path=args.output if args.apply else None,
         full_snapshot=args.full_snapshot,
@@ -68,6 +69,12 @@ def main() -> None:
 
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
+
+    # Publish the latest run summary where the local dashboard can read it.
+    # This file is generated data and is excluded from source control.
+    dashboard_report = ROOT_DIR / "ambitionbox_app" / "static" / "last_update_report.json"
+    dashboard_report.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(args.report, dashboard_report)
 
     print(json.dumps(report, indent=2, default=str))
     if not args.apply:
