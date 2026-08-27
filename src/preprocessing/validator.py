@@ -7,8 +7,13 @@ import pandas as pd
 from .cleaner import FINAL_COLUMNS
 
 
-def validate_dataframe(df: pd.DataFrame) -> list[str]:
-    """Return validation errors; an empty list means the frame is valid."""
+def validate_dataframe(df: pd.DataFrame, *, check_duplicates: bool = True) -> list[str]:
+    """Return validation errors; an empty list means the frame is valid.
+
+    Duplicate checking can be disabled for raw/incoming snapshots because the
+    incremental ingestion layer intentionally counts and collapses duplicates.
+    The final merged dataset should always be checked for duplicates.
+    """
     errors: list[str] = []
 
     missing_columns = [column for column in FINAL_COLUMNS if column not in df.columns]
@@ -26,14 +31,14 @@ def validate_dataframe(df: pd.DataFrame) -> list[str]:
     if not invalid_ages.empty:
         errors.append("years_old contains negative values")
 
-    if df.duplicated().any():
+    if check_duplicates and df.duplicated().any():
         errors.append("dataset contains exact duplicate rows")
 
     return errors
 
 
-def validate_or_raise(df: pd.DataFrame) -> None:
-    """Raise ValueError when the cleaned dataframe fails validation."""
-    errors = validate_dataframe(df)
+def validate_or_raise(df: pd.DataFrame, *, check_duplicates: bool = True) -> None:
+    """Raise ValueError when the dataframe fails validation."""
+    errors = validate_dataframe(df, check_duplicates=check_duplicates)
     if errors:
         raise ValueError("Data validation failed: " + "; ".join(errors))
