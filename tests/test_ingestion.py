@@ -35,6 +35,9 @@ def test_incremental_merge_adds_new_company_and_updates_existing(tmp_path):
     assert result.final_records == 3
     assert len(merged) == 3
     assert float(merged.loc[merged["company_name"] == "Example Corp", "company_rating"].iloc[0]) == 4.2
+    assert result.updated_companies[0]["company_name"] == "Example Corp"
+    assert result.updated_companies[0]["changes"]["company_rating"]["old"] == 4.0
+    assert result.updated_companies[0]["changes"]["company_rating"]["new"] == 4.2
 
 
 def test_incremental_merge_does_not_duplicate_unchanged_company(tmp_path):
@@ -48,4 +51,40 @@ def test_incremental_merge_does_not_duplicate_unchanged_company(tmp_path):
     assert result.new_records == 0
     assert result.updated_records == 0
     assert result.unchanged_records == 1
+    assert result.collapsed_records == 0
     assert len(merged) == 1
+
+
+def test_incremental_merge_reports_incoming_duplicate_keys(tmp_path):
+    master_path = tmp_path / "master.csv"
+    master = frame([["Existing", 4.0, "IT", None, "Private", 10, "Jaipur"]])
+    master.to_csv(master_path, index=False)
+
+    incoming = frame([
+        ["New Co", 4.0, "IT", None, "Private", 10, "Delhi"],
+        ["New Co", 4.1, "IT", None, "Private", 10, "Delhi"],
+    ])
+
+    merged, result = IncrementalIngestor(master_path).merge(incoming)
+
+    assert result.incoming_records == 1
+    assert result.new_records == 1
+    assert result.incoming_duplicate_rows == 1
+    assert result.collapsed_records == 1
+    assert result.final_records == 2
+    assert float(merged.loc[merged["company_name"] == "New Co", "company_rating"].iloc[0]) == 4.1
+
+
+def test_partial_snapshot_does_not_report_removals(tmp_path):
+    master_path = tmp_path / "master.csv"
+    master = frame([
+        ["Existing A", 4.0, "IT", None, "Private", 10, "Jaipur"],
+        ["Existing B", 4.0, "IT", None, "Private", 10, "Delhi"],
+    ])
+    master.to_csv(master_path, index=False)
+
+    incoming = frame([["Existing A", 4.0, "IT", None, "Private", 10, "Jaipur"]])
+    _, result = IncrementalIngestor(master_path).merge(incoming)
+
+    assert result.removed_records == 0
+    assert result.removal_scope == "partial"
