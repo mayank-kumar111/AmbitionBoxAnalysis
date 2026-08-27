@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Company History · AmbitionBox Analysis{% endblock %}
+
+{% block content %}
+<div class="wrap" style="padding-top:26px;padding-bottom:60px">
+  <div class="tool-head" style="margin-bottom:18px">
+    <div>
+      <h1>Company history</h1>
+      <p>Inspect the current profile and historical changes for one company.</p>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="{{ url_for('history') }}">Back to history</a>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <form id="company-history-form" style="display:flex;gap:10px;flex-wrap:wrap;align-items:end">
+      <label style="flex:1;min-width:260px">Company name
+        <input id="company-name-input" class="form-control" value="{{ company_name }}" placeholder="e.g. TCS" required>
+      </label>
+      <label style="min-width:220px">Location (optional)
+        <input id="company-location-input" class="form-control" value="{{ location }}" placeholder="e.g. Pune">
+      </label>
+      <button class="btn btn-primary" type="submit">Load history</button>
+    </form>
+  </div>
+
+  <div id="company-error" class="card" style="display:none;margin-bottom:18px"></div>
+
+  <section id="company-profile" style="display:none">
+    <div class="kpi-row">
+      <div class="kpi"><div class="k-lbl">Current rating</div><div class="k-val grad" id="company-current-rating">—</div></div>
+      <div class="kpi"><div class="k-lbl">Rating change</div><div class="k-val" id="company-rating-change">—</div></div>
+      <div class="kpi"><div class="k-lbl">First seen</div><div class="k-val" id="company-first-seen" style="font-size:1rem">—</div></div>
+      <div class="kpi"><div class="k-lbl">Last seen</div><div class="k-val" id="company-last-seen" style="font-size:1rem">—</div></div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="card col-8">
+        <h3 id="company-title">Company</h3>
+        <div class="sub" id="company-subtitle">—</div>
+        <div class="canvas-box"><canvas id="company-rating-chart"></canvas></div>
+      </div>
+      <div class="card col-4">
+        <h3>Current profile</h3>
+        <div id="company-details" style="margin-top:14px;line-height:1.9"></div>
+      </div>
+      <div class="card col-12">
+        <h3>Change timeline</h3>
+        <div class="sub">Field-level changes recorded by the ingestion system</div>
+        <div id="company-changes" class="table-wrap" style="margin-top:12px;overflow:auto"></div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/company_history.js') }}"></script>
+{% endblock %}
