@@ -34,15 +34,24 @@ def _make_db(path):
     connection.close()
 
 
+def _app():
+    app = Flask(__name__, template_folder="../ambitionbox_app/templates")
+
+    # The real application already defines these endpoints. They are supplied
+    # here so the shared base template can render in this isolated route test.
+    for endpoint in ("index", "explore", "dashboard", "compare", "about"):
+        app.add_url_rule(f"/__test_{endpoint}", endpoint, lambda endpoint=endpoint: endpoint)
+
+    register_history_routes(app)
+    return app
+
+
 def test_history_api_reads_sqlite(tmp_path, monkeypatch):
     db_path = tmp_path / "history.db"
     _make_db(db_path)
     monkeypatch.setattr(history_routes, "DATABASE_PATH", db_path)
 
-    app = Flask(__name__, template_folder="../ambitionbox_app/templates")
-    register_history_routes(app)
-
-    client = app.test_client()
+    client = _app().test_client()
     response = client.get("/api/history")
     assert response.status_code == 200
     data = response.get_json()
@@ -55,7 +64,6 @@ def test_history_api_reads_sqlite(tmp_path, monkeypatch):
 
 def test_history_page_exists(tmp_path, monkeypatch):
     monkeypatch.setattr(history_routes, "DATABASE_PATH", tmp_path / "missing.db")
-    app = Flask(__name__, template_folder="../ambitionbox_app/templates")
-    register_history_routes(app)
-    response = app.test_client().get("/history")
+    response = _app().test_client().get("/history")
     assert response.status_code == 200
+    assert b"Data history" in response.data
