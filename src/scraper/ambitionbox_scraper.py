@@ -62,7 +62,7 @@ class AmbitionBoxScraper:
 
     @staticmethod
     def parse_page(html: str) -> list[dict[str, str | None]]:
-        """Extract company name, rating, and raw detail text from HTML."""
+        """Extract company name, rating, and normalized raw detail text from HTML."""
         soup = BeautifulSoup(html, "html.parser")
         rows: list[dict[str, str | None]] = []
 
@@ -71,15 +71,16 @@ class AmbitionBoxScraper:
             rating_node = card.find("span", class_=RATING_CLASS)
             details_node = card.find("span", class_=DETAILS_CLASS)
 
+            details = None
+            if details_node:
+                parts = details_node.get_text("|", strip=True).split("|")
+                details = ", ".join(part.strip() for part in parts if part.strip())
+
             rows.append(
                 {
                     "company_name": name_node.get_text(strip=True) if name_node else None,
                     "company_rating": rating_node.get_text(strip=True) if rating_node else None,
-                    "other_data": (
-                        ",".join(details_node.get_text(strip=True).split("|"))
-                        if details_node
-                        else None
-                    ),
+                    "other_data": details,
                 }
             )
 
@@ -97,9 +98,12 @@ class AmbitionBoxScraper:
                 LOGGER.error("%s page %s failed: %s", location, page, exc)
                 continue
 
-            # Empty pages normally indicate that pagination has ended.
             if not page_records:
-                LOGGER.info("%s page %s returned no company cards; stopping", location, page)
+                LOGGER.info(
+                    "%s page %s returned no company cards; stopping",
+                    location,
+                    page,
+                )
                 break
 
             records.extend(page_records)
@@ -108,8 +112,10 @@ class AmbitionBoxScraper:
 
         return pd.DataFrame(records, columns=["company_name", "company_rating", "other_data"])
 
-    def scrape_locations(self, locations: list[str], output_dir: str | Path) -> dict[str, pd.DataFrame]:
-        """Scrape locations sequentially and optionally persist one CSV per location."""
+    def scrape_locations(
+        self, locations: list[str], output_dir: str | Path
+    ) -> dict[str, pd.DataFrame]:
+        """Scrape locations sequentially and persist one CSV per location."""
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         results: dict[str, pd.DataFrame] = {}
