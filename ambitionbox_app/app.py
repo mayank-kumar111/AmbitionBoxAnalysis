@@ -13,6 +13,13 @@ import numpy as np
 import pandas as pd
 from flask import Flask, render_template, request, jsonify, Response
 
+# Optional history module: works both as a package import and when app.py is
+# launched directly from the ambitionbox_app directory.
+try:
+    from .history_routes import register_history_routes
+except ImportError:  # pragma: no cover - direct script execution
+    from history_routes import register_history_routes
+
 # App + data loading
 app = Flask(__name__)
 
@@ -60,7 +67,6 @@ def size_lower_bound(label):
 
 def ordered_sizes():
     sizes = [s for s in DF["size"].dropna().unique().tolist()]
-    # sort by lower bound, then India-first before Global variants
     sizes.sort(key=lambda s: (size_lower_bound(s), "(Global)" in s))
     return sizes
 
@@ -114,14 +120,12 @@ def apply_filters(df: pd.DataFrame) -> pd.DataFrame:
         if vals:
             q = q[q[field].isin(vals)]
 
-    # rating range
     rmin, rmax = _floats("rating_min"), _floats("rating_max")
     if rmin is not None:
         q = q[q["company_rating"] >= rmin]
     if rmax is not None:
         q = q[q["company_rating"] <= rmax]
 
-    # age range; optionally keep rows with no founding year
     ymin, ymax = _floats("years_min"), _floats("years_max")
     include_unknown = request.args.get("include_unknown_age", "true") != "false"
     if ymin is not None or ymax is not None or not include_unknown:
@@ -181,7 +185,6 @@ def api_companies():
     if sort not in COLUMNS:
         sort = "company_rating"
     ascending = order == "asc"
-    # keep NaNs at the bottom regardless of direction
     q = q.sort_values(by=sort, ascending=ascending, na_position="last",
                       kind="mergesort")
 
@@ -194,8 +197,6 @@ def api_companies():
 
     start = (page - 1) * page_size
     rows = q.iloc[start:start + page_size].copy()
-
-    # JSON-safe records (NaN -> None)
     rows = rows.replace({np.nan: None})
     records = rows.to_dict(orient="records")
     for r in records:
@@ -215,33 +216,28 @@ def api_companies():
 def api_compare():
     c1 = request.args.get("c1", "").strip().lower()
     c2 = request.args.get("c2", "").strip().lower()
-    
+
     if not c1 or not c2:
         return jsonify({"error": "Please provide both c1 and c2"}), 400
-        
+
     df1 = DF[DF["company_name"].str.lower() == c1]
     df2 = DF[DF["company_name"].str.lower() == c2]
-    
-    # fallback to contains if exact match fails
+
     if df1.empty:
         df1 = DF[DF["company_name"].str.lower().str.contains(c1, na=False)]
     if df2.empty:
         df2 = DF[DF["company_name"].str.lower().str.contains(c2, na=False)]
-        
-    # JSON-safe dicts
+
     def clean(df):
-        if df.empty: return None
-        r = df.iloc[0].copy()
-        r = r.replace({np.nan: None})
+        if df.empty:
+            return None
+        r = df.iloc[0].copy().replace({np.nan: None})
         d = r.to_dict()
         if d.get("years_old") is not None:
             d["years_old"] = int(d["years_old"])
         return d
 
-    return jsonify({
-        "c1": clean(df1),
-        "c2": clean(df2)
-    })
+    return jsonify({"c1": clean(df1), "c2": clean(df2)})
 
 
 # API: analytics aggregations for the dashboard
@@ -258,7 +254,6 @@ def api_analytics():
     rated = q["company_rating"].dropna()
     aged = q["years_old"].dropna()
 
-    # KPIs
     top_type = "—"
     if q["type"].notna().any():
         top_type = str(q["type"].dropna().value_counts().index[0])
@@ -272,7 +267,6 @@ def api_analytics():
         "top_type": top_type,
     }
 
-    # Rating histogram (0.5-wide bins from 1.0 to 5.0)
     rating_hist = []
     if len(rated):
         edges = np.arange(1.0, 5.5, 0.5)
@@ -284,7 +278,6 @@ def api_analytics():
                 "count": int(cnt),
             })
 
-    # Age histogram (human-friendly buckets)
     years_hist = []
     if len(aged):
         edges = [0, 5, 10, 20, 30, 50, 75, 100, np.inf]
@@ -295,7 +288,6 @@ def api_analytics():
         vc = cats.value_counts().reindex(labels).fillna(0)
         years_hist = [{"label": l, "count": int(c)} for l, c in vc.items()]
 
-    # Average rating by industry (top 12 industries by company count)
     rating_by_industry = []
     if len(q):
         top_inds = q["industry"].dropna().value_counts().head(12).index.tolist()
@@ -307,21 +299,18 @@ def api_analytics():
         ]
         rating_by_industry.sort(key=lambda d: d["avg"], reverse=True)
 
-    # Size distribution (ordered)
     size_dist = []
     scnt = q["size"].dropna().value_counts()
     for s in META["filters"]["sizes"]:
         if s in scnt.index:
             size_dist.append({"label": s, "count": int(scnt[s])})
 
-    # Rating vs Age scatter (sample to keep payload light)
     both = q[q["company_rating"].notna() & q["years_old"].notna()]
     if len(both) > 1500:
         both = both.sample(1500, random_state=7)
     scatter = [{"x": int(r.years_old), "y": float(r.company_rating)}
                for r in both.itertuples()]
 
-    # average rating grouped by size / type / age / city
     rated_q = q[q["company_rating"].notna()]
 
     def _avg_by(col, order=None, min_n=20, top=None, sort_desc=False):
@@ -372,7 +361,6 @@ def api_analytics():
     })
 
 
-# API: export filtered rows as CSV
 @app.route("/api/export")
 def api_export():
     q = apply_filters(DF)
@@ -382,9 +370,13 @@ def api_export():
     return Response(
         buf.getvalue(),
         mimetype="text/csv",
-        headers={"Content-Disposition":
-                 "attachment; filename=ambitionbox_filtered.csv"},
+        headers={"Content-Disposition": "attachment; filename=ambitionbox_filtered.csv"},
     )
+
+
+# Register SQLite-backed history routes on the same Flask application. The
+# API safely returns empty history data until data/ambitionbox.db exists.
+register_history_routes(app)
 
 
 if __name__ == "__main__":
