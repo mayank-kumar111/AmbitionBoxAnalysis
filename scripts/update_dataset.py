@@ -49,7 +49,10 @@ def main() -> None:
     args = parser.parse_args()
 
     incoming = load_snapshot_files(args.incoming)
-    validate_or_raise(incoming)
+    # Incoming snapshots may contain duplicates across locations/pages. Those
+    # duplicates are an expected ingestion metric and are collapsed by the
+    # incremental merger. The merged master is validated strictly there.
+    validate_or_raise(incoming, check_duplicates=False)
 
     ingestor = IncrementalIngestor(args.master)
     merged, result = ingestor.merge(
