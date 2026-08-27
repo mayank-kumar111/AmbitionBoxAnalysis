@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block nav_history %}active{% endblock %}
+{% block title %}Data History · AmbitionBox Analysis{% endblock %}
+
+{% block content %}
+<div class="wrap" style="padding-top:26px;padding-bottom:60px">
+  <div class="tool-head" style="margin-bottom:18px">
+    <div>
+      <h1>Data history</h1>
+      <p>Track dataset snapshots, company discoveries, and rating changes.</p>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="{{ url_for('dashboard') }}">Back to dashboard</a>
+  </div>
+
+  <div class="kpi-row" id="history-kpis">
+    <div class="kpi"><div class="k-lbl">Current companies</div><div class="k-val grad" id="history-companies">—</div></div>
+    <div class="kpi"><div class="k-lbl">Snapshots</div><div class="k-val" id="history-snapshots">—</div></div>
+    <div class="kpi"><div class="k-lbl">New records</div><div class="k-val" id="history-new">—</div></div>
+    <div class="kpi"><div class="k-lbl">Rating updates</div><div class="k-val" id="history-updates">—</div></div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="card col-8">
+      <h3>Dataset growth</h3>
+      <div class="sub">Companies observed in each historical snapshot</div>
+      <div class="canvas-box"><canvas id="history-growth"></canvas></div>
+    </div>
+    <div class="card col-4">
+      <h3>Latest activity</h3>
+      <div class="sub" id="history-status">Loading history…</div>
+      <div id="history-latest" style="margin-top:14px"></div>
+    </div>
+
+    <div class="card col-6">
+      <h3>Most improved companies</h3>
+      <div class="sub">Largest accumulated positive rating changes</div>
+      <div id="history-improved" class="table-wrap" style="margin-top:12px;overflow:auto"></div>
+    </div>
+    <div class="card col-6">
+      <h3>Latest new companies</h3>
+      <div class="sub">Most recently discovered records</div>
+      <div id="history-new-list" class="table-wrap" style="margin-top:12px;overflow:auto"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}
