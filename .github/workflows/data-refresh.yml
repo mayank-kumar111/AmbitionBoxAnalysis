@@ -1,0 +1,53 @@
+name: AmbitionBox Data Refresh
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Weekly refresh. The workflow creates a snapshot/report artifact only;
+    # it never commits scraped data or overwrites the master CSV.
+    - cron: "30 2 * * 0"
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run test suite
+        run: pytest -q
+
+      - name: Collect weekly snapshot
+        run: |
+          python scripts/collect_and_update.py \
+            --master ambitionbox_app/data/companies.csv \
+            --output data/processed/companies_updated.csv \
+            --report reports/update_report.json \
+            --pages 1
+
+      - name: Upload refresh artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ambitionbox-refresh-${{ github.run_number }}
+          path: |
+            data/incoming/
+            reports/update_report.json
+          if-no-files-found: warn
+          retention-days: 14
