@@ -3,12 +3,13 @@ name: AmbitionBox Data Refresh
 on:
   workflow_dispatch:
   schedule:
-    # Weekly refresh. The workflow creates a snapshot/report artifact only;
-    # it never commits scraped data or overwrites the master CSV.
+    # Weekly refresh. The workflow persists the history database as an artifact
+    # and never commits generated data back to the repository.
     - cron: "30 2 * * 0"
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   refresh:
@@ -33,6 +34,24 @@ jobs:
       - name: Run test suite
         run: pytest -q
 
+      - name: Restore latest history database
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          mkdir -p data
+          artifact_id="$(gh api "repos/${{ github.repository }}/actions/artifacts?name=ambitionbox-history-db&per_page=1" --jq '.artifacts[0].id // empty')"
+          if [ -n "$artifact_id" ]; then
+            echo "Restoring history database artifact: $artifact_id"
+            gh api "repos/${{ github.repository }}/actions/artifacts/$artifact_id/zip" > /tmp/history.zip
+            unzip -o /tmp/history.zip -d /tmp/history_restore
+            if [ -f /tmp/history_restore/ambitionbox.db ]; then
+              cp /tmp/history_restore/ambitionbox.db data/ambitionbox.db
+            fi
+          else
+            echo "No previous history artifact found; the refresh will seed from the master CSV."
+          fi
+
       - name: Collect weekly snapshot
         run: |
           python scripts/collect_and_update.py \
@@ -41,7 +60,30 @@ jobs:
             --report reports/update_report.json \
             --pages 1
 
-      - name: Upload refresh artifacts
+      - name: Persist SQLite history snapshot
+        run: |
+          snapshot_dir="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("reports/update_report.json").read_text(encoding="utf-8"))
+          print(report["incoming_directory"])
+          PY
+          )"
+          python scripts/refresh_history.py \
+            --master ambitionbox_app/data/companies.csv \
+            --incoming "$snapshot_dir" \
+            --database data/ambitionbox.db \
+            --report reports/history_refresh.json
+
+      - name: Upload persistent history database
+        uses: actions/upload-artifact@v4
+        with:
+          name: ambitionbox-history-db
+          path: data/ambitionbox.db
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Upload refresh reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -49,5 +91,6 @@ jobs:
           path: |
             data/incoming/
             reports/update_report.json
+            reports/history_refresh.json
           if-no-files-found: warn
           retention-days: 14
