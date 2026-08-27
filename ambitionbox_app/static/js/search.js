@@ -13,18 +13,19 @@
     if (data.location) tags += `<span>${esc(data.location)}</span>`;
     if (data.size) tags += `<span>${esc(String(data.size).replace(" Employees", ""))}</span>`;
     $("#modal-tags").innerHTML = tags;
-    
     let b = `<strong>${esc(data.company_name)}</strong> is a ${data.years_old ? data.years_old+' year old ' : ''}company`;
     if (data.location) b += ` based in ${esc(data.location)}.`;
     else b += ".";
-    
-    if (data.company_rating >= 4.0) {
-      b += `<br><br><span style="color:var(--cyan)">★ This company is highly rated!</span>`;
-    }
-    
+    if (data.company_rating >= 4.0) b += `<br><br><span style="color:var(--cyan)">★ This company is highly rated!</span>`;
     $("#modal-body").innerHTML = b;
     $("#company-modal").classList.add("active");
   };
+
+  function openCompanyHistory(data) {
+    const params = new URLSearchParams({ name: data.company_name });
+    if (data.location) params.set("location", data.location);
+    window.location.href = `/history/company?${params.toString()}`;
+  }
 
   if (!input || !dropdown) return;
 
@@ -50,6 +51,7 @@
             return `<div class="search-item" data-info="${info}">
               <div class="search-item-title">${esc(r.company_name)} <span>★ ${r.company_rating ? Number(r.company_rating).toFixed(1) : '-'}</span></div>
               <div class="search-item-sub">${r.industry ? esc(r.industry) : ''}${r.location ? ' · ' + esc(r.location) : ''}</div>
+              <div class="search-item-actions"><button type="button" class="search-history-btn">View history</button></div>
             </div>`;
           }).join("");
         }
@@ -67,6 +69,10 @@
       const data = JSON.parse(decodeURIComponent(item.dataset.info || "%7B%7D"));
       dropdown.classList.remove("active");
       input.value = "";
+      if (e.target.closest(".search-history-btn")) {
+        openCompanyHistory(data);
+        return;
+      }
       window.openCompanyModal(data);
     } catch(err) {}
   });
@@ -76,5 +82,4 @@
       dropdown.classList.remove("active");
     }
   });
-
 })();
