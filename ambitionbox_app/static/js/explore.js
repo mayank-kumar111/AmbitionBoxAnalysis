@@ -4,6 +4,12 @@
   const $ = (s) => document.querySelector(s);
   const esc = AB.esc;
 
+  function historyUrl(row) {
+    const p = new URLSearchParams({ name: row.company_name });
+    if (row.location) p.set("location", row.location);
+    return `/history/company?${p.toString()}`;
+  }
+
   function ratingCell(v) {
     if (v === null || v === undefined) return `<span class="rating na">—</span>`;
     const cls = v >= 4 ? "hi" : v >= 3 ? "mid" : "lo";
@@ -48,11 +54,21 @@
     const tr = e.target.closest("tr");
     if (!tr || tr.dataset.empty) return;
     if (e.target.tagName === "A" || e.target.closest("a")) return;
-    
     try {
       const data = JSON.parse(decodeURIComponent(tr.dataset.info || "%7B%7D"));
       if (window.openCompanyModal) window.openCompanyModal(data);
     } catch(err) {
+      console.error(err);
+    }
+  });
+
+  $("#rows").addEventListener("dblclick", (e) => {
+    const tr = e.target.closest("tr");
+    if (!tr || tr.dataset.empty) return;
+    try {
+      const data = JSON.parse(decodeURIComponent(tr.dataset.info || "%7B%7D"));
+      window.location.href = historyUrl(data);
+    } catch (err) {
       console.error(err);
     }
   });
@@ -119,7 +135,6 @@
     window.location.href = "/api/export?" + p.toString();
   });
 
-  // Boot
   AB.initFilters($("#filter-panel"), () => load(true)).then(() => {
     updateSortArrows();
     load(true);
