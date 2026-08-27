@@ -50,3 +50,4 @@ dist/
 /data/processed/companies_updated.csv
 /reports/*.json
 /reports/*.csv
+/ambitionbox_app/static/last_update_report.json
