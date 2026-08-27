@@ -48,6 +48,24 @@
   <section class="card" style="margin:18px 0">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
       <div>
+        <h3 style="margin-bottom:4px">Latest refresh changes</h3>
+        <div class="sub">What changed during the most recent data ingestion run</div>
+      </div>
+      <span id="refresh-summary-status" class="chip">Checking…</span>
+    </div>
+    <div class="kpi-row" style="margin-top:14px">
+      <div class="kpi"><div class="k-lbl">New companies</div><div class="k-val" id="refresh-new">—</div></div>
+      <div class="kpi"><div class="k-lbl">Updated companies</div><div class="k-val" id="refresh-updated">—</div></div>
+      <div class="kpi"><div class="k-lbl">Duplicates</div><div class="k-val" id="refresh-duplicates">—</div></div>
+      <div class="kpi"><div class="k-lbl">Rating changes</div><div class="k-val" id="refresh-rating">—</div></div>
+      <div class="kpi"><div class="k-lbl">Invalid records</div><div class="k-val" id="refresh-invalid">—</div></div>
+    </div>
+    <div id="refresh-summary-meta" class="sub" style="margin-top:10px">Loading refresh report…</div>
+  </section>
+
+  <section class="card" style="margin:18px 0">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div>
         <h3 style="margin-bottom:4px">Company timeline</h3>
         <div class="sub">Jump from the dashboard to a company's historical profile</div>
       </div>
