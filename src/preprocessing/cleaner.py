@@ -17,14 +17,19 @@ FINAL_COLUMNS = [
     "location",
 ]
 
+# Observed company-type labels from the project dataset plus the original
+# parser's supported labels. Values are matched case-insensitively.
 TYPE_VALUES = {
     "public",
     "private",
     "government",
+    "state",
+    "central",
     "startup",
     "mnc",
     "partnership",
     "proprietorship",
+    "conglomerate",
     "fortune india 500",
     "forbes global 2000",
     "indian unicorn",
@@ -83,7 +88,6 @@ def parse_other_data(value: object) -> dict[str, object]:
     if type_index is not None:
         excluded.add(type_index)
 
-    # The location is the final segment. The remaining leading content is the industry.
     location_index = len(parts) - 1
     excluded.add(location_index)
     industry_parts = [part for index, part in enumerate(parts) if index not in excluded]
