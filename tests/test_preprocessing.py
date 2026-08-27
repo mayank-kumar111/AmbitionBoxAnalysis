@@ -1,5 +1,4 @@
 import pandas as pd
-import pytest
 
 from src.preprocessing.cleaner import clean_dataframe, parse_other_data
 from src.preprocessing.validator import validate_dataframe
@@ -17,6 +16,14 @@ def test_parse_complete_other_data():
         "years_old": 72,
         "location": "Ahmedabad",
     }
+
+
+def test_parse_other_locations_suffix():
+    result = parse_other_data(
+        "IT Services, 1k-5k Employees, Public, 20 years old, Mumbai +392 other locations"
+    )
+
+    assert result["location"] == "Mumbai"
 
 
 def test_parse_missing_type_and_industry():
