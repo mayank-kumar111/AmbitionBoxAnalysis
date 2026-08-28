@@ -31,12 +31,21 @@ _active_job: dict[str, Any] | None = None
 
 
 def _authorized() -> bool:
-    """Allow loopback by default; require a token for non-loopback use."""
+    """Allow configured refresh-token access or loopback local use."""
     remote = request.remote_addr or ""
     token = os.getenv("AMBITIONBOX_REFRESH_TOKEN", "").strip()
     if token:
         supplied = request.headers.get("X-Refresh-Token", "")
         return supplied == token
+    return remote in {"127.0.0.1", "::1", "localhost"}
+
+
+def _admin_authorized() -> bool:
+    """Require the dedicated admin token for mutating/apply operations."""
+    remote = request.remote_addr or ""
+    admin_token = os.getenv("AMBITIONBOX_ADMIN_TOKEN", "").strip()
+    if admin_token:
+        return request.headers.get("X-Admin-Token", "") == admin_token
     return remote in {"127.0.0.1", "::1", "localhost"}
 
 
@@ -125,6 +134,9 @@ def register_refresh_routes(app) -> None:
         extended = bool(payload.get("extended", False))
         apply = bool(payload.get("apply", False))
         full_snapshot = bool(payload.get("full_snapshot", False))
+
+        if apply and not _admin_authorized():
+            return jsonify({"error": "Admin authorization required for apply refresh."}), 403
 
         _cleanup_finished()
         global _active_process, _active_job
