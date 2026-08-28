@@ -2,9 +2,19 @@ name: AmbitionBox Data Refresh
 
 on:
   workflow_dispatch:
+    inputs:
+      extended:
+        description: "Scrape the extended location set"
+        required: false
+        default: false
+        type: boolean
+      pages:
+        description: "Pages per location"
+        required: false
+        default: "1"
+        type: string
   schedule:
-    # Weekly refresh. The workflow persists the history database as an artifact
-    # and never commits generated data back to the repository.
+    # Weekly refresh. Scheduled runs use the core location preset.
     - cron: "30 2 * * 0"
 
 permissions:
@@ -52,13 +62,22 @@ jobs:
             echo "No previous history artifact found; the refresh will seed from the master CSV."
           fi
 
-      - name: Collect weekly snapshot
+      - name: Collect snapshot
+        env:
+          EXTENDED: ${{ inputs.extended }}
+          PAGES: ${{ inputs.pages }}
+        shell: bash
         run: |
-          python scripts/collect_and_update.py \
-            --master ambitionbox_app/data/companies.csv \
-            --output data/processed/companies_updated.csv \
-            --report reports/update_report.json \
-            --pages 1
+          if [ -z "$PAGES" ]; then PAGES=1; fi
+          command=(python scripts/collect_and_update.py
+            --master ambitionbox_app/data/companies.csv
+            --output data/processed/companies_updated.csv
+            --report reports/update_report.json
+            --pages "$PAGES")
+          if [ "$EXTENDED" = "true" ]; then
+            command+=(--extended)
+          fi
+          "${command[@]}"
 
       - name: Persist SQLite history snapshot
         run: |
