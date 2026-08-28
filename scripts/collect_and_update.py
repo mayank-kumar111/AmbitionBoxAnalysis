@@ -2,6 +2,7 @@
 
 The command is dry-run by default. Scraped files are stored separately from
 the application dataset, and the master dataset is only written with --apply.
+Critical anomalies block an --apply run until the input is reviewed.
 """
 
 from __future__ import annotations
@@ -19,6 +20,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from src.ingestion.incremental import IncrementalIngestor
+from src.quality.anomaly_detector import detect_anomalies
 from src.scraper.ambitionbox_scraper import AmbitionBoxScraper
 from src.scraper.config import ScraperConfig
 from src.scraper.locations import CORE_LOCATIONS, EXTENDED_LOCATIONS
@@ -34,7 +36,7 @@ def main() -> None:
     parser.add_argument("--report", type=Path, default=Path("reports/update_report.json"))
     parser.add_argument("--pages", type=int, default=10, help="Maximum pages per location for this run")
     parser.add_argument("--extended", action="store_true", help="Include the extended location preset")
-    parser.add_argument("--apply", action="store_true", help="Write the merged dataset")
+    parser.add_argument("--apply", action="store_true", help="Write the merged dataset when no critical anomaly is found")
     parser.add_argument("--full-snapshot", action="store_true", help="Report removals only when the collection covers the complete source")
     args = parser.parse_args()
 
@@ -51,11 +53,38 @@ def main() -> None:
 
     incoming = load_snapshot_files(incoming_dir)
     ingestor = IncrementalIngestor(args.master)
-    _, result = ingestor.merge(
+    merged, result = ingestor.merge(
         incoming,
-        output_path=args.output if args.apply else None,
+        output_path=None,
         full_snapshot=args.full_snapshot,
     )
+
+    rating_changes = sum(
+        1
+        for company in result.updated_companies
+        if "company_rating" in company.get("changes", {})
+    )
+    duplicate_records = result.incoming_duplicate_rows + result.master_duplicate_keys
+
+    anomalies = detect_anomalies(
+        previous_records=result.previous_records,
+        incoming_records=result.incoming_records,
+        final_records=result.final_records,
+        new_records=result.new_records,
+        updated_records=result.updated_records,
+        duplicate_records=duplicate_records,
+        invalid_records=result.invalid_records,
+        rating_changes=rating_changes,
+        removed_records=result.removed_records if args.full_snapshot else None,
+    )
+
+    critical_anomalies = [item for item in anomalies if item.severity == "critical"]
+    applied = False
+    if args.apply and not critical_anomalies:
+        destination = Path(args.output)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        merged.to_csv(destination, index=False)
+        applied = True
 
     report = result.to_dict()
     report["snapshot"] = timestamp
@@ -63,21 +92,26 @@ def main() -> None:
     report["pages_per_location"] = args.pages
     report["new_companies"] = list(result.new_companies)
     report["updated_companies"] = list(result.updated_companies)
-    report["applied"] = args.apply
+    report["duplicate_records"] = duplicate_records
+    report["rating_changes"] = rating_changes
+    report["anomalies"] = [item.to_dict() for item in anomalies]
+    report["anomalies_found"] = bool(anomalies)
+    report["critical_anomalies"] = [item.to_dict() for item in critical_anomalies]
+    report["applied"] = applied
     report["full_snapshot"] = args.full_snapshot
     report["incoming_directory"] = str(incoming_dir.relative_to(ROOT_DIR))
 
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
 
-    # Publish the latest run summary where the local dashboard can read it.
-    # This file is generated data and is excluded from source control.
     dashboard_report = ROOT_DIR / "ambitionbox_app" / "static" / "last_update_report.json"
     dashboard_report.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(args.report, dashboard_report)
 
     print(json.dumps(report, indent=2, default=str))
-    if not args.apply:
+    if critical_anomalies:
+        print("ANOMALY BLOCK: critical anomalies were found; the master dataset was NOT changed.")
+    elif not applied:
         print("DRY RUN: the master dataset was not changed. Use --apply to write the merged output.")
     else:
         print(f"Merged dataset written to: {args.output}")
