@@ -156,3 +156,7 @@ def register_refresh_routes(app) -> None:
                 "job": job,
                 "report": _read_report() if job and job.get("status") != "running" else None,
             })
+
+    # Data Operations is registered from the same application bootstrap.
+    from .ops_routes import register_ops_routes
+    register_ops_routes(app)
