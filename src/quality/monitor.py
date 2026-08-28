@@ -6,7 +6,11 @@ from typing import Any
 
 
 def summarize_health_runs(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    """Return compact trend metrics from refresh-run records."""
+    """Return compact trend metrics from refresh-run records.
+
+    Status values are normalized case-insensitively so historical reports can use
+    ``Healthy``/``Warning``/``Blocked`` or their lowercase equivalents.
+    """
     if not rows:
         return {
             "runs": [],
@@ -20,19 +24,22 @@ def summarize_health_runs(rows: list[dict[str, Any]]) -> dict[str, Any]:
     normalized = []
     for row in rows:
         score = row.get("health_score")
-        status = row.get("health_status") or "unknown"
+        raw_status = row.get("health_status") or "unknown"
+        status = str(raw_status).strip()
         normalized.append({
             **row,
             "health_score": None if score is None else int(score),
-            "health_status": str(status),
+            "health_status": status,
         })
 
     scores = [r["health_score"] for r in normalized if r["health_score"] is not None]
+    status_counts = [r["health_status"].casefold() for r in normalized]
+
     return {
         "runs": normalized,
         "latest": normalized[-1],
-        "healthy_runs": sum(r["health_status"] == "healthy" for r in normalized),
-        "warning_runs": sum(r["health_status"] == "warning" for r in normalized),
-        "blocked_runs": sum(r["health_status"] == "blocked" for r in normalized),
+        "healthy_runs": status_counts.count("healthy"),
+        "warning_runs": status_counts.count("warning"),
+        "blocked_runs": status_counts.count("blocked"),
         "average_score": round(sum(scores) / len(scores), 1) if scores else None,
     }
