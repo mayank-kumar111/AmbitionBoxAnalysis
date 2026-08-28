@@ -15,7 +15,7 @@ from flask import jsonify, request
 
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-REFRESH_SCRIPT = ROOT_DIR / "scripts" / "auto_refresh.py"
+REFRESH_SCRIPT = ROOT_DIR / "scripts" / "refresh_pipeline.py"
 MAX_PAGES = 10
 
 _state_lock = threading.RLock()
