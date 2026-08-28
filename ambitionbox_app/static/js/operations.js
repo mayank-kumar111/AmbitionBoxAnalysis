@@ -9,13 +9,42 @@
   const fmt = (value) => value == null ? "—" : Number(value).toLocaleString("en-IN");
   const dt = (value) => value == null ? "—" : new Date(Number(value) * 1000).toLocaleString("en-IN");
 
+  function renderAudit(events) {
+    const target = document.getElementById("ops-audit");
+    if (!target) return;
+    if (!events || !events.length) {
+      target.innerHTML = '<span class="muted">No refresh audit events recorded yet.</span>';
+      return;
+    }
+    target.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+      <thead><tr>
+        <th style="text-align:left;padding:8px;border-bottom:1px solid var(--border);">Time</th>
+        <th style="text-align:left;padding:8px;border-bottom:1px solid var(--border);">Actor</th>
+        <th style="text-align:left;padding:8px;border-bottom:1px solid var(--border);">Action</th>
+        <th style="text-align:left;padding:8px;border-bottom:1px solid var(--border);">Status</th>
+        <th style="text-align:left;padding:8px;border-bottom:1px solid var(--border);">Details</th>
+      </tr></thead>
+      <tbody>${events.map((event) => {
+        const d = event.details || {};
+        const summary = event.action === "refresh"
+          ? `${d.pages ?? "—"} page(s) · ${d.extended ? "extended" : "core"} · ${d.apply ? "apply" : "dry run"}${d.health?.status ? ` · ${esc(d.health.status)}` : ""}`
+          : "—";
+        return `<tr>
+          <td style="padding:8px;border-bottom:1px solid var(--border);white-space:nowrap;">${esc(new Date(event.timestamp).toLocaleString("en-IN"))}</td>
+          <td style="padding:8px;border-bottom:1px solid var(--border);">${esc(event.actor)}</td>
+          <td style="padding:8px;border-bottom:1px solid var(--border);">${esc(event.action)}</td>
+          <td style="padding:8px;border-bottom:1px solid var(--border);font-weight:600;">${esc(event.status)}</td>
+          <td style="padding:8px;border-bottom:1px solid var(--border);">${summary}</td>
+        </tr>`;
+      }).join("")}</tbody></table>`;
+  }
+
   function render(data) {
     const health = data.latest_refresh?.health || {};
     const alerts = data.latest_refresh?.alerts || {};
     const metrics = data.latest_refresh?.metrics || {};
     const score = health.score == null ? "—" : `${health.score}/100`;
     const status = health.status || "No refresh report";
-    const badge = status.toLowerCase();
 
     document.getElementById("ops-health").innerHTML = `
       <div style="display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap;">
@@ -49,11 +78,13 @@
     document.getElementById("ops-alerts").innerHTML = combined.length
       ? combined.slice(0, 8).map((a) => `<div style="padding:10px 0;border-bottom:1px solid var(--border);"><strong>${esc(a.code || a.type || a.severity || "Alert")}</strong><div class="muted" style="margin-top:3px;">${esc(a.message || a.reason || "Anomaly detected")}</div></div>`).join("")
       : `<span class="muted">No alerts in the latest refresh report.</span>`;
+
+    renderAudit(data.audit || []);
   }
 
   async function load() {
     try {
-      const response = await fetch("/api/ops", { cache: "no-store" });
+      const response = await fetch("/api/ops?audit_limit=20", { cache: "no-store" });
       if (!response.ok) throw new Error("Operations API unavailable");
       render(await response.json());
     } catch (error) {
