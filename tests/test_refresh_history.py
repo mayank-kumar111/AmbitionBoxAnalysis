@@ -1,4 +1,4 @@
-from __future__ import annotations
+from pathlib import Path
 
 import pandas as pd
 
@@ -49,3 +49,7 @@ def test_refresh_history_seeds_and_imports(tmp_path, monkeypatch):
     store = SQLiteStore(database)
     assert store.company_count() == 1
     assert store.snapshot_count() == 2
+    assert store.refresh_run_count() == 1
+
+    dashboard_history = Path("ambitionbox_app/static/refresh_history.json")
+    assert dashboard_history.exists()
