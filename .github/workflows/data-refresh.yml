@@ -91,19 +91,12 @@ jobs:
           if [ "$EXTENDED" = "true" ]; then command+=(--extended); fi
           "${command[@]}"
 
-      - name: Restore database after collection failure
-        if: failure()
-        shell: bash
+      - name: Verify post-refresh dataset
+        if: success()
         run: |
-          backup="data/backups/ambitionbox-${{ github.run_number }}.db"
-          if [ -f "$backup" ]; then
-            python scripts/validate_and_restore_database.py \
-              --database data/ambitionbox.db \
-              --backup "$backup" \
-              --force
-          else
-            echo "No pre-refresh database backup exists; nothing to restore."
-          fi
+          python scripts/verify_master_dataset.py \
+            --master data/processed/companies_updated.csv \
+            --minimum-rows 1
 
       - name: Publish GitHub refresh summary
         if: always()
