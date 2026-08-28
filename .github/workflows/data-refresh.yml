@@ -64,6 +64,7 @@ jobs:
       - name: Backup existing history database
         if: ${{ hashFiles('data/ambitionbox.db') != '' }}
         run: |
+          mkdir -p data/backups
           python scripts/backup_database.py \
             --database data/ambitionbox.db \
             --backup data/backups/ambitionbox-${{ github.run_number }}.db
@@ -83,17 +84,42 @@ jobs:
           if [ "$EXTENDED" = "true" ]; then command+=(--extended); fi
           "${command[@]}"
 
+      - name: Restore database after collection failure
+        if: failure()
+        shell: bash
+        run: |
+          backup="data/backups/ambitionbox-${{ github.run_number }}.db"
+          if [ -f "$backup" ]; then
+            python scripts/validate_and_restore_database.py \
+              --database data/ambitionbox.db \
+              --backup "$backup" \
+              --force
+          else
+            echo "No pre-refresh database backup exists; nothing to restore."
+          fi
+
       - name: Publish GitHub refresh summary
         if: always()
-        run: python scripts/github_summary.py reports/update_report.json
+        run: |
+          if [ -f reports/update_report.json ]; then
+            python scripts/github_summary.py reports/update_report.json
+          else
+            echo "No refresh report was produced."
+          fi
 
       - name: Send alert notification
         if: always()
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: python scripts/notify_refresh.py reports/update_report.json
+        run: |
+          if [ -f reports/update_report.json ]; then
+            python scripts/notify_refresh.py reports/update_report.json
+          else
+            echo "No refresh report was produced; notification skipped."
+          fi
 
       - name: Persist SQLite history snapshot
+        if: success()
         run: |
           snapshot_dir="$(python - <<'PY'
           import json
@@ -108,12 +134,48 @@ jobs:
             --database data/ambitionbox.db \
             --report reports/history_refresh.json
 
+      - name: Validate persisted history database
+        if: success()
+        run: |
+          backup="data/backups/ambitionbox-${{ github.run_number }}.db"
+          if [ -f "$backup" ]; then
+            python scripts/validate_and_restore_database.py \
+              --database data/ambitionbox.db \
+              --backup "$backup"
+          else
+            python - <<'PY'
+            import sqlite3
+            from pathlib import Path
+            db = Path("data/ambitionbox.db")
+            with sqlite3.connect(db) as connection:
+                result = connection.execute("PRAGMA integrity_check").fetchone()[0]
+            if str(result).lower() != "ok":
+                raise SystemExit(f"SQLite integrity check failed: {result}")
+            print("SQLite database integrity check: ok")
+            PY
+          fi
+
+      - name: Restore database after history failure
+        if: failure()
+        shell: bash
+        run: |
+          backup="data/backups/ambitionbox-${{ github.run_number }}.db"
+          if [ -f "$backup" ]; then
+            python scripts/validate_and_restore_database.py \
+              --database data/ambitionbox.db \
+              --backup "$backup" \
+              --force
+          else
+            echo "No pre-refresh database backup exists; nothing to restore."
+          fi
+
       - name: Upload persistent history database
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ambitionbox-history-db
           path: data/ambitionbox.db
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 90
 
       - name: Upload database backup
