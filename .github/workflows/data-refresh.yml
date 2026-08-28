@@ -77,6 +77,12 @@ jobs:
         if: always()
         run: python scripts/github_summary.py reports/update_report.json
 
+      - name: Send alert notification
+        if: always()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: python scripts/notify_refresh.py reports/update_report.json
+
       - name: Persist SQLite history snapshot
         run: |
           snapshot_dir="$(python - <<'PY'
