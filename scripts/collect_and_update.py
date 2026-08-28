@@ -1,4 +1,9 @@
-"""Collect a fresh snapshot and prepare an incremental dataset update."""
+"""Collect a fresh snapshot and prepare an incremental dataset update.
+
+The command is dry-run by default. Scraped files are stored separately from
+the application dataset, and the master dataset is only written with --apply.
+Critical anomalies block an --apply run until the input is reviewed.
+"""
 
 from __future__ import annotations
 
@@ -6,6 +11,7 @@ import argparse
 import json
 import logging
 import shutil
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -23,6 +29,19 @@ from src.scraper.locations import CORE_LOCATIONS, EXTENDED_LOCATIONS
 from scripts.update_dataset import load_snapshot_files
 
 LOGGER = logging.getLogger(__name__)
+
+
+def _record_health_history(report_path: Path) -> None:
+    """Persist a compact generated history file for the local dashboard."""
+    history_path = ROOT_DIR / "ambitionbox_app" / "static" / "refresh_health_history.json"
+    command = [
+        sys.executable,
+        str(ROOT_DIR / "scripts" / "record_health_history.py"),
+        str(report_path),
+        "--output",
+        str(history_path),
+    ]
+    subprocess.run(command, check=True)
 
 
 def main() -> None:
@@ -100,6 +119,7 @@ def main() -> None:
     dashboard_report = ROOT_DIR / "ambitionbox_app" / "static" / "last_update_report.json"
     dashboard_report.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(args.report, dashboard_report)
+    _record_health_history(args.report)
 
     print(json.dumps(report, indent=2, default=str))
     if critical_anomalies:
