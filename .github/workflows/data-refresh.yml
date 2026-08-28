@@ -38,10 +38,13 @@ jobs:
           cache: pip
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: python -m pip install -r requirements.txt
 
-      - name: Run test suite
-        run: pytest -q
+      - name: Run full test suite quality gate
+        run: python -m pytest -q
+
+      - name: Run deterministic ingestion E2E gate
+        run: python -m pytest -q tests/test_e2e_pipeline.py
 
       - name: Restore latest history database
         env:
