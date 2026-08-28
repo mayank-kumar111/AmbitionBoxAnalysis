@@ -12,9 +12,11 @@ from flask import Flask, render_template, request, jsonify, Response
 try:
     from .history_routes import register_history_routes
     from .config import AppConfig
+    from .cache import TTLCache, make_cache_key
 except ImportError:  # pragma: no cover
     from history_routes import register_history_routes
     from config import AppConfig
+    from cache import TTLCache, make_cache_key
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = AppConfig.SECRET_KEY
@@ -24,6 +26,20 @@ DATA_PATH = AppConfig.DATA_PATH or os.path.join(BASE_DIR, "data", "companies.csv
 
 COLUMNS = ["company_name", "company_rating", "industry", "size",
            "type", "years_old", "location"]
+
+# Short-lived bounded caches keep repeated dashboard/table requests from
+# repeatedly executing expensive pandas operations. The CSV modification time
+# is part of each cache key, so a refresh naturally invalidates old entries.
+API_CACHE = TTLCache(maxsize=128, ttl_seconds=30)
+
+
+def data_version() -> str:
+    """Return a cheap version token that changes when the dataset is rewritten."""
+    try:
+        stat = os.stat(DATA_PATH)
+        return f"{stat.st_mtime_ns}:{stat.st_size}"
+    except OSError:
+        return "missing"
 
 
 def load_data() -> pd.DataFrame:
@@ -166,6 +182,12 @@ def api_meta():
 
 @app.route("/api/companies")
 def api_companies():
+    query = request.query_string.decode("utf-8")
+    key = make_cache_key("companies", f"{data_version()}:{query}")
+    cached = API_CACHE.get(key)
+    if cached is not None:
+        return jsonify(cached)
+
     q = apply_filters(DF)
     sort = request.args.get("sort", "company_rating")
     order = request.args.get("order", "desc")
@@ -184,8 +206,10 @@ def api_companies():
     for r in records:
         if r["years_old"] is not None:
             r["years_old"] = int(r["years_old"])
-    return jsonify({"total": total, "page": page, "page_size": page_size,
-                    "pages": max(1, math.ceil(total / page_size)), "rows": records})
+    payload = {"total": total, "page": page, "page_size": page_size,
+               "pages": max(1, math.ceil(total / page_size)), "rows": records}
+    API_CACHE.set(key, payload)
+    return jsonify(payload)
 
 
 @app.route("/api/compare")
@@ -194,12 +218,17 @@ def api_compare():
     c2 = request.args.get("c2", "").strip().lower()
     if not c1 or not c2:
         return jsonify({"error": "Please provide both c1 and c2"}), 400
+    key = make_cache_key("compare", f"{data_version()}:{c1}:{c2}")
+    cached = API_CACHE.get(key)
+    if cached is not None:
+        return jsonify(cached)
     df1 = DF[DF["company_name"].str.lower() == c1]
     df2 = DF[DF["company_name"].str.lower() == c2]
     if df1.empty:
         df1 = DF[DF["company_name"].str.lower().str.contains(c1, na=False)]
     if df2.empty:
         df2 = DF[DF["company_name"].str.lower().str.contains(c2, na=False)]
+
     def clean(df):
         if df.empty:
             return None
@@ -208,7 +237,10 @@ def api_compare():
         if d.get("years_old") is not None:
             d["years_old"] = int(d["years_old"])
         return d
-    return jsonify({"c1": clean(df1), "c2": clean(df2)})
+
+    payload = {"c1": clean(df1), "c2": clean(df2)}
+    API_CACHE.set(key, payload)
+    return jsonify(payload)
 
 
 def _counts(series, top=None):
@@ -220,6 +252,12 @@ def _counts(series, top=None):
 
 @app.route("/api/analytics")
 def api_analytics():
+    query = request.query_string.decode("utf-8")
+    key = make_cache_key("analytics", f"{data_version()}:{query}")
+    cached = API_CACHE.get(key)
+    if cached is not None:
+        return jsonify(cached)
+
     q = apply_filters(DF)
     rated = q["company_rating"].dropna()
     aged = q["years_old"].dropna()
@@ -247,13 +285,15 @@ def api_analytics():
         grp = sub.groupby("industry")["company_rating"].mean().reindex(top_inds)
         rating_by_industry = [{"label": str(k), "avg": round(float(v), 2)} for k, v in grp.items() if not pd.isna(v)]
         rating_by_industry.sort(key=lambda d: d["avg"], reverse=True)
-    size_dist = [{"label": s, "count": int(q["size"].dropna().value_counts().get(s, 0))}
-                 for s in META["filters"]["sizes"] if s in q["size"].value_counts().index]
+    size_counts = q["size"].dropna().value_counts()
+    size_dist = [{"label": s, "count": int(size_counts.get(s, 0))}
+                 for s in META["filters"]["sizes"] if s in size_counts.index]
     both = q[q["company_rating"].notna() & q["years_old"].notna()]
     if len(both) > 1500:
         both = both.sample(1500, random_state=7)
     scatter = [{"x": int(r.years_old), "y": float(r.company_rating)} for r in both.itertuples()]
     rated_q = q[q["company_rating"].notna()]
+
     def _avg_by(col, order=None, min_n=20, top=None, sort_desc=False):
         g = rated_q.dropna(subset=[col]).groupby(col)["company_rating"].agg(["mean", "count"])
         keys = [k for k in order if k in g.index] if order is not None else g["count"].sort_values(ascending=False).index.tolist()
@@ -264,6 +304,7 @@ def api_analytics():
         if sort_desc:
             out.sort(key=lambda d: d["avg"], reverse=True)
         return out
+
     rating_by_size = _avg_by("size", [s for s in META["filters"]["sizes"] if "(Global)" not in s], min_n=20)
     rating_by_type = _avg_by("type", None, min_n=15, sort_desc=True)
     rating_by_location = _avg_by("location", None, min_n=30, top=10, sort_desc=True)
@@ -277,11 +318,13 @@ def api_analytics():
         for lab in labels:
             if lab in gg.index and not pd.isna(gg.loc[lab, "mean"]) and gg.loc[lab, "count"] >= 15:
                 rating_by_age.append({"label": lab, "avg": round(float(gg.loc[lab, "mean"]), 2), "count": int(gg.loc[lab, "count"])})
-    return jsonify({"kpis": kpis, "top_industries": _counts(q["industry"], top=12), "rating_hist": rating_hist,
-                    "type_breakdown": _counts(q["type"]), "size_dist": size_dist, "top_locations": _counts(q["location"], top=12),
-                    "rating_by_industry": rating_by_industry, "years_hist": years_hist, "scatter": scatter,
-                    "rating_by_size": rating_by_size, "rating_by_type": rating_by_type, "rating_by_age": rating_by_age,
-                    "rating_by_location": rating_by_location})
+    payload = {"kpis": kpis, "top_industries": _counts(q["industry"], top=12), "rating_hist": rating_hist,
+               "type_breakdown": _counts(q["type"]), "size_dist": size_dist, "top_locations": _counts(q["location"], top=12),
+               "rating_by_industry": rating_by_industry, "years_hist": years_hist, "scatter": scatter,
+               "rating_by_size": rating_by_size, "rating_by_type": rating_by_type, "rating_by_age": rating_by_age,
+               "rating_by_location": rating_by_location}
+    API_CACHE.set(key, payload)
+    return jsonify(payload)
 
 
 @app.route("/api/export")
