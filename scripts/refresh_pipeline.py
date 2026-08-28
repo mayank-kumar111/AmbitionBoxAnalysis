@@ -7,7 +7,6 @@ import json
 import shutil
 import subprocess
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -35,8 +34,6 @@ def main() -> int:
     if args.apply and MASTER.exists():
         backup_dir = ROOT_DIR / "data" / "backups" / "master"
         backup_dir.mkdir(parents=True, exist_ok=True)
-        backup_name = datetime.now(timezone.utc).strftime("companies-%Y%m%dT%H%M%SZ.csv")
-        master_backup = backup_dir / backup_name
         code = run([
             sys.executable,
             str(ROOT_DIR / "scripts" / "master_backup.py"),
@@ -45,6 +42,10 @@ def main() -> int:
         ])
         if code != 0:
             return code
+        backups = sorted(backup_dir.glob("companies-*.csv"), key=lambda p: p.stat().st_mtime_ns)
+        if not backups:
+            return 5
+        master_backup = backups[-1]
 
     command = [
         sys.executable,
