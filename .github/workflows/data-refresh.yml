@@ -69,6 +69,13 @@ jobs:
             --database data/ambitionbox.db \
             --backup data/backups/ambitionbox-${{ github.run_number }}.db
 
+      - name: Backup master dataset before refresh
+        run: |
+          mkdir -p data/backups/master
+          python scripts/master_backup.py \
+            --master ambitionbox_app/data/companies.csv \
+            --backup-dir data/backups/master
+
       - name: Collect snapshot
         env:
           EXTENDED: ${{ inputs.extended }}
@@ -184,6 +191,15 @@ jobs:
         with:
           name: ambitionbox-history-backup-${{ github.run_number }}
           path: data/backups/*.db
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload master dataset backup
+        if: ${{ hashFiles('data/backups/master/*.csv') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ambitionbox-master-backup-${{ github.run_number }}
+          path: data/backups/master/*.csv
           if-no-files-found: error
           retention-days: 30
 
