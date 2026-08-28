@@ -37,3 +37,28 @@ def test_sqlite_store_inserts_and_updates(tmp_path):
         ).fetchone()
 
     assert tuple(change) == ("company_rating", "4.2", "4.5")
+
+
+def test_sqlite_store_records_refresh_history(tmp_path):
+    store = SQLiteStore(tmp_path / "ambitionbox.db")
+    store.initialize()
+
+    store.record_refresh_run({
+        "snapshot_at": "2026-08-28T10:00:00+00:00",
+        "previous_records": 64210,
+        "incoming_records": 380,
+        "final_records": 64588,
+        "new_records": 380,
+        "updated_records": 0,
+        "duplicate_records": 2,
+        "invalid_records": 0,
+        "collapsed_records": 2,
+        "applied": True,
+        "source": "local",
+    })
+
+    assert store.refresh_run_count() == 1
+    runs = store.list_refresh_runs()
+    assert len(runs) == 1
+    assert runs[0]["final_records"] == 64588
+    assert runs[0]["duplicate_records"] == 2
