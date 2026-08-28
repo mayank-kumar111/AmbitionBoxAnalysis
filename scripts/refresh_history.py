@@ -1,9 +1,4 @@
-"""Refresh the persistent SQLite history database from a newly collected snapshot.
-
-The script is designed for both local use and GitHub Actions. On the first run it
-seeds the database from the current master CSV; subsequent runs only import the
-newly collected snapshot so historical state can accumulate across runs.
-"""
+"""Refresh the persistent SQLite history database from a collected snapshot."""
 
 from __future__ import annotations
 
@@ -50,6 +45,16 @@ def _seed_timestamp(snapshot_at: str) -> str:
     return (parsed - timedelta(seconds=1)).isoformat()
 
 
+def _load_update_report(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data if isinstance(data, dict) else {}
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Persist a collected snapshot in SQLite history.")
     parser.add_argument("--master", type=Path, required=True)
@@ -57,12 +62,19 @@ def main() -> None:
     parser.add_argument("--database", type=Path, default=Path("data/ambitionbox.db"))
     parser.add_argument("--snapshot-at", default=None, help="UTC timestamp for this snapshot")
     parser.add_argument("--report", type=Path, default=Path("reports/history_refresh.json"))
+    parser.add_argument(
+        "--update-report",
+        type=Path,
+        default=Path("reports/update_report.json"),
+        help="Incremental-ingestion report used for refresh-run metrics",
+    )
     args = parser.parse_args()
 
     store = SQLiteStore(args.database)
     store.initialize()
 
     snapshot_at = args.snapshot_at or datetime.now(timezone.utc).isoformat()
+    update_report = _load_update_report(args.update_report)
     seeded = False
     seed_records = 0
 
@@ -81,6 +93,21 @@ def main() -> None:
     if not _snapshot_exists(store, snapshot_at):
         imported = store.import_dataframe(incoming, snapshot_at)
 
+    metrics = {
+        "snapshot_at": snapshot_at,
+        "previous_records": update_report.get("previous_records", store.company_count() - int(update_report.get("new_records", 0) or 0)),
+        "incoming_records": update_report.get("incoming_records", len(incoming)),
+        "final_records": update_report.get("final_records", store.company_count()),
+        "new_records": update_report.get("new_records", 0),
+        "updated_records": update_report.get("updated_records", 0),
+        "duplicate_records": update_report.get("duplicate_records", update_report.get("incoming_duplicate_rows", 0)),
+        "invalid_records": update_report.get("invalid_records", 0),
+        "collapsed_records": update_report.get("collapsed_records", 0),
+        "applied": update_report.get("applied", False),
+        "source": "github-actions" if "GITHUB_ACTIONS" in __import__("os").environ else "local",
+    }
+    store.record_refresh_run(metrics)
+
     report = {
         "database": str(args.database),
         "seeded_master": seeded,
@@ -89,8 +116,10 @@ def main() -> None:
         "imported_snapshot_records": int(imported),
         "companies_in_database": store.company_count(),
         "snapshot_records_in_database": store.snapshot_count(),
+        "refresh_runs_in_database": store.refresh_run_count(),
         "latest_snapshot": _latest_snapshot(store),
         "incoming_directory": str(args.incoming),
+        "refresh_metrics": metrics,
     }
 
     args.report.parent.mkdir(parents=True, exist_ok=True)
