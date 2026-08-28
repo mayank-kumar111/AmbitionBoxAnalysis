@@ -61,6 +61,13 @@ jobs:
             fi
           fi
 
+      - name: Backup existing history database
+        if: ${{ hashFiles('data/ambitionbox.db') != '' }}
+        run: |
+          python scripts/backup_database.py \
+            --database data/ambitionbox.db \
+            --backup data/backups/ambitionbox-${{ github.run_number }}.db
+
       - name: Collect snapshot
         env:
           EXTENDED: ${{ inputs.extended }}
@@ -108,6 +115,15 @@ jobs:
           path: data/ambitionbox.db
           if-no-files-found: error
           retention-days: 90
+
+      - name: Upload database backup
+        if: ${{ hashFiles('data/backups/*.db') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ambitionbox-history-backup-${{ github.run_number }}
+          path: data/backups/*.db
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Upload refresh reports
         if: always()
