@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Data Operations · AmbitionBox Analysis{% endblock %}
+{% block nav_operations %}active{% endblock %}
+
+{% block content %}
+<section class="container" style="padding-top:40px;padding-bottom:64px;">
+  <div style="display:flex;justify-content:space-between;gap:20px;align-items:flex-end;flex-wrap:wrap;">
+    <div>
+      <p class="eyebrow">DATA OPERATIONS</p>
+      <h1 style="margin-bottom:8px;">Pipeline Control Center</h1>
+      <p class="muted">Monitor refresh health, dataset state, SQLite history, and recovery points from one place.</p>
+    </div>
+    <a class="nav-cta" href="{{ url_for('dashboard') }}">Back to dashboard</a>
+  </div>
+
+  <div id="ops-health" class="card" style="margin-top:24px;padding:18px;">
+    Loading operations status…
+  </div>
+
+  <div id="ops-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:16px;">
+    <div class="card" style="padding:18px;"><h3>Master dataset</h3><div id="ops-master" class="muted" style="margin-top:10px;">Loading…</div></div>
+    <div class="card" style="padding:18px;"><h3>SQLite history</h3><div id="ops-db" class="muted" style="margin-top:10px;">Loading…</div></div>
+    <div class="card" style="padding:18px;"><h3>Last refresh</h3><div id="ops-refresh" class="muted" style="margin-top:10px;">Loading…</div></div>
+    <div class="card" style="padding:18px;"><h3>Recovery points</h3><div id="ops-backups" class="muted" style="margin-top:10px;">Loading…</div></div>
+  </div>
+
+  <div class="card" style="margin-top:16px;padding:18px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <h3 style="margin:0;">Latest alerts</h3>
+      <a class="muted" href="{{ url_for('history') }}">Open full history →</a>
+    </div>
+    <div id="ops-alerts" style="margin-top:12px;">Loading…</div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/operations.js') }}"></script>
+{% endblock %}
