@@ -111,6 +111,8 @@ def main() -> None:
     print(json.dumps(report, indent=2, default=str))
     if critical_anomalies:
         print("ANOMALY BLOCK: critical anomalies were found; the master dataset was NOT changed.")
+        if args.apply:
+            raise SystemExit(2)
     elif not applied:
         print("DRY RUN: the master dataset was not changed. Use --apply to write the merged output.")
     else:
