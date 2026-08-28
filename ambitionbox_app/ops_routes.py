@@ -6,10 +6,10 @@ import json
 from pathlib import Path
 from typing import Any
 
-from flask import jsonify, render_template
+from flask import jsonify, render_template, request
 
 from src.database.sqlite_store import SQLiteStore
-
+from .audit_log import list_events
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DATABASE_PATH = ROOT_DIR / "data" / "ambitionbox.db"
@@ -58,7 +58,7 @@ def register_ops_routes(app) -> None:
                         "latest_snapshot": recent_runs[0]["snapshot_at"] if recent_runs else None,
                     }
                 )
-            except Exception as exc:  # pragma: no cover - API safety boundary
+            except Exception as exc:
                 db_payload["error"] = str(exc)
 
         backups = []
@@ -78,6 +78,11 @@ def register_ops_routes(app) -> None:
 
         health = report.get("health") or {}
         alerts = report.get("alerts") or {}
+        try:
+            limit = int(request.args.get("audit_limit", 20))
+        except ValueError:
+            limit = 20
+
         return jsonify(
             {
                 "master": {
@@ -106,5 +111,6 @@ def register_ops_routes(app) -> None:
                     },
                 },
                 "backups": backups,
+                "audit": list_events(limit),
             }
         )
