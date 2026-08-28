@@ -185,3 +185,7 @@ def register_history_routes(app):
             "snapshots": [dict(row) for row in snapshots],
             "changes": [dict(row) for row in changes],
         })
+
+    # Register safe refresh controls through the same Flask bootstrap.
+    from .refresh_routes import register_refresh_routes
+    register_refresh_routes(app)
