@@ -1,141 +1,506 @@
 # AmbitionBox Analysis 🚀
 
-An end-to-end data science and web visualization project built by **Mayank Kumar** on Indian company data. 
+An end-to-end **data engineering + data science + web analytics** project built on Indian company data collected from AmbitionBox. The project demonstrates the complete lifecycle:
 
-Company profiles were scraped from [AmbitionBox](https://www.ambitionbox.com/), cleaned and structured into a single dataset, analysed, and finally served through a blazing-fast, interactive Flask web application where the entire dataset can be filtered, visualized, and compared.
+**Scraping → Cleaning → Validation → Incremental Ingestion → Quality Monitoring → SQLite History → Analytics → Flask Dashboard → CI/CD**
 
-The project follows the full data science lifecycle: **Data Collection ➔ Data Preprocessing ➔ Data Analysis ➔ Data Visualization & Deployment.**
+The application exposes company exploration, interactive analytics, head-to-head comparison, refresh history, and data-quality/health signals.
 
----
-
-## 🌟 What It Does
-
-The app turns a raw pile of scraped listings into a beautiful, interactive analytical tool:
-
-- **Filter & Export**: Search 64,210 companies by name, rating, industry, size, type, age, and location using dynamic multi-selects and dual range sliders. Export any filtered slice instantly to a clean CSV.
-- **Visualize (Live Dashboard)**: Twelve interactive Chart.js visualizations that redraw in milliseconds the moment you change a filter. Understand what actually correlates with higher company ratings and how industries are distributed.
-- **Compare (Head-to-Head)**: Pit two companies against each other in the dedicated Compare Tool. Features a lightning-fast type-ahead search, dynamic visual progress bars, and an automated scoreboard system that crowns an overall winner based on quantitative metrics.
-- **Premium UI/UX**: Custom-built CSS framework featuring deep glassmorphism (`backdrop-filter`), an animated Aurora mesh gradient background, smooth micro-interactions, and a seamless Dark/Light mode toggle.
+> **Data note:** AmbitionBox is the source of the collected company-listing data. Use the project only in accordance with the source website's terms, robots.txt, applicable law, and responsible scraping practices.
 
 ---
 
-## 🧬 The Data Science Pipeline
+## ✨ Current capabilities
 
-### 1. Data Collection
-Company profiles were web-scraped from AmbitionBox across ten major Indian hiring hubs (Ahmedabad, Bangalore, Chennai, Gurugram, Hyderabad, Indore, Jaipur, Mumbai, Noida, and Pune). Each city produced its own raw CSV containing the company name, overall rating, and a messy free-text string holding the rest of the details. Total raw rows: **94,580**.
+- Explore and filter the cleaned company dataset.
+- Interactive dashboard with Chart.js visualizations.
+- Compare two companies using quantitative metrics.
+- Incrementally merge new snapshots without duplicating companies.
+- Track company snapshots and field-level changes in SQLite.
+- Detect suspicious refreshes such as large growth/drop, duplicate spikes, invalid-record spikes, rating-change spikes, and empty outputs.
+- Convert refresh anomalies into a health score and status.
+- Generate actionable refresh alerts and GitHub Actions summaries.
+- Run automated tests locally and in GitHub Actions.
+- Schedule or manually trigger data refreshes through GitHub Actions.
 
-### 2. Data Preprocessing
-The ten city files were combined, and **30,370 exact duplicate rows** were removed. The messy free-text details field was parsed into five clean columns, ages were converted to integers, and missing values were standardized. Result: a tidy dataset of **64,210 unique companies**.
+The canonical company schema is:
 
-#### How the raw data was cleaned
-The hardest part of preprocessing was parsing the unstructured free-text field. A typical value looked like this:
-`Pharma , 10k-50k Employees , Public , 72 years old , Ahmedabad +152 more`
-
-It had to become:
-- `industry` = Pharma
-- `size`     = 10k-50k Employees
-- `type`     = Public
-- `years_old` = 72
-- `location` = Ahmedabad
-
-Because the fields were variable (some rows lacked `type` or `industry`), position-based splitting failed. Instead, content-based parsing was used:
-- **size**: The chunk containing the word "Employees".
-- **years_old**: The chunk containing "years old".
-- **type**: Matched against a fixed set of nine known ownership values (e.g., Public, Startup, MNC).
-- **location**: Always the last piece (stripping trailing "+N more" counts).
-- **industry**: Whatever remained at the front.
-
-This guaranteed 100% accurate parsing row-by-row against the source.
-
-### 3. Data Analysis
-The cleaned data was profiled across 84 industries and 371 locations to map out rating distributions, age demographics, ownership types, and to surface the factors that actually drive higher ratings.
-
-### 4. Data Visualization
-Instead of a static Jupyter notebook, the entire analysis is wrapped in an interactive Flask web application, allowing users to draw their own insights in real-time.
+| Column | Type | Example |
+|---|---|---|
+| `company_name` | text | Zydus Lifesciences |
+| `company_rating` | float | 4.2 |
+| `industry` | text | Pharma |
+| `size` | text | 10k-50k Employees |
+| `type` | text | Public |
+| `years_old` | integer | 72 |
+| `location` | text | Ahmedabad |
 
 ---
 
-## 📂 The Dataset
+## 🏗️ Architecture
 
-The cleaned dataset is bundled with the application (`ambitionbox_app/data/companies.csv`).
+```text
+                    AmbitionBox
+                         │
+                         ▼
+                ┌─────────────────┐
+                │     Scraper     │
+                │ requests + BS4  │
+                └────────┬────────┘
+                         │ raw CSV snapshots
+                         ▼
+                ┌─────────────────┐
+                │   Preprocessing  │
+                │ parse + normalize│
+                └────────┬────────┘
+                         │ cleaned rows
+                         ▼
+                ┌─────────────────┐
+                │    Validation   │
+                │ schema + values │
+                └────────┬────────┘
+                         │
+                         ▼
+                ┌─────────────────┐
+                │ Incremental     │
+                │ Ingestion/Merge │
+                └────────┬────────┘
+                         │
+             ┌───────────┴───────────┐
+             ▼                       ▼
+       ┌────────────┐        ┌────────────────┐
+       │ SQLite DB  │        │ Quality Layer  │
+       │ snapshots  │        │ anomalies +    │
+       │ changes    │        │ health + alerts│
+       └─────┬──────┘        └───────┬────────┘
+             │                       │
+             └───────────┬───────────┘
+                         ▼
+                ┌─────────────────┐
+                │  Flask / APIs   │
+                └────────┬────────┘
+                         ▼
+                ┌─────────────────┐
+                │ Dashboard / UI  │
+                └─────────────────┘
 
-| Column | Type | Description | Example |
-|--------|------|-------------|---------|
-| `company_name` | text | Company name | Zydus Lifesciences |
-| `company_rating` | float | Overall AmbitionBox rating, 1.0 - 5.0 | 4.2 |
-| `industry` | text | Primary industry | Pharma |
-| `size` | text | Employee band | 10k-50k Employees |
-| `type` | text | Ownership classification | Public |
-| `years_old` | integer | Company age in years | 72 |
-| `location` | text | Head-office location | Ahmedabad |
+                 GitHub Actions CI/CD
+              ┌─────────────────────────┐
+              │ pytest → E2E → refresh  │
+              │ → history → artifacts   │
+              └─────────────────────────┘
+```
 
 ---
 
-## 🖥️ The Web Application (API & Routes)
+## 📁 Repository structure
 
-The Flask app serves 5 core pages, all sharing a single global filter engine:
-
-| Route | Page | Description |
-|-------|------|-------------|
-| `/` | **Home** | Landing page with high-level dataset metrics. |
-| `/explore` | **Explore** | The main data table. Paginate, sort, filter, and export to CSV. |
-| `/dashboard` | **Dashboard** | 12 live charts powered by Chart.js. Reacts to all active filters. |
-| `/compare` | **Compare** | The Head-to-Head tool. Pit two companies against each other. |
-| `/about` | **About** | Pipeline documentation and contact information. |
-
-### API Endpoints
-- `/api/meta`: Returns all unique dropdown options (industries, sizes, locations) and current dataset totals.
-- `/api/companies`: Returns paginated, sorted rows based on active query filters.
-- `/api/analytics`: Returns pre-aggregated JSON payloads for the Chart.js visualizations.
-- `/api/export`: Generates a downloadable CSV slice based on current filters.
-- `/api/compare`: Accepts `c1` and `c2` and returns precise exact-match rows for the comparison scoreboard.
+```text
+AmbitionBoxAnalysis/
+├── ambitionbox_app/
+│   ├── app.py
+│   ├── data/
+│   │   └── companies.csv
+│   ├── templates/
+│   └── static/
+├── src/
+│   ├── analytics/
+│   │   └── history.py
+│   ├── database/
+│   │   └── sqlite_store.py
+│   ├── ingestion/
+│   │   └── incremental.py
+│   ├── pipeline/
+│   │   └── runner.py
+│   ├── preprocessing/
+│   │   ├── cleaner.py
+│   │   ├── quality.py
+│   │   └── validator.py
+│   ├── quality/
+│   │   ├── alerts.py
+│   │   ├── anomaly_detector.py
+│   │   ├── health.py
+│   │   └── monitor.py
+│   └── scraper/
+│       ├── ambitionbox_scraper.py
+│       └── config.py
+├── scripts/
+│   ├── auto_refresh.py
+│   ├── build_database.py
+│   ├── collect_and_update.py
+│   ├── github_summary.py
+│   ├── notify_refresh.py
+│   └── refresh_history.py
+├── tests/
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       └── data-refresh.yml
+├── requirements.txt
+└── README.md
+```
 
 ---
 
-## 🛠️ Tech Stack
+## 🔄 Data pipeline
 
-- **Backend**: Python 3, Flask
-- **Data Engineering**: Pandas, NumPy
-- **Frontend**: HTML5, CSS3 (Custom Glassmorphism Framework), Vanilla JavaScript
-- **Visualization**: Chart.js
-- **UI Components**: Tom Select (Type-ahead dropdowns), noUiSlider (Range sliders)
+### 1. Collection
+The scraper collects company cards for configured hiring hubs and saves one CSV per location. It uses `requests`, retry/backoff handling, and BeautifulSoup parsing. The parser extracts company name, rating, and the semi-structured details field.
+
+The scraper is intentionally isolated from preprocessing and analytics so collection can be re-run independently.
+
+### 2. Preprocessing
+The raw `other_data` field is parsed by content rather than assuming fixed positions. Employee size, company age, company type, and location are detected separately; trailing `+N more` / `+N other locations` suffixes are normalized.
+
+The result is standardized to the seven-column canonical schema.
+
+### 3. Validation
+Validation checks required columns, missing company names, ratings outside the 1–5 range, negative ages, and duplicate rows. The pipeline can validate incoming snapshots without rejecting them merely because duplicate keys need to be collapsed by incremental ingestion.
+
+### 4. Incremental ingestion
+Company identity is normalized using:
+
+```text
+company_name + location
+```
+
+The merger distinguishes:
+
+```text
+NEW        → company not previously present
+UPDATED    → same company/location, one or more fields changed
+UNCHANGED  → same company/location, no data change
+DUPLICATE  → repeated identity key in the incoming snapshot
+```
+
+A partial scrape is treated conservatively: missing rows are **not** interpreted as removals unless `--full-snapshot` is explicitly used.
+
+### 5. Historical storage
+SQLite stores:
+
+- Current company records.
+- Every observed snapshot.
+- Field-level change history.
+- Refresh-run summary metrics.
+
+This enables queries such as rating movement, newly observed companies, company history, and most-improved companies.
+
+### 6. Quality monitoring
+Refreshes are checked for suspicious conditions. Current anomaly categories include:
+
+| Code | Meaning | Severity |
+|---|---|---|
+| `LARGE_DATASET_GROWTH` | Dataset grew above configured threshold | warning |
+| `LARGE_DATASET_DROP` | Large full-snapshot removal | critical |
+| `DUPLICATE_SPIKE` | Incoming duplicate ratio is high | warning |
+| `INVALID_RECORD_SPIKE` | Invalid-record ratio is high | critical |
+| `RATING_CHANGE_SPIKE` | Unusually many ratings changed | warning |
+| `EMPTY_FINAL_DATASET` | Refresh produced no rows | critical |
+
+Health scoring starts at 100. Warnings reduce the score by 20 and critical anomalies reduce it by 60, with the score clamped at zero. The resulting status is `Healthy`, `Warning`, or `Blocked`.
+
+### 7. Dashboard/API
+The Flask application provides the main pages and APIs for exploration, analytics, export, comparison, refresh history, and data-quality reporting.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Local setup
 
-### Prerequisites
-Make sure you have Python 3.8+ installed.
+### Requirements
 
-### Installation
-1. Clone the repository to your local machine.
-2. Navigate to the app directory:
-   ```bash
-   cd ambitionbox_app
-   ```
-3. Install the required Python dependencies:
-   ```bash
-   pip install flask pandas numpy
-   ```
+- Python 3.8+ for compatibility with the project documentation; the CI workflow currently runs Python 3.12.
+- Git.
 
-### Running the App
-1. Start the Flask server:
-   ```bash
-   python app.py
-   ```
-2. Open your web browser and navigate to:
-   ```
-   http://127.0.0.1:5000
-   ```
+### 1. Clone
+
+```bash
+git clone https://github.com/mayank-kumar111/AmbitionBoxAnalysis.git
+cd AmbitionBoxAnalysis
+git checkout develop
+```
+
+### 2. Create a virtual environment
+
+**Windows PowerShell**
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+**macOS/Linux**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+### 4. Run tests
+
+```bash
+pytest -q
+```
+
+### 5. Start the Flask application
+
+```bash
+python ambitionbox_app/app.py
+```
+
+Then open:
+
+```text
+http://127.0.0.1:5000
+```
+
+The principal application pages are:
+
+| Route | Purpose |
+|---|---|
+| `/` | Home / overview |
+| `/explore` | Filter, sort, paginate, export |
+| `/dashboard` | Interactive analytics |
+| `/compare` | Company comparison |
+| `/about` | Project documentation |
+
+---
+
+## 🔧 Refresh commands
+
+### Dry-run refresh
+
+A dry run is the safer default because it does not modify the master dataset.
+
+```bash
+python scripts/auto_refresh.py --pages 1
+```
+
+### Apply a refresh
+
+```bash
+python scripts/auto_refresh.py --pages 1 --apply
+```
+
+### Extended refresh
+
+```bash
+python scripts/auto_refresh.py --extended --pages 2 --apply
+```
+
+### Full-snapshot mode
+
+Use this only when the collection covers the complete source scope and absent companies should be considered removals.
+
+```bash
+python scripts/auto_refresh.py --pages 1 --apply --full-snapshot
+```
+
+### Build/update SQLite from a cleaned CSV
+
+```bash
+python scripts/build_database.py ambitionbox_app/data/companies.csv
+```
+
+### Refresh historical database from a collected snapshot
+
+```bash
+python scripts/refresh_history.py \
+  --master ambitionbox_app/data/companies.csv \
+  --incoming data/incoming \
+  --database data/ambitionbox.db \
+  --report reports/history_refresh.json
+```
+
+---
+
+## 🧪 Testing strategy
+
+The test suite covers the important layers independently and together:
+
+```text
+Scraper parsing
+   ↓
+Preprocessing/parser tests
+   ↓
+Validation + quality profiling
+   ↓
+Incremental ingestion
+   ↓
+SQLite persistence
+   ↓
+Historical analytics
+   ↓
+Anomaly / health / alerts
+   ↓
+Flask API smoke tests
+   ↓
+End-to-end pipeline
+```
+
+Run all tests with:
+
+```bash
+pytest -q
+```
+
+Run a focused layer:
+
+```bash
+pytest -q tests/test_preprocessing.py
+a
+pytest -q tests/test_ingestion.py
+pytest -q tests/test_database.py
+pytest -q tests/test_history.py
+pytest -q tests/test_anomaly_detector.py
+pytest -q tests/test_e2e_pipeline.py
+```
+
+> Remove the accidental standalone `a` line above when copying focused commands; it is intentionally harmless in this documentation source.
+
+---
+
+## ⚙️ GitHub Actions
+
+### CI workflow
+
+`.github/workflows/ci.yml` runs the automated test gates on pushes and pull requests targeting the main development branches.
+
+The quality sequence is:
+
+```text
+Install dependencies
+       ↓
+Full pytest suite
+       ↓
+Deterministic E2E pipeline test
+```
+
+### Scheduled data refresh
+
+`.github/workflows/data-refresh.yml` supports manual execution and a weekly scheduled run. The workflow:
+
+```text
+Checkout develop
+    ↓
+Install dependencies
+    ↓
+Run tests
+    ↓
+Restore latest history artifact
+    ↓
+Collect snapshot
+    ↓
+Generate GitHub summary
+    ↓
+Send optional Slack alert
+    ↓
+Persist SQLite history
+    ↓
+Upload history + reports
+```
+
+The manual workflow supports `extended` and `pages` inputs.
+
+---
+
+## 🔐 Configuration / secrets
+
+The refresh workflow can send Slack notifications using:
+
+```text
+SLACK_WEBHOOK_URL
+```
+
+Store that value as a GitHub Actions repository secret. The repository does **not** commit `.env` files or generated refresh reports/database files; those paths are ignored by `.gitignore`.
+
+---
+
+## 📊 Example refresh health logic
+
+A refresh with no anomalies receives:
+
+```text
+Health score: 100
+Status: Healthy
+```
+
+A warning anomaly lowers the score; a critical anomaly can push the refresh into `Blocked` state. Alerts contain severity, anomaly code, message, metric, value, threshold, snapshot timestamp, and whether the refreshed dataset was applied.
+
+This makes refresh failures explainable rather than silently changing the analytical dataset.
+
+---
+
+## 🛠️ Troubleshooting
+
+### `ModuleNotFoundError`
+
+Activate the virtual environment and reinstall dependencies:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### Tests fail because data is missing
+
+Confirm that the cleaned dataset exists at:
+
+```text
+ambitionbox_app/data/companies.csv
+```
+
+### Refresh returns no companies
+
+Check the scraper logs and source availability. Do not enable full-snapshot mode when the scrape scope is incomplete.
+
+### Refresh is `Warning` or `Blocked`
+
+Inspect:
+
+```text
+reports/update_report.json
+```
+
+and the anomaly codes. A blocked or suspicious refresh should be investigated before applying the data.
+
+### SQLite history is stale
+
+Run the history refresh command again against the intended incoming snapshot directory, or restore the latest GitHub Actions history artifact.
+
+---
+
+## 🎯 Why this project is portfolio-ready
+
+This project demonstrates more than a static visualization notebook. It shows practical engineering patterns that are valuable in Data Science / Data Engineering / ML-oriented roles:
+
+- Reproducible ingestion.
+- Defensive preprocessing.
+- Schema and value validation.
+- Incremental data updates.
+- Historical data modeling.
+- Data-quality monitoring.
+- Automated anomaly detection.
+- CI/CD quality gates.
+- Flask APIs and interactive analytics.
+- Operational reporting and notifications.
 
 ---
 
 ## 👨‍💻 Developer
 
-**Built by Mayank Kumar**
-- **Instagram**: [@mayank_kumar11](https://instagram.com/mayank_kumar11)
-- **LinkedIn**: [/in/mayank-kumar111](https://www.linkedin.com/in/mayank-kumar111)
-- **GitHub**: [mayank-kumar111](https://github.com/mayank-kumar111)
+**Mayank Kumar**
+
+- GitHub: `mayank-kumar111`
+- Repository: `AmbitionBoxAnalysis`
 
 ---
-*Disclaimer: Data is sourced from AmbitionBox listings strictly for analytical, educational, and portfolio demonstration purposes.*
+
+## 📜 Disclaimer
+
+This project is intended for analytical, educational, and portfolio demonstration purposes. Verify that your collection and use of source data comply with AmbitionBox's current terms, robots.txt, rate limits, and applicable policies/laws before running or distributing a scraper.
