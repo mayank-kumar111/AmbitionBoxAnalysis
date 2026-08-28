@@ -21,6 +21,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from src.ingestion.incremental import IncrementalIngestor
+from src.quality.alerts import alert_summary
 from src.quality.anomaly_detector import detect_anomalies
 from src.quality.health import summarize_health
 from src.scraper.ambitionbox_scraper import AmbitionBoxScraper
@@ -32,7 +33,6 @@ LOGGER = logging.getLogger(__name__)
 
 
 def _record_health_history(report_path: Path) -> None:
-    """Persist a compact generated history file for the local dashboard."""
     history_path = ROOT_DIR / "ambitionbox_app" / "static" / "refresh_health_history.json"
     command = [
         sys.executable,
@@ -40,6 +40,18 @@ def _record_health_history(report_path: Path) -> None:
         str(report_path),
         "--output",
         str(history_path),
+    ]
+    subprocess.run(command, check=True)
+
+
+def _record_alerts(report_path: Path) -> None:
+    alerts_path = ROOT_DIR / "ambitionbox_app" / "static" / "latest_alerts.json"
+    command = [
+        sys.executable,
+        str(ROOT_DIR / "scripts" / "record_alerts.py"),
+        str(report_path),
+        "--output",
+        str(alerts_path),
     ]
     subprocess.run(command, check=True)
 
@@ -112,6 +124,7 @@ def main() -> None:
         "incoming_directory": str(incoming_dir.relative_to(ROOT_DIR)),
     })
     report["health"] = summarize_health(report)
+    report["alerts"] = alert_summary(report)
 
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
@@ -120,6 +133,7 @@ def main() -> None:
     dashboard_report.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(args.report, dashboard_report)
     _record_health_history(args.report)
+    _record_alerts(args.report)
 
     print(json.dumps(report, indent=2, default=str))
     if critical_anomalies:
