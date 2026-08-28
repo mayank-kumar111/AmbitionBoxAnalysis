@@ -52,3 +52,4 @@ dist/
 /reports/*.csv
 /ambitionbox_app/static/last_update_report.json
 /ambitionbox_app/static/refresh_history.json
+/ambitionbox_app/static/refresh_health_history.json
