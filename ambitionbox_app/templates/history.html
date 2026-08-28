@@ -7,7 +7,7 @@
   <div class="tool-head" style="margin-bottom:18px">
     <div>
       <h1>Data history</h1>
-      <p>Track dataset snapshots, company discoveries, and rating changes.</p>
+      <p>Track dataset snapshots, refresh activity, company discoveries, and rating changes.</p>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <a class="btn btn-primary btn-sm" href="{{ url_for('history_company') }}">Company Timeline</a>
@@ -23,7 +23,7 @@
   <div class="kpi-row" id="history-kpis">
     <div class="kpi"><div class="k-lbl">Current companies</div><div class="k-val grad" id="history-companies">—</div></div>
     <div class="kpi"><div class="k-lbl">Snapshots</div><div class="k-val" id="history-snapshots">—</div></div>
-    <div class="kpi"><div class="k-lbl">New records</div><div class="k-val" id="history-new">—</div></div>
+    <div class="kpi"><div class="k-lbl">Refresh runs</div><div class="k-val" id="history-runs">—</div></div>
     <div class="kpi"><div class="k-lbl">Rating updates</div><div class="k-val" id="history-updates">—</div></div>
   </div>
 
@@ -34,17 +34,33 @@
       <div class="canvas-box"><canvas id="history-growth"></canvas></div>
     </div>
     <div class="card col-4">
-      <h3>Latest activity</h3>
-      <div class="sub" id="history-status">Loading history…</div>
-      <div id="history-latest" style="margin-top:14px"></div>
+      <h3>Refresh activity</h3>
+      <div class="sub">New, updated, duplicate, and invalid records by run</div>
+      <div class="canvas-box"><canvas id="refresh-activity"></canvas></div>
     </div>
 
+    <div class="card col-12">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <h3>Refresh history</h3>
+          <div class="sub">One row per ingestion run</div>
+        </div>
+        <span id="history-status" class="chip">Loading…</span>
+      </div>
+      <div id="refresh-runs-table" class="table-wrap" style="margin-top:12px;overflow:auto"></div>
+    </div>
+
+    <div class="card col-6">
+      <h3>Latest activity</h3>
+      <div id="history-latest" style="margin-top:14px"></div>
+    </div>
     <div class="card col-6">
       <h3>Most improved companies</h3>
       <div class="sub">Largest accumulated positive rating changes</div>
       <div id="history-improved" class="table-wrap" style="margin-top:12px;overflow:auto"></div>
     </div>
-    <div class="card col-6">
+
+    <div class="card col-12">
       <h3>Latest new companies</h3>
       <div class="sub">Most recently discovered records</div>
       <div id="history-new-list" class="table-wrap" style="margin-top:12px;overflow:auto"></div>
