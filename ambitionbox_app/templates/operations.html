@@ -9,7 +9,7 @@
     <div>
       <p class="eyebrow">DATA OPERATIONS</p>
       <h1 style="margin-bottom:8px;">Pipeline Control Center</h1>
-      <p class="muted">Monitor refresh health, dataset state, SQLite history, and recovery points from one place.</p>
+      <p class="muted">Monitor refresh health, dataset state, SQLite history, recovery points, and the refresh audit trail from one place.</p>
     </div>
     <a class="nav-cta" href="{{ url_for('dashboard') }}">Back to dashboard</a>
   </div>
@@ -31,6 +31,14 @@
       <a class="muted" href="{{ url_for('history') }}">Open full history →</a>
     </div>
     <div id="ops-alerts" style="margin-top:12px;">Loading…</div>
+  </div>
+
+  <div class="card" style="margin-top:16px;padding:18px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <h3 style="margin:0;">Refresh audit trail</h3>
+      <span class="muted" style="font-size:.82rem;">Latest 20 events</span>
+    </div>
+    <div id="ops-audit" style="margin-top:12px;overflow:auto;">Loading…</div>
   </div>
 </section>
 {% endblock %}
