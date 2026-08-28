@@ -7,7 +7,7 @@
   <div class="tool-head" style="margin-bottom:18px">
     <div>
       <h1>Data history</h1>
-      <p>Track dataset snapshots, refresh activity, company discoveries, and rating changes.</p>
+      <p>Track dataset snapshots, refresh activity, company discoveries, rating changes, and pipeline health.</p>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <a class="btn btn-primary btn-sm" href="{{ url_for('history_company') }}">Company Timeline</a>
@@ -16,8 +16,15 @@
   </div>
 
   <div class="card" style="margin-bottom:18px">
-    <h3>Two levels of history</h3>
-    <p class="sub" style="margin-top:6px">Use <b>Data History</b> for the whole dataset, or <b>Company Timeline</b> to inspect one company's rating and field changes over time.</p>
+    <h3>Pipeline health</h3>
+    <p class="sub" style="margin-top:6px">Every refresh is scored from 0–100. Critical anomalies block an applied dataset update; warnings remain visible for review.</p>
+    <div class="kpi-row" style="margin-top:14px">
+      <div class="kpi"><div class="k-lbl">Latest score</div><div class="k-val grad" id="health-latest-score">—</div></div>
+      <div class="kpi"><div class="k-lbl">Latest status</div><div class="k-val" id="health-latest-status">—</div></div>
+      <div class="kpi"><div class="k-lbl">Average score</div><div class="k-val" id="health-average-score">—</div></div>
+      <div class="kpi"><div class="k-lbl">Blocked runs</div><div class="k-val" id="health-blocked-runs">—</div></div>
+    </div>
+    <div class="canvas-box" style="margin-top:14px"><canvas id="health-trend"></canvas></div>
   </div>
 
   <div class="kpi-row" id="history-kpis">
