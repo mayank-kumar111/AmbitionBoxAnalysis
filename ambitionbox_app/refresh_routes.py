@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -16,6 +17,7 @@ from flask import jsonify, request
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 REFRESH_SCRIPT = ROOT_DIR / "scripts" / "refresh_pipeline.py"
+REPORT_PATH = ROOT_DIR / "reports" / "update_report.json"
 MAX_PAGES = 10
 
 _state_lock = threading.RLock()
@@ -33,6 +35,16 @@ def _authorized() -> bool:
     return remote in {"127.0.0.1", "::1", "localhost"}
 
 
+def _read_report() -> dict[str, Any]:
+    if not REPORT_PATH.exists():
+        return {}
+    try:
+        payload = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
+        return payload if isinstance(payload, dict) else {}
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
 def _cleanup_finished() -> None:
     global _active_process, _active_job
     with _state_lock:
@@ -42,6 +54,33 @@ def _cleanup_finished() -> None:
                 _active_job["status"] = "completed" if code == 0 else "failed"
                 _active_job["return_code"] = code
                 _active_job["finished_at"] = time.time()
+
+                report = _read_report()
+                health = report.get("health") or {}
+                alerts = report.get("alerts") or {}
+                _active_job["health"] = {
+                    "score": health.get("score"),
+                    "status": health.get("status"),
+                    "warnings": health.get("warning_count"),
+                    "critical": health.get("critical_count"),
+                }
+                _active_job["metrics"] = {
+                    key: report.get(key)
+                    for key in (
+                        "previous_records",
+                        "incoming_records",
+                        "final_records",
+                        "new_records",
+                        "updated_records",
+                        "duplicate_records",
+                        "invalid_records",
+                        "rating_changes",
+                        "applied",
+                    )
+                    if key in report
+                }
+                _active_job["alerts"] = alerts
+
             _active_process = None
 
 
@@ -65,6 +104,7 @@ def register_refresh_routes(app) -> None:
 
         _cleanup_finished()
         global _active_process, _active_job
+
         with _state_lock:
             if _active_process is not None and _active_process.poll() is None:
                 return jsonify({
@@ -108,6 +148,11 @@ def register_refresh_routes(app) -> None:
     def api_refresh_status():
         if not _authorized():
             return jsonify({"error": "Refresh endpoint is not authorized."}), 403
+
         _cleanup_finished()
         with _state_lock:
-            return jsonify({"job": _active_job})
+            job = dict(_active_job) if _active_job else None
+            return jsonify({
+                "job": job,
+                "report": _read_report() if job and job.get("status") != "running" else None,
+            })
