@@ -14,7 +14,6 @@ on:
         default: "1"
         type: string
   schedule:
-    # Weekly refresh. Scheduled runs use the core location preset.
     - cron: "30 2 * * 0"
 
 permissions:
@@ -52,14 +51,11 @@ jobs:
           mkdir -p data
           artifact_id="$(gh api "repos/${{ github.repository }}/actions/artifacts?name=ambitionbox-history-db&per_page=1" --jq '.artifacts[0].id // empty')"
           if [ -n "$artifact_id" ]; then
-            echo "Restoring history database artifact: $artifact_id"
             gh api "repos/${{ github.repository }}/actions/artifacts/$artifact_id/zip" > /tmp/history.zip
             unzip -o /tmp/history.zip -d /tmp/history_restore
             if [ -f /tmp/history_restore/ambitionbox.db ]; then
               cp /tmp/history_restore/ambitionbox.db data/ambitionbox.db
             fi
-          else
-            echo "No previous history artifact found; the refresh will seed from the master CSV."
           fi
 
       - name: Collect snapshot
@@ -74,10 +70,12 @@ jobs:
             --output data/processed/companies_updated.csv
             --report reports/update_report.json
             --pages "$PAGES")
-          if [ "$EXTENDED" = "true" ]; then
-            command+=(--extended)
-          fi
+          if [ "$EXTENDED" = "true" ]; then command+=(--extended); fi
           "${command[@]}"
+
+      - name: Publish GitHub refresh summary
+        if: always()
+        run: python scripts/github_summary.py reports/update_report.json
 
       - name: Persist SQLite history snapshot
         run: |
