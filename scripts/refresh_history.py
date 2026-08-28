@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -55,6 +56,18 @@ def _load_update_report(path: Path) -> dict:
         return {}
 
 
+def _write_dashboard_history(store: SQLiteStore) -> Path:
+    """Publish the persisted refresh history through Flask's static folder."""
+    destination = ROOT_DIR / "ambitionbox_app" / "static" / "refresh_history.json"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "runs": store.list_refresh_runs(limit=200),
+    }
+    destination.write_text(json.dumps(payload, indent=2, default=str), encoding="utf-8")
+    return destination
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Persist a collected snapshot in SQLite history.")
     parser.add_argument("--master", type=Path, required=True)
@@ -104,9 +117,10 @@ def main() -> None:
         "invalid_records": update_report.get("invalid_records", 0),
         "collapsed_records": update_report.get("collapsed_records", 0),
         "applied": update_report.get("applied", False),
-        "source": "github-actions" if "GITHUB_ACTIONS" in __import__("os").environ else "local",
+        "source": "github-actions" if "GITHUB_ACTIONS" in os.environ else "local",
     }
     store.record_refresh_run(metrics)
+    dashboard_history = _write_dashboard_history(store)
 
     report = {
         "database": str(args.database),
@@ -119,6 +133,7 @@ def main() -> None:
         "refresh_runs_in_database": store.refresh_run_count(),
         "latest_snapshot": _latest_snapshot(store),
         "incoming_directory": str(args.incoming),
+        "dashboard_history": str(dashboard_history.relative_to(ROOT_DIR)),
         "refresh_metrics": metrics,
     }
 
