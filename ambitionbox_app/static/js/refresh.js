@@ -22,6 +22,8 @@
       </div>
       <div id="refresh-status" class="refresh-status">Ready</div>
       <div id="refresh-result" class="refresh-result" hidden></div>
+      <div class="refresh-history-title">Recent refreshes</div>
+      <div id="refresh-history" class="refresh-history"><span class="muted">Loading…</span></div>
     </div>`;
   document.body.appendChild(panel);
 
@@ -29,18 +31,22 @@
   style.textContent = `
     #refresh-control{position:fixed;right:22px;bottom:22px;z-index:9999;font-family:Inter,system-ui,sans-serif}
     #refresh-toggle{border:1px solid rgba(148,163,184,.22);background:rgba(15,23,42,.92);color:#e2e8f0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 8px 28px rgba(0,0,0,.22)}
-    #refresh-menu{margin-top:8px;width:320px;padding:14px;border:1px solid rgba(148,163,184,.18);border-radius:12px;background:rgba(15,23,42,.97);color:#e2e8f0;box-shadow:0 16px 40px rgba(0,0,0,.28)}
+    #refresh-menu{margin-top:8px;width:340px;max-height:75vh;overflow:auto;padding:14px;border:1px solid rgba(148,163,184,.18);border-radius:12px;background:rgba(15,23,42,.97);color:#e2e8f0;box-shadow:0 16px 40px rgba(0,0,0,.28)}
     .refresh-title{font-weight:700;margin-bottom:10px}.refresh-status{margin-top:10px;font-size:.8rem;color:#94a3b8;line-height:1.4}
     .refresh-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.refresh-grid button{padding:8px 7px;border-radius:8px;border:1px solid rgba(148,163,184,.2);background:#111b2e;color:#e2e8f0;cursor:pointer;font-size:.76rem}.refresh-grid button:hover{border-color:rgba(6,182,212,.55)}
     #refresh-pages{margin-left:8px;border-radius:7px;padding:3px 6px}.refresh-result{margin-top:12px;padding-top:10px;border-top:1px solid rgba(148,163,184,.15);font-size:.78rem;line-height:1.55}.refresh-result .refresh-head{font-weight:700;margin-bottom:5px}.refresh-result .refresh-metrics{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px}.refresh-result .refresh-alert{margin-top:7px;padding:6px 8px;border-radius:7px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.18)}
+    .refresh-history-title{font-weight:700;margin-top:14px;padding-top:10px;border-top:1px solid rgba(148,163,184,.15)}
+    .refresh-history{margin-top:7px;font-size:.72rem;line-height:1.35}.refresh-run{padding:7px 0;border-bottom:1px solid rgba(148,163,184,.10)}.refresh-run:last-child{border-bottom:0}.refresh-run-head{display:flex;justify-content:space-between;gap:8px;font-weight:600}.refresh-run-meta{color:#94a3b8;margin-top:2px}.refresh-run-stats{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:3px;color:#cbd5e1}.refresh-pill{font-size:.66rem;padding:1px 5px;border-radius:999px;border:1px solid rgba(148,163,184,.16)}
   `;
   document.head.appendChild(style);
 
   const menu = document.getElementById("refresh-menu");
   const status = document.getElementById("refresh-status");
   const result = document.getElementById("refresh-result");
+  const historyBox = document.getElementById("refresh-history");
   document.getElementById("refresh-toggle").addEventListener("click", () => {
     menu.hidden = !menu.hidden;
+    if (!menu.hidden) loadHistory();
   });
 
   function setBusy(message) {
@@ -57,6 +63,10 @@
     return value === undefined || value === null ? "—" : Number(value).toLocaleString("en-IN");
   }
 
+  function esc(value) {
+    return String(value ?? "").replace(/[&<>'"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c]));
+  }
+
   function renderResult(job, report) {
     if (!job) return;
     const health = job.health || report?.health || {};
@@ -66,7 +76,7 @@
     const score = health.score == null ? "—" : `${health.score}/100`;
     const alertCount = alerts.alert_count ?? alerts.warning_count ?? 0;
 
-    let html = `<div class="refresh-head">${healthStatus} · Health ${score}</div>`;
+    let html = `<div class="refresh-head">${esc(healthStatus)} · Health ${esc(score)}</div>`;
     html += `<div class="refresh-metrics">
       <span>Incoming</span><b>${metricValue(metrics, "incoming_records")}</b>
       <span>Final</span><b>${metricValue(metrics, "final_records")}</b>
@@ -81,7 +91,7 @@
     if (alertCount) {
       const items = Array.isArray(alerts.items) ? alerts.items : (Array.isArray(report?.anomalies) ? report.anomalies : []);
       if (items.length) {
-        html += `<div class="refresh-alert">${items.slice(0, 3).map(a => `<b>${a.code || a.type || a.severity || "Alert"}</b>: ${a.message || a.reason || "Anomaly detected"}`).join("<br>")}</div>`;
+        html += `<div class="refresh-alert">${items.slice(0, 3).map(a => `<b>${esc(a.code || a.type || a.severity || "Alert")}</b>: ${esc(a.message || a.reason || "Anomaly detected")}`).join("<br>")}</div>`;
       } else {
         html += `<div class="refresh-alert">${alertCount} alert(s) detected. Check refresh report for details.</div>`;
       }
@@ -92,6 +102,33 @@
     }
     result.innerHTML = html;
     result.hidden = false;
+  }
+
+  function renderHistory(payload) {
+    const runs = Array.isArray(payload?.runs) ? payload.runs : [];
+    if (!runs.length) {
+      historyBox.innerHTML = `<span class="muted">No persisted refresh runs yet.</span>`;
+      return;
+    }
+    const recent = runs.slice(-10).reverse();
+    historyBox.innerHTML = recent.map(run => {
+      const date = run.snapshot_at ? new Date(run.snapshot_at).toLocaleString() : "Unknown time";
+      const mode = Number(run.applied) ? "Apply" : "Dry run";
+      const source = run.source || "local";
+      const head = `${esc(date)} <span class="refresh-pill">${esc(mode)}</span>`;
+      const stats = `New ${metricValue(run, "new_records")} · Updated ${metricValue(run, "updated_records")} · Final ${metricValue(run, "final_records")} · Duplicates ${metricValue(run, "duplicate_records")}`;
+      return `<div class="refresh-run"><div class="refresh-run-head"><span>${head}</span><span>${esc(source)}</span></div><div class="refresh-run-stats">${stats}</div><div class="refresh-run-meta">Incoming ${metricValue(run, "incoming_records")} · Invalid ${metricValue(run, "invalid_records")}</div></div>`;
+    }).join("");
+  }
+
+  async function loadHistory() {
+    try {
+      const response = await fetch("/api/history", { cache: "no-store" });
+      if (!response.ok) return;
+      renderHistory(await response.json());
+    } catch (_) {
+      historyBox.innerHTML = `<span class="muted">Refresh history unavailable.</span>`;
+    }
   }
 
   async function poll() {
@@ -107,6 +144,7 @@
       } else {
         setReady(`${job.status === "completed" ? "Completed" : "Failed"} · return code ${job.return_code ?? "?"}`);
         renderResult(job, data.report);
+        loadHistory();
       }
     } catch (_) {
       // Keep the UI unobtrusive when refresh controls are unavailable.
