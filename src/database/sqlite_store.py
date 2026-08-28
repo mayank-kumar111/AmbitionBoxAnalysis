@@ -69,10 +69,16 @@ CREATE TABLE IF NOT EXISTS refresh_runs (
 
 CREATE INDEX IF NOT EXISTS idx_companies_name_location
     ON companies(company_name, location);
+CREATE INDEX IF NOT EXISTS idx_companies_lower_name_location
+    ON companies(lower(company_name), lower(location));
 CREATE INDEX IF NOT EXISTS idx_snapshots_company_time
     ON company_snapshots(company_id, snapshot_at);
+CREATE INDEX IF NOT EXISTS idx_snapshots_time_company
+    ON company_snapshots(snapshot_at, company_id);
 CREATE INDEX IF NOT EXISTS idx_change_log_time
     ON change_log(snapshot_at);
+CREATE INDEX IF NOT EXISTS idx_change_log_company_time
+    ON change_log(company_id, snapshot_at);
 CREATE INDEX IF NOT EXISTS idx_refresh_runs_time
     ON refresh_runs(snapshot_at);
 """
