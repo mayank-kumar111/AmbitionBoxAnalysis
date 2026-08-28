@@ -1,10 +1,10 @@
-"""SQLite persistence for company snapshots and change history."""
+"""SQLite persistence for company snapshots, refresh history, and change history."""
 
 from __future__ import annotations
 
 import sqlite3
 from pathlib import Path
-from typing import Iterable
+from typing import Any
 
 import pandas as pd
 
@@ -52,12 +52,29 @@ CREATE TABLE IF NOT EXISTS change_log (
     FOREIGN KEY(company_id) REFERENCES companies(id)
 );
 
+CREATE TABLE IF NOT EXISTS refresh_runs (
+    run_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    snapshot_at TEXT NOT NULL UNIQUE,
+    previous_records INTEGER NOT NULL DEFAULT 0,
+    incoming_records INTEGER NOT NULL DEFAULT 0,
+    final_records INTEGER NOT NULL DEFAULT 0,
+    new_records INTEGER NOT NULL DEFAULT 0,
+    updated_records INTEGER NOT NULL DEFAULT 0,
+    duplicate_records INTEGER NOT NULL DEFAULT 0,
+    invalid_records INTEGER NOT NULL DEFAULT 0,
+    collapsed_records INTEGER NOT NULL DEFAULT 0,
+    applied INTEGER NOT NULL DEFAULT 0,
+    source TEXT NOT NULL DEFAULT 'local'
+);
+
 CREATE INDEX IF NOT EXISTS idx_companies_name_location
     ON companies(company_name, location);
 CREATE INDEX IF NOT EXISTS idx_snapshots_company_time
     ON company_snapshots(company_id, snapshot_at);
 CREATE INDEX IF NOT EXISTS idx_change_log_time
     ON change_log(snapshot_at);
+CREATE INDEX IF NOT EXISTS idx_refresh_runs_time
+    ON refresh_runs(snapshot_at);
 """
 
 
@@ -87,6 +104,57 @@ class SQLiteStore:
         with self.connect() as connection:
             row = connection.execute("SELECT COUNT(*) AS count FROM company_snapshots").fetchone()
             return int(row["count"])
+
+    def refresh_run_count(self) -> int:
+        with self.connect() as connection:
+            row = connection.execute("SELECT COUNT(*) AS count FROM refresh_runs").fetchone()
+            return int(row["count"])
+
+    def record_refresh_run(self, metrics: dict[str, Any]) -> None:
+        """Persist one refresh-run summary for dashboard reporting."""
+        snapshot_at = str(metrics.get("snapshot_at", "")).strip()
+        if not snapshot_at:
+            raise ValueError("snapshot_at is required for a refresh run")
+
+        fields = [
+            "snapshot_at", "previous_records", "incoming_records", "final_records",
+            "new_records", "updated_records", "duplicate_records", "invalid_records",
+            "collapsed_records", "applied", "source",
+        ]
+        values = [
+            snapshot_at,
+            int(metrics.get("previous_records", 0) or 0),
+            int(metrics.get("incoming_records", 0) or 0),
+            int(metrics.get("final_records", 0) or 0),
+            int(metrics.get("new_records", 0) or 0),
+            int(metrics.get("updated_records", 0) or 0),
+            int(metrics.get("duplicate_records", metrics.get("incoming_duplicate_rows", 0)) or 0),
+            int(metrics.get("invalid_records", 0) or 0),
+            int(metrics.get("collapsed_records", 0) or 0),
+            1 if metrics.get("applied", False) else 0,
+            str(metrics.get("source", "local")),
+        ]
+
+        with self.connect() as connection:
+            connection.execute(
+                f"""INSERT OR REPLACE INTO refresh_runs ({', '.join(fields)})
+                VALUES ({', '.join(['?'] * len(fields))})""",
+                values,
+            )
+
+    def list_refresh_runs(self, limit: int = 30) -> list[dict[str, Any]]:
+        limit = max(1, min(200, int(limit)))
+        with self.connect() as connection:
+            rows = connection.execute(
+                """SELECT snapshot_at, previous_records, incoming_records, final_records,
+                          new_records, updated_records, duplicate_records, invalid_records,
+                          collapsed_records, applied, source
+                   FROM refresh_runs
+                   ORDER BY snapshot_at ASC
+                   LIMIT ?""",
+                (limit,),
+            ).fetchall()
+        return [dict(row) for row in rows]
 
     def import_dataframe(self, df: pd.DataFrame, snapshot_at: str) -> int:
         """Insert or update companies and record a snapshot for every row."""
