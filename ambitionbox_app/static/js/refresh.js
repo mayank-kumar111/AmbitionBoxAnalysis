@@ -157,12 +157,21 @@
       const extended = button.dataset.extended === "true";
       if (apply && !window.confirm("Apply this refresh to the master dataset?\n\nA backup is created before the refresh.")) return;
       const pages = Number(document.getElementById("refresh-pages").value || 1);
+      const headers = { "Content-Type": "application/json" };
+      if (apply) {
+        const adminToken = window.prompt("Admin token (required for Apply):", "");
+        if (!adminToken) {
+          setReady("Apply cancelled: admin token required.");
+          return;
+        }
+        headers["X-Admin-Token"] = adminToken;
+      }
       try {
         result.hidden = true;
         setBusy(`Starting ${extended ? "extended" : "core"} ${apply ? "apply" : "dry run"}…`);
         const response = await fetch("/api/refresh", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers,
           body: JSON.stringify({ pages, extended, apply })
         });
         const data = await response.json();
