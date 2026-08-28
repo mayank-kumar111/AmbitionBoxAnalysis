@@ -31,7 +31,11 @@ def test_operations_dashboard_routes_exist(monkeypatch, tmp_path):
 
     from flask import Flask
 
-    app = Flask(__name__)
+    # Use the repository's actual template directory so /ops exercises the
+    # real operations.html instead of a test-only Flask template root.
+    repo_root = Path(__file__).resolve().parents[1]
+    template_dir = repo_root / "ambitionbox_app" / "templates"
+    app = Flask(__name__, template_folder=str(template_dir))
     ops_routes.register_ops_routes(app)
     client = app.test_client()
 
