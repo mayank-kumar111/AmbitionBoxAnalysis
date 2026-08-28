@@ -14,6 +14,11 @@ from typing import Any
 
 from flask import jsonify, request
 
+try:
+    from .audit_log import record_event, list_events
+except ImportError:  # pragma: no cover
+    from audit_log import record_event, list_events
+
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 REFRESH_SCRIPT = ROOT_DIR / "scripts" / "refresh_pipeline.py"
@@ -33,6 +38,10 @@ def _authorized() -> bool:
         supplied = request.headers.get("X-Refresh-Token", "")
         return supplied == token
     return remote in {"127.0.0.1", "::1", "localhost"}
+
+
+def _actor() -> str:
+    return request.headers.get("X-Refresh-Actor", "local-user").strip() or "local-user"
 
 
 def _read_report() -> dict[str, Any]:
@@ -80,6 +89,21 @@ def _cleanup_finished() -> None:
                     if key in report
                 }
                 _active_job["alerts"] = alerts
+                record_event(
+                    action="refresh",
+                    actor=_active_job.get("actor", "local-user"),
+                    status=_active_job["status"],
+                    job_id=_active_job.get("job_id"),
+                    details={
+                        "pages": _active_job.get("pages"),
+                        "extended": _active_job.get("extended"),
+                        "apply": _active_job.get("apply"),
+                        "full_snapshot": _active_job.get("full_snapshot"),
+                        "return_code": code,
+                        "health": _active_job["health"],
+                        "metrics": _active_job["metrics"],
+                    },
+                )
 
             _active_process = None
 
@@ -124,6 +148,7 @@ def register_refresh_routes(app) -> None:
             if full_snapshot:
                 command.append("--full-snapshot")
 
+            job_id = uuid.uuid4().hex
             process = subprocess.Popen(
                 command,
                 cwd=ROOT_DIR,
@@ -133,7 +158,7 @@ def register_refresh_routes(app) -> None:
             )
             _active_process = process
             _active_job = {
-                "job_id": uuid.uuid4().hex,
+                "job_id": job_id,
                 "status": "running",
                 "pages": pages,
                 "extended": extended,
@@ -141,7 +166,20 @@ def register_refresh_routes(app) -> None:
                 "full_snapshot": full_snapshot,
                 "pid": process.pid,
                 "started_at": time.time(),
+                "actor": _actor(),
             }
+            record_event(
+                action="refresh",
+                actor=_active_job["actor"],
+                status="started",
+                job_id=job_id,
+                details={
+                    "pages": pages,
+                    "extended": extended,
+                    "apply": apply,
+                    "full_snapshot": full_snapshot,
+                },
+            )
             return jsonify({"message": "Refresh started.", "job": _active_job}), 202
 
     @app.route("/api/refresh/status", methods=["GET"])
@@ -156,6 +194,16 @@ def register_refresh_routes(app) -> None:
                 "job": job,
                 "report": _read_report() if job and job.get("status") != "running" else None,
             })
+
+    @app.route("/api/refresh/audit", methods=["GET"])
+    def api_refresh_audit():
+        if not _authorized():
+            return jsonify({"error": "Refresh endpoint is not authorized."}), 403
+        try:
+            limit = int(request.args.get("limit", 25))
+        except ValueError:
+            limit = 25
+        return jsonify({"events": list_events(limit)})
 
     # Data Operations is registered from the same application bootstrap.
     from .ops_routes import register_ops_routes
