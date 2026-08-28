@@ -25,6 +25,7 @@ def test_apply_accepts_admin_token_on_loopback(monkeypatch):
 
     class DummyProcess:
         pid = 123
+        returncode = 0
 
         def poll(self):
             return 0
@@ -53,6 +54,10 @@ def test_dry_run_does_not_require_admin_token(monkeypatch):
 
     class DummyProcess:
         pid = 456
+        returncode = 0
+
+        def poll(self):
+            return 0
 
     app = Flask(__name__)
     refresh_routes.register_refresh_routes(app)
