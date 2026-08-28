@@ -13,10 +13,12 @@ try:
     from .history_routes import register_history_routes
     from .config import AppConfig
     from .cache import TTLCache, make_cache_key
+    from .data_runtime import DatasetRuntime
 except ImportError:  # pragma: no cover
     from history_routes import register_history_routes
     from config import AppConfig
     from cache import TTLCache, make_cache_key
+    from data_runtime import DatasetRuntime
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = AppConfig.SECRET_KEY
@@ -33,17 +35,8 @@ COLUMNS = ["company_name", "company_rating", "industry", "size",
 API_CACHE = TTLCache(maxsize=128, ttl_seconds=30)
 
 
-def data_version() -> str:
-    """Return a cheap version token that changes when the dataset is rewritten."""
-    try:
-        stat = os.stat(DATA_PATH)
-        return f"{stat.st_mtime_ns}:{stat.st_size}"
-    except OSError:
-        return "missing"
-
-
-def load_data() -> pd.DataFrame:
-    df = pd.read_csv(DATA_PATH)
+def load_data(path: str | os.PathLike[str]) -> pd.DataFrame:
+    df = pd.read_csv(path)
     for c in COLUMNS:
         if c not in df.columns:
             df[c] = np.nan
@@ -55,7 +48,17 @@ def load_data() -> pd.DataFrame:
     return df[COLUMNS].copy()
 
 
-DF = load_data()
+def data_version() -> str:
+    """Return a cheap version token that changes when the dataset is rewritten."""
+    try:
+        stat = os.stat(DATA_PATH)
+        return f"{stat.st_mtime_ns}:{stat.st_size}"
+    except OSError:
+        return "missing"
+
+
+DATA_RUNTIME = DatasetRuntime(DATA_PATH, load_data, API_CACHE)
+DF = DATA_RUNTIME.get()
 
 
 def size_lower_bound(label):
@@ -74,35 +77,61 @@ def size_lower_bound(label):
     return num
 
 
-def ordered_sizes():
-    sizes = [s for s in DF["size"].dropna().unique().tolist()]
+def ordered_sizes(df):
+    sizes = [s for s in df["size"].dropna().unique().tolist()]
     sizes.sort(key=lambda s: (size_lower_bound(s), "(Global)" in s))
     return sizes
 
 
-META = {
-    "totals": {
-        "companies": int(len(DF)),
-        "rated": int(DF["company_rating"].notna().sum()),
-        "industries": int(DF["industry"].nunique()),
-        "locations": int(DF["location"].nunique()),
-        "types": int(DF["type"].nunique()),
-        "avg_rating": round(float(DF["company_rating"].mean()), 2),
-        "avg_years": round(float(DF["years_old"].mean()), 1),
-        "oldest": int(DF["years_old"].max()),
-    },
-    "filters": {
-        "industries": sorted(DF["industry"].dropna().unique().tolist()),
-        "sizes": ordered_sizes(),
-        "types": sorted(DF["type"].dropna().unique().tolist()),
-        "locations": sorted(DF["location"].dropna().unique().tolist()),
-        "rating": {"min": 1.0, "max": 5.0},
-        "years": {
-            "min": int(DF["years_old"].min()),
-            "max": int(DF["years_old"].max()),
+def build_meta(df: pd.DataFrame) -> dict:
+    return {
+        "totals": {
+            "companies": int(len(df)),
+            "rated": int(df["company_rating"].notna().sum()),
+            "industries": int(df["industry"].nunique()),
+            "locations": int(df["location"].nunique()),
+            "types": int(df["type"].nunique()),
+            "avg_rating": round(float(df["company_rating"].mean()), 2),
+            "avg_years": round(float(df["years_old"].mean()), 1),
+            "oldest": int(df["years_old"].max()),
         },
-    },
-}
+        "filters": {
+            "industries": sorted(df["industry"].dropna().unique().tolist()),
+            "sizes": ordered_sizes(df),
+            "types": sorted(df["type"].dropna().unique().tolist()),
+            "locations": sorted(df["location"].dropna().unique().tolist()),
+            "rating": {"min": 1.0, "max": 5.0},
+            "years": {
+                "min": int(df["years_old"].min()),
+                "max": int(df["years_old"].max()),
+            },
+        },
+    }
+
+
+META = build_meta(DF)
+
+
+def refresh_runtime() -> bool:
+    """Reload the dataset when its file fingerprint changes.
+
+    Returns True when a new DataFrame was loaded. A failed reload leaves the
+    previous known-good DataFrame in place and is allowed to raise so the
+    request surfaces the actual read/validation error.
+    """
+    global DF, META
+    before = DATA_RUNTIME.version
+    fresh = DATA_RUNTIME.get()
+    if DATA_RUNTIME.version != before:
+        DF = fresh
+        META = build_meta(DF)
+        return True
+    return False
+
+
+@app.before_request
+def _refresh_dataset_before_request():
+    refresh_runtime()
 
 
 def _floats(name):
