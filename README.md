@@ -1,141 +1,191 @@
-# AmbitionBox Analysis 🚀
+# 📊 AmbitionBox Analysis
 
-An end-to-end data science and web visualization project built by **Mayank Kumar** on Indian company data. 
+> An end-to-end **Data Science + Analytics + Flask dashboard** project built by **Mayank Kumar** to explore Indian company data through interactive search, filtering, visualization, and comparison.
 
-Company profiles were scraped from [AmbitionBox](https://www.ambitionbox.com/), cleaned and structured into a single dataset, analysed, and finally served through a blazing-fast, interactive Flask web application where the entire dataset can be filtered, visualized, and compared.
+## ⭐ Project Overview
 
-The project follows the full data science lifecycle: **Data Collection ➔ Data Preprocessing ➔ Data Analysis ➔ Data Visualization & Deployment.**
+**AmbitionBox Analysis** takes scraped company-profile data through a complete analytics workflow:
 
----
+**Data Collection → Data Cleaning → Feature Extraction → Analysis → Interactive Visualization → Web Deployment**
 
-## 🌟 What It Does
+The project turns a large company dataset into an interactive web application where users can explore companies, compare organizations, filter results, visualize trends, and export filtered data.
 
-The app turns a raw pile of scraped listings into a beautiful, interactive analytical tool:
+## 🔎 Key Highlights
 
-- **Filter & Export**: Search 64,210 companies by name, rating, industry, size, type, age, and location using dynamic multi-selects and dual range sliders. Export any filtered slice instantly to a clean CSV.
-- **Visualize (Live Dashboard)**: Twelve interactive Chart.js visualizations that redraw in milliseconds the moment you change a filter. Understand what actually correlates with higher company ratings and how industries are distributed.
-- **Compare (Head-to-Head)**: Pit two companies against each other in the dedicated Compare Tool. Features a lightning-fast type-ahead search, dynamic visual progress bars, and an automated scoreboard system that crowns an overall winner based on quantitative metrics.
-- **Premium UI/UX**: Custom-built CSS framework featuring deep glassmorphism (`backdrop-filter`), an animated Aurora mesh gradient background, smooth micro-interactions, and a seamless Dark/Light mode toggle.
+- **64,210 unique company records** after preprocessing.
+- **94,580 raw rows** collected across ten major Indian hiring hubs.
+- **30,370 exact duplicate rows** removed during cleaning.
+- Analysis covering **84 industries** and **371 locations**.
+- Interactive filtering by company, rating, industry, employee size, ownership type, age, and location.
+- CSV export for filtered results.
+- **12 interactive Chart.js visualizations**.
+- Head-to-head company comparison with a quantitative scoreboard.
+- Responsive dark/light interface with custom glassmorphism styling.
 
----
-
-## 🧬 The Data Science Pipeline
+## 🧠 Data Science Workflow
 
 ### 1. Data Collection
-Company profiles were web-scraped from AmbitionBox across ten major Indian hiring hubs (Ahmedabad, Bangalore, Chennai, Gurugram, Hyderabad, Indore, Jaipur, Mumbai, Noida, and Pune). Each city produced its own raw CSV containing the company name, overall rating, and a messy free-text string holding the rest of the details. Total raw rows: **94,580**.
+
+Company profile information was collected from AmbitionBox across:
+
+Ahmedabad · Bangalore · Chennai · Gurugram · Hyderabad · Indore · Jaipur · Mumbai · Noida · Pune
+
+Raw information included company name, rating, and additional company details stored in a semi-structured text field.
 
 ### 2. Data Preprocessing
-The ten city files were combined, and **30,370 exact duplicate rows** were removed. The messy free-text details field was parsed into five clean columns, ages were converted to integers, and missing values were standardized. Result: a tidy dataset of **64,210 unique companies**.
 
-#### How the raw data was cleaned
-The hardest part of preprocessing was parsing the unstructured free-text field. A typical value looked like this:
-`Pharma , 10k-50k Employees , Public , 72 years old , Ahmedabad +152 more`
+The raw city-level datasets were combined and cleaned into a structured analytical dataset.
 
-It had to become:
-- `industry` = Pharma
-- `size`     = 10k-50k Employees
-- `type`     = Public
-- `years_old` = 72
-- `location` = Ahmedabad
+The preprocessing workflow included:
 
-Because the fields were variable (some rows lacked `type` or `industry`), position-based splitting failed. Instead, content-based parsing was used:
-- **size**: The chunk containing the word "Employees".
-- **years_old**: The chunk containing "years old".
-- **type**: Matched against a fixed set of nine known ownership values (e.g., Public, Startup, MNC).
-- **location**: Always the last piece (stripping trailing "+N more" counts).
-- **industry**: Whatever remained at the front.
+- Duplicate removal
+- Unstructured text parsing
+- Industry extraction
+- Employee-size extraction
+- Ownership/type extraction
+- Company-age conversion
+- Location extraction
+- Missing-value standardization
 
-This guaranteed 100% accurate parsing row-by-row against the source.
+Example transformation:
 
-### 3. Data Analysis
-The cleaned data was profiled across 84 industries and 371 locations to map out rating distributions, age demographics, ownership types, and to surface the factors that actually drive higher ratings.
+```text
+Raw:
+Pharma, 10k-50k Employees, Public, 72 years old, Ahmedabad +152 more
 
-### 4. Data Visualization
-Instead of a static Jupyter notebook, the entire analysis is wrapped in an interactive Flask web application, allowing users to draw their own insights in real-time.
+Structured:
+industry     → Pharma
+size         → 10k-50k Employees
+type         → Public
+years_old    → 72
+location     → Ahmedabad
+```
 
----
+Content-based parsing was used instead of relying only on fixed field positions so that incomplete or differently formatted records could still be processed.
 
-## 📂 The Dataset
+### 3. Analysis
 
-The cleaned dataset is bundled with the application (`ambitionbox_app/data/companies.csv`).
+The cleaned dataset is used to explore:
 
-| Column | Type | Description | Example |
-|--------|------|-------------|---------|
-| `company_name` | text | Company name | Zydus Lifesciences |
-| `company_rating` | float | Overall AmbitionBox rating, 1.0 - 5.0 | 4.2 |
-| `industry` | text | Primary industry | Pharma |
-| `size` | text | Employee band | 10k-50k Employees |
-| `type` | text | Ownership classification | Public |
-| `years_old` | integer | Company age in years | 72 |
-| `location` | text | Head-office location | Ahmedabad |
+- Company rating distributions
+- Industry-level patterns
+- Location-level patterns
+- Company age distributions
+- Ownership/type distributions
+- Relationships between company characteristics and ratings
 
----
+### 4. Visualization & Web App
 
-## 🖥️ The Web Application (API & Routes)
+The analysis is delivered through an interactive Flask application rather than a static notebook.
 
-The Flask app serves 5 core pages, all sharing a single global filter engine:
+## 🖥️ Application
 
-| Route | Page | Description |
-|-------|------|-------------|
-| `/` | **Home** | Landing page with high-level dataset metrics. |
-| `/explore` | **Explore** | The main data table. Paginate, sort, filter, and export to CSV. |
-| `/dashboard` | **Dashboard** | 12 live charts powered by Chart.js. Reacts to all active filters. |
-| `/compare` | **Compare** | The Head-to-Head tool. Pit two companies against each other. |
-| `/about` | **About** | Pipeline documentation and contact information. |
+| Route | Purpose |
+|---|---|
+| `/` | Home page and dataset overview |
+| `/explore` | Search, filter, sort, paginate, and export companies |
+| `/dashboard` | Interactive charts and analytics |
+| `/compare` | Compare two companies |
+| `/about` | Project and pipeline information |
 
-### API Endpoints
-- `/api/meta`: Returns all unique dropdown options (industries, sizes, locations) and current dataset totals.
-- `/api/companies`: Returns paginated, sorted rows based on active query filters.
-- `/api/analytics`: Returns pre-aggregated JSON payloads for the Chart.js visualizations.
-- `/api/export`: Generates a downloadable CSV slice based on current filters.
-- `/api/compare`: Accepts `c1` and `c2` and returns precise exact-match rows for the comparison scoreboard.
+### API
 
----
+| Endpoint | Purpose |
+|---|---|
+| `/api/meta` | Dataset totals and filter options |
+| `/api/companies` | Filtered/paginated company data |
+| `/api/analytics` | Analytics payloads for charts |
+| `/api/export` | Filtered CSV export |
+| `/api/compare` | Exact company comparison data |
+
+## 📁 Dataset
+
+The cleaned dataset is included with the application at:
+
+```text
+ambitionbox_app/data/companies.csv
+```
+
+| Column | Description |
+|---|---|
+| `company_name` | Company name |
+| `company_rating` | AmbitionBox rating, 1.0–5.0 |
+| `industry` | Primary industry |
+| `size` | Employee-size band |
+| `type` | Ownership classification |
+| `years_old` | Company age in years |
+| `location` | Head-office location |
 
 ## 🛠️ Tech Stack
 
-- **Backend**: Python 3, Flask
-- **Data Engineering**: Pandas, NumPy
-- **Frontend**: HTML5, CSS3 (Custom Glassmorphism Framework), Vanilla JavaScript
-- **Visualization**: Chart.js
-- **UI Components**: Tom Select (Type-ahead dropdowns), noUiSlider (Range sliders)
+**Backend**  
+Python · Flask
 
----
+**Data & Analysis**  
+Pandas · NumPy
+
+**Frontend**  
+HTML5 · CSS3 · Vanilla JavaScript
+
+**Visualization**  
+Chart.js
+
+**UI Components**  
+Tom Select · noUiSlider
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-Make sure you have Python 3.8+ installed.
+
+- Python 3.8+
+- pip
 
 ### Installation
-1. Clone the repository to your local machine.
-2. Navigate to the app directory:
-   ```bash
-   cd ambitionbox_app
-   ```
-3. Install the required Python dependencies:
-   ```bash
-   pip install flask pandas numpy
-   ```
 
-### Running the App
-1. Start the Flask server:
-   ```bash
-   python app.py
-   ```
-2. Open your web browser and navigate to:
-   ```
-   http://127.0.0.1:5000
-   ```
+```bash
+git clone https://github.com/mayank-kumar111/AmbitionBoxAnalysis.git
+cd AmbitionBoxAnalysis/ambitionbox_app
+pip install flask pandas numpy
+```
 
----
+### Run
 
-## 👨‍💻 Developer
+```bash
+python app.py
+```
 
-**Built by Mayank Kumar**
-- **Instagram**: [@mayank_kumar11](https://instagram.com/mayank_kumar11)
-- **LinkedIn**: [/in/mayank-kumar111](https://www.linkedin.com/in/mayank-kumar111)
-- **GitHub**: [mayank-kumar111](https://github.com/mayank-kumar111)
+Open:
 
----
-*Disclaimer: Data is sourced from AmbitionBox listings strictly for analytical, educational, and portfolio demonstration purposes.*
+```text
+http://127.0.0.1:5000
+```
+
+## 💼 Why This Project Matters
+
+This project demonstrates practical skills across the full analytics lifecycle:
+
+```text
+Raw Data
+   ↓
+Cleaning & Parsing
+   ↓
+Structured Dataset
+   ↓
+Exploratory Analysis
+   ↓
+Interactive Visualization
+   ↓
+Flask Web Application
+```
+
+It is particularly relevant for demonstrating **Data Science, Data Analytics, Python, Pandas, data cleaning, visualization, and dashboard development**.
+
+## 👨‍💻 Author
+
+**Mayank Kumar**  
+GitHub: [@mayank-kumar111](https://github.com/mayank-kumar111)  
+LinkedIn: [Mayank Kumar](https://www.linkedin.com/in/mayank-kumar111/)
+
+## 📌 Disclaimer
+
+The project uses AmbitionBox listing data for **educational, analytical, and portfolio demonstration purposes**.
